@@ -1,6 +1,7 @@
-@import "tailwindcss";
 
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400;500;600&display=swap');
 /* 1. Register fonts here so Tailwind creates the utility classes for @apply */
+@import "tailwindcss";
 @theme {
   --font-display: var(--font-playfair), Georgia, serif;
   --font-body: var(--font-dm-sans), system-ui, sans-serif;
@@ -128,3 +129,106 @@
 .animate-fade-up-delay-3 { animation-delay: 0.3s; opacity: 0; animation-fill-mode: both; }
 .animate-fade-up-delay-4 { animation-delay: 0.4s; opacity: 0; animation-fill-mode: both; }
 .animate-fade-up-delay-5 { animation-delay: 0.5s; opacity: 0; animation-fill-mode: both; }
+
+/* =================================================================
+   VIBE SALON — GLOBAL STYLES ADDITIONS
+   Add these to your existing globals.css
+   ================================================================= */
+
+/* Import luxury display font (Cormorant Garamond) + refined body font (Jost) */
+
+
+/* CSS Custom Properties — Brand Tokens */
+:root {
+  --color-primary: #C9A84C;
+  --color-dark: #1A1410;
+  --color-background: #FAF8F5;
+  --color-accent: #E7D8B1;
+  --color-text-light: #F5F5F5;
+  --color-text-muted: #6B5F55;
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Jost', system-ui, sans-serif;
+}
+
+/* Font utility classes for Tailwind */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+/* =================================================================
+   TAILWIND CONFIG ADDITIONS — add to tailwind.config.ts
+   ================================================================= */
+
+/*
+module.exports = {
+  theme: {
+    extend: {
+      fontFamily: {
+        display: ['Cormorant Garamond', 'Georgia', 'serif'],
+        body: ['Jost', 'system-ui', 'sans-serif'],
+      },
+      colors: {
+        gold: {
+          DEFAULT: '#C9A84C',
+          light: '#E7D8B1',
+        },
+        salon: {
+          dark: '#1A1410',
+          bg: '#FAF8F5',
+          muted: '#6B5F55',
+        },
+      },
+    },
+  },
+}
+*/
+
+/* =================================================================
+   SMOOTH SCROLL
+   ================================================================= */
+html {
+  scroll-behavior: smooth;
+}
+
+/* =================================================================
+   SELECTION COLOR
+   ================================================================= */
+::selection {
+  background-color: #C9A84C;
+  color: #1A1410;
+}
+
+/* =================================================================
+   SCROLLBAR (WebKit)
+   ================================================================= */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #1A1410;
+}
+::-webkit-scrollbar-thumb {
+  background: #C9A84C;
+  border-radius: 0;
+}
+
+/* =================================================================
+   PROSE OVERRIDES for CitySEOContent
+   ================================================================= */
+.prose h2 {
+  font-family: var(--font-display);
+  color: #1A1410;
+  font-weight: 400;
+}
+
+.prose p {
+  color: #6B5F55;
+  font-weight: 300;
+  line-height: 1.85;
+}

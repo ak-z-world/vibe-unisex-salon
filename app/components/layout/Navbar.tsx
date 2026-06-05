@@ -8,7 +8,7 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/branches", label: "Our Salons" },
   { href: "/#services", label: "Services" },
-  { href: "/#about", label: "About" },
+  { href: "/contact", label: "Contact Us" },
 ];
 
 export default function Navbar() {

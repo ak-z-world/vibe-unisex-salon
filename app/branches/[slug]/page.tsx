@@ -1,261 +1,164 @@
-
-import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import {
-  getBranchBySlug,
-} from "@/lib/branches";
-import {
-  LocalBusinessSchema,
-  BreadcrumbSchema,
-} from "@/app/components/SEO/StructuredData";
+import { SALON_BRANCHES, getBranchBySlug, nearbyAreas } from "@/lib/branches";
+import BranchDetailPage from "@/app/components/branch/BranchDetailPage";
 
-const SITE_URL = "https://vibeunisexsalon.in";
-
-type PageProps = {
-  params: Promise<{
-    slug: string;
-  }>;
-};
-
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-
-  const branch = getBranchBySlug(slug);
-
-  if (!branch) {
-    return {
-      title: "Branch Not Found",
-    };
-  }
-
-  const location = `${branch.neighborhood}, ${branch.city}`;
-
-  const title = `${branch.name} | Best Unisex Salon in ${location}`;
-
-  const description = `Visit ${branch.name} in ${location} for premium haircuts, hair spa, keratin treatment, facials, bridal makeup, beard styling, manicure, pedicure and complete beauty services.`;
-
-  return {
-    title,
-    description,
-
-    keywords: [
-      branch.name,
-      `${location} salon`,
-      `best salon in ${location}`,
-      `unisex salon in ${location}`,
-      `haircut in ${location}`,
-      `hair spa in ${location}`,
-      `bridal makeup in ${location}`,
-      `beauty parlour in ${location}`,
-      `facial in ${location}`,
-      `hair salon near me`,
-      `salon near me`,
-      `${branch.city} salon`,
-      `${branch.neighborhood} salon`,
-    ],
-
-    alternates: {
-      canonical: `${SITE_URL}/branches/${branch.slug}`,
-    },
-
-    openGraph: {
-      title,
-      description,
-      url: `${SITE_URL}/branches/${branch.slug}`,
-      siteName: "Vibe Unisex Salon",
-      locale: "en_IN",
-      type: "website",
-
-      images: [
-        {
-          url: branch.featuredImageUrl,
-          width: 1200,
-          height: 630,
-          alt: branch.name,
-        },
-      ],
-    },
-
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [branch.featuredImageUrl],
-    },
-  };
+interface Props {
+  params: Promise<{ slug: string }>;
 }
 
-export default async function BranchPage({
-  params,
-}: PageProps) {
-  const { slug } = await params;
+export async function generateStaticParams() {
+  return SALON_BRANCHES.map((branch) => ({ slug: branch.slug }));
+}
 
+function generateStructuredData(branch: ReturnType<typeof getBranchBySlug>) {
+  if (!branch) return "";
+
+  const branchNearbyAreas = nearbyAreas[branch.slug] || [];
+  
+  const localBusiness = {
+    "@type": ["LocalBusiness", "BeautySalon", "HairSalon"],
+    "@id": `https://vibeunisexsalon.com/branches/${branch.slug}`,
+    name: `Vibe Unisex Salon ${branch.name}`,
+    url: `https://vibeunisexsalon.com/branches/${branch.slug}`,
+    telephone: branch.phone,
+    image: branch.featuredImageUrl,
+    description: `Premium unisex salon in ${branch.neighborhood}, Chennai offering hair cutting, colouring, keratin treatment, bridal makeup, hair spa, facials and men's grooming.`,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: branch.address,
+      addressLocality: "Chennai",
+      addressRegion: "Tamil Nadu",
+      addressCountry: "IN",
+    },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ],
+        opens: "09:00",
+        closes: "21:00",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Sunday"],
+        opens: "10:00",
+        closes: "19:00",
+      },
+    ],
+    priceRange: "₹₹",
+    hasMap: branch.mapsLink,
+    areaServed: [
+      { "@type": "City", name: "Chennai" },
+      ...branchNearbyAreas.map((area: string) => ({
+        "@type": "Place",
+        name: `${area}, Chennai`,
+      })),
+    ],
+    makesOffer: [
+      "Hair Cutting and Styling",
+      "Hair Colouring",
+      "Balayage",
+      "Keratin Smoothening",
+      "Hair Spa",
+      "Bridal Makeup",
+      "Facial Treatments",
+      "Men's Grooming",
+    ].map((name) => ({
+      "@type": "Offer",
+      name,
+      areaServed: `${branch.neighborhood}, Chennai`,
+    })),
+  };
+
+  const breadcrumb = {
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://vibeunisexsalon.com",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Branches",
+        item: "https://vibeunisexsalon.com/branches",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: `${branch.name} Branch`,
+        item: `https://vibeunisexsalon.com/branches/${branch.slug}`,
+      },
+    ],
+  };
+
+  const faqSchema = {
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: `Where is Vibe Unisex Salon ${branch.neighborhood} located?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `Vibe Unisex Salon ${branch.neighborhood} is located at ${branch.address}, Chennai.`,
+        },
+      },
+      {
+        "@type": "Question",
+        name: `What are the opening hours of Vibe Salon ${branch.neighborhood}?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `Vibe Salon ${branch.neighborhood} is open Monday to Saturday 9:00 AM to 9:00 PM and Sunday 10:00 AM to 7:00 PM.`,
+        },
+      },
+      {
+        "@type": "Question",
+        name: `What services does Vibe Salon ${branch.neighborhood} offer?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `Vibe Salon ${branch.neighborhood} offers hair cutting, hair colour, keratin treatment, hair spa, bridal makeup, facial treatments, and men's grooming.`,
+        },
+      },
+      {
+        "@type": "Question",
+        name: `How do I book an appointment at Vibe Salon ${branch.neighborhood}?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `Call ${branch.phone} or walk in during business hours. Weekend bookings are recommended in advance.`,
+        },
+      },
+    ],
+  };
+
+  return JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [localBusiness, breadcrumb, faqSchema],
+  });
+}
+
+export default async function BranchPage({ params }: Props) {
+  const { slug } = await params;
   const branch = getBranchBySlug(slug);
 
   if (!branch) {
     notFound();
   }
 
-  const location = `${branch.neighborhood}, ${branch.city}`;
-
-
   return (
     <>
-       <LocalBusinessSchema branch={branch} />
-       <BreadcrumbSchema
-    slug={branch.slug}
-    name={branch.name}
-  />
-
-      <main className="min-h-screen">
-
-        {/* Hero Section */}
-
-        <section className="relative h-[500px]">
-
-          <img
-            src={branch.featuredImageUrl}
-            alt={branch.name}
-            className="w-full h-full object-cover"
-          />
-
-          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-
-            <div className="text-center text-white px-4">
-
-              <h1 className="text-4xl md:text-6xl font-bold mb-4">
-                {branch.name}
-              </h1>
-
-              <p className="text-lg md:text-xl">
-                Premium Hair & Beauty Services in {location}
-              </p>
-
-            </div>
-
-          </div>
-
-        </section>
-
-        {/* Branch Details */}
-
-        <section className="max-w-7xl mx-auto px-4 py-16">
-
-          <h2 className="text-3xl font-bold mb-6">
-            Best Unisex Salon in {location}
-          </h2>
-
-          <p className="text-gray-600 leading-8 mb-10">
-            Looking for the best salon in {location}? {branch.name}
-            provides professional haircuts, beard styling, hair spa,
-            keratin treatment, hair coloring, facials, manicure,
-            pedicure, bridal makeup and advanced beauty services.
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-6">
-
-            <div className="border rounded-xl p-6">
-              <h3 className="text-xl font-semibold mb-3">
-                Hair Services
-              </h3>
-
-              <p>
-                Haircut, Hair Spa, Keratin Treatment,
-                Smoothening, Hair Coloring, Beard Styling.
-              </p>
-            </div>
-
-            <div className="border rounded-xl p-6">
-              <h3 className="text-xl font-semibold mb-3">
-                Beauty Services
-              </h3>
-
-              <p>
-                Facial, Cleanup, D-Tan,
-                Threading, Waxing and Skin Care.
-              </p>
-            </div>
-
-            <div className="border rounded-xl p-6">
-              <h3 className="text-xl font-semibold mb-3">
-                Bridal Services
-              </h3>
-
-              <p>
-                Bridal Makeup, Reception Makeup,
-                Groom Packages and Party Makeup.
-              </p>
-            </div>
-
-          </div>
-
-        </section>
-
-        {/* Contact Section */}
-
-        <section className="bg-gray-100 py-16">
-
-          <div className="max-w-7xl mx-auto px-4">
-
-            <h2 className="text-3xl font-bold mb-8">
-              Visit Our Salon
-            </h2>
-
-            <div className="grid md:grid-cols-2 gap-8">
-
-              <div>
-
-                <p className="mb-4">
-                  <strong>Address:</strong>
-                  <br />
-                  {branch.address}
-                </p>
-
-                <p className="mb-4">
-                  <strong>Phone:</strong>
-                  <br />
-                  {branch.phone}
-                </p>
-
-                <p className="mb-4">
-                  <strong>Working Hours:</strong>
-                  <br />
-                  {branch.hours}
-                </p>
-
-                <a
-                  href={branch.mapsLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block bg-black text-white px-6 py-3 rounded-lg"
-                >
-                  Get Directions
-                </a>
-
-              </div>
-
-              <div>
-
-                <iframe
-                  src={`https://maps.google.com/maps?q=${branch.latitude},${branch.longitude}&z=15&output=embed`}
-                  width="100%"
-                  height="350"
-                  loading="lazy"
-                  className="rounded-xl"
-                />
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </section>
-
-      </main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: generateStructuredData(branch) }}
+      />
+      <BranchDetailPage branch={branch} />
     </>
   );
 }
-

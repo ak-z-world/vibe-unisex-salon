@@ -1,105 +1,81 @@
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import { SALON_BRANCHES, getBranchBySlug, nearbyAreas } from "@/lib/branches";
 
-import {
-  getBranchBySlug,
-} from "@/lib/branches";
-
-const SITE_URL = "https://vibeunisexsalon.in";
-
-type LayoutProps = {
+interface Props {
+  params: Promise<{ slug: string }>;
   children: React.ReactNode;
-  params: Promise<{
-    slug: string;
-  }>;
-};
+}
 
-export async function generateMetadata({
-  params,
-}: LayoutProps): Promise<Metadata> {
+export async function generateStaticParams() {
+  return SALON_BRANCHES.map((branch) => ({ slug: branch.slug }));
+}
 
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
 
   const branch = getBranchBySlug(slug);
 
   if (!branch) {
     return {
-      title: "Branch Not Found",
+      title: "Branch Not Found | Vibe Unisex Salon Chennai",
     };
   }
 
-  const title = `${branch.name} | Best Unisex Salon in ${branch.neighborhood}, ${branch.city}`;
-
-  const description =
-    `Visit ${branch.name} in ${branch.neighborhood}, ${branch.city}. Professional haircuts, hair spa, keratin treatment, beard styling, bridal makeup, facials and premium beauty services.`;
+  const branchNearbyAreas = nearbyAreas[branch.slug] || [];
 
   return {
-    title,
-    description,
-
+    title: `${branch.neighborhood} | Vibe Unisex Salon`,
+    description: `Visit Vibe Unisex Salon at ${branch.address}. Expert hair salon, bridal makeup, hair spa, keratin treatment & beauty salon in ${branch.neighborhood}, Chennai. Call ${branch.phone}.`,
     keywords: [
-      branch.name,
-      `${branch.neighborhood} salon`,
-      `${branch.city} salon`,
-      `best salon in ${branch.neighborhood}`,
-      `best salon in ${branch.city}`,
-      `unisex salon ${branch.neighborhood}`,
-      `hair spa ${branch.neighborhood}`,
-      `haircut ${branch.neighborhood}`,
-      `facial ${branch.neighborhood}`,
-      `bridal makeup ${branch.city}`,
-      `beauty parlour ${branch.neighborhood}`,
-      `salon near me`,
-      `hair salon near me`,
-      `${branch.city} beauty services`,
+      `Best Salon in ${branch.neighborhood}`,
+      `Hair Salon in ${branch.neighborhood}`,
+      `Beauty Salon in ${branch.neighborhood}`,
+      `Bridal Makeup in ${branch.neighborhood}`,
+      `Hair Spa in ${branch.neighborhood}`,
+      `Keratin Treatment in ${branch.neighborhood}`,
+      `Premium Salon in ${branch.neighborhood}`,
+      `Unisex Salon ${branch.neighborhood} Chennai`,
+      `Hair Color ${branch.neighborhood}`,
+      `Men's Grooming ${branch.neighborhood}`,
+      `Luxury Salon ${branch.neighborhood} Chennai`,
+      ...branchNearbyAreas.map((a: string) => `Salon near ${a} Chennai`),
     ],
-
     alternates: {
-      canonical: `${SITE_URL}/branches/${branch.slug}`,
+      canonical: `https://vibeunisexsalon.com/branches/${branch.slug}`,
     },
-
-    robots: {
-      index: true,
-      follow: true,
-    },
-
     openGraph: {
-      title,
-      description,
-      url: `${SITE_URL}/branches/${branch.slug}`,
+      title: `${branch.neighborhood} | Vibe Unisex Salon`,
+      description: `Luxury hair & beauty salon in ${branch.neighborhood}, Chennai. Expert stylists, premium products, bridal makeup, keratin & more. ${branch.address}.`,
+      url: `https://vibeunisexsalon.com/branches/${branch.slug}`,
+      siteName: "Vibe Unisex Salon Chennai",
+      locale: "en_IN",
       type: "website",
-      siteName: "Vibe Unisex Salon",
       images: [
         {
           url: branch.featuredImageUrl,
           width: 1200,
           height: 630,
-          alt: branch.name,
+          alt: `Vibe Unisex Salon ${branch.neighborhood} Chennai`,
         },
       ],
     },
-
     twitter: {
       card: "summary_large_image",
-      title,
-      description,
-      images: [branch.featuredImageUrl],
+      title: `${branch.neighborhood} | Vibe Unisex Salon`,
+      description: `Visit Vibe Unisex Salon in ${branch.neighborhood} — luxury hair cuts, colour, keratin, bridal makeup & more. ${branch.phone}`,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true, "max-image-preview": "large" },
     },
   };
 }
 
-export default async function BranchLayout({
+export default function BranchLayout({
   children,
-  params,
-}: LayoutProps) {
-
-  const { slug } = await params;
-
-  const branch = getBranchBySlug(slug);
-
-  if (!branch) {
-    notFound();
-  }
-
+}: {
+  children: React.ReactNode;
+}) {
   return <>{children}</>;
 }
