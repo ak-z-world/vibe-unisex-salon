@@ -17,9 +17,9 @@ function generateStructuredData(branch: ReturnType<typeof getBranchBySlug>) {
   
   const localBusiness = {
     "@type": ["LocalBusiness", "BeautySalon", "HairSalon"],
-    "@id": `https://vibeunisexsalon.com/branches/${branch.slug}`,
+    "@id": `https://vibe-unisex-salon.vercel.app/branches/${branch.slug}`,
     name: `Vibe Unisex Salon ${branch.name}`,
-    url: `https://vibeunisexsalon.com/branches/${branch.slug}`,
+    url: `https://vibe-unisex-salon.vercel.app/branches/${branch.slug}`,
     telephone: branch.phone,
     image: branch.featuredImageUrl,
     description: `Premium unisex salon in ${branch.neighborhood}, Chennai offering hair cutting, colouring, keratin treatment, bridal makeup, hair spa, facials and men's grooming.`,
@@ -83,19 +83,19 @@ function generateStructuredData(branch: ReturnType<typeof getBranchBySlug>) {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: "https://vibeunisexsalon.com",
+        item: "https://vibe-unisex-salon.vercel.app",
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Branches",
-        item: "https://vibeunisexsalon.com/branches",
+        item: "https://vibe-unisex-salon.vercel.app/branches",
       },
       {
         "@type": "ListItem",
         position: 3,
         name: `${branch.name} Branch`,
-        item: `https://vibeunisexsalon.com/branches/${branch.slug}`,
+        item: `https://vibe-unisex-salon.vercel.app/branches/${branch.slug}`,
       },
     ],
   };

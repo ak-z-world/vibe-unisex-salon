@@ -41,12 +41,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ...branchNearbyAreas.map((a: string) => `Salon near ${a} Chennai`),
     ],
     alternates: {
-      canonical: `https://vibeunisexsalon.com/branches/${branch.slug}`,
+      canonical: `https://vibe-unisex-salon.vercel.app/branches/${branch.slug}`,
     },
     openGraph: {
       title: `${branch.neighborhood} | Vibe Unisex Salon`,
       description: `Luxury hair & beauty salon in ${branch.neighborhood}, Chennai. Expert stylists, premium products, bridal makeup, keratin & more. ${branch.address}.`,
-      url: `https://vibeunisexsalon.com/branches/${branch.slug}`,
+      url: `https://vibe-unisex-salon.vercel.app/branches/${branch.slug}`,
       siteName: "Vibe Unisex Salon Chennai",
       locale: "en_IN",
       type: "website",

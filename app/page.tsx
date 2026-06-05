@@ -182,7 +182,7 @@ export default function HomePage() {
   return (
     <>
       <OrganizationSchema
-        siteUrl="https://vibeunisexsalon.in"
+        siteUrl="https://vibe-unisex-salon.vercel.app"
         branches={SALON_BRANCHES}
       />
 

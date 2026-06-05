@@ -19,7 +19,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://vibeunisexsalon.in"),
+  metadataBase: new URL("https://vibe-unisex-salon.vercel.app"),
   title: {
     default: "Vibe Unisex Salon | Premium Hair & Beauty Care in India",
     template: "%s | Vibe Unisex Salon",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://vibeunisexsalon.in",
+    url: "https://vibe-unisex-salon.vercel.app",
     siteName: "Vibe Unisex Salon",
     images: [
       {
