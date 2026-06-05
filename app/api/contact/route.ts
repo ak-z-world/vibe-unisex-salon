@@ -63,8 +63,6 @@ function sanitize(value: string): string {
 // Route handler
 // ---------------------------------------------------------------------------
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(req: NextRequest) {
   // 1. Rate limiting
   const ip =
@@ -81,26 +79,37 @@ export async function POST(req: NextRequest) {
 
   // 2. Parse body
   let body: unknown;
+
   try {
     body = await req.json();
   } catch {
     return err("Invalid request body.", 400);
   }
 
-  // 3. Validate with Zod
+  // 3. Validate
   const parsed = contactApiSchema.safeParse(body);
+
   if (!parsed.success) {
     const fields: Record<string, string[]> = {};
+
     parsed.error.issues.forEach((e) => {
       const key = e.path.join(".");
+
       if (!fields[key]) fields[key] = [];
+
       fields[key].push(e.message);
     });
-    return err("Validation failed. Please check the form and try again.", 422, fields);
+
+    return err(
+      "Validation failed. Please check the form and try again.",
+      422,
+      fields
+    );
   }
 
-  // 4. Sanitize all string fields
+  // 4. Sanitize
   const raw = parsed.data;
+
   const data = {
     ...raw,
     fullName: sanitize(raw.fullName),
@@ -110,68 +119,90 @@ export async function POST(req: NextRequest) {
     branchName: sanitize(raw.branchName),
   };
 
-  // 5. Resolve branch email
-  const branchEmail = branchEmailMap[data.branchSlug];
-  if (!branchEmail) {
-    return err("Selected branch is not recognised. Please refresh and try again.", 400);
+  // 5. If no Resend key, just log and return success
+  if (!process.env.RESEND_API_KEY) {
+    console.log("Contact form received (email disabled):", data);
+
+    return ok(
+      "Your enquiry has been received! Our team will contact you soon."
+    );
   }
 
-  // 6. Build email payloads
+  // 6. Create Resend only when key exists
+  const resend = new Resend(process.env.RESEND_API_KEY);
+
+  // 7. Branch lookup
+  const branchEmail = branchEmailMap[data.branchSlug];
+
+  if (!branchEmail) {
+    return err(
+      "Selected branch is not recognised. Please refresh and try again.",
+      400
+    );
+  }
+
+  // 8. Build emails
   const branchEmail_ = buildBranchEmail(data);
   const adminEmail_ = buildAdminEmail(data, branchEmail);
   const customerEmail_ = buildCustomerConfirmationEmail(data);
 
-  // 7. Send emails
   try {
-    const [branchResult, adminResult, customerResult] = await Promise.allSettled([
-      resend.emails.send({
-        from: `${BRAND_NAME} <${FROM_EMAIL}>`,
-        to: [branchEmail],
-        subject: branchEmail_.subject,
-        html: branchEmail_.html,
-        text: branchEmail_.text,
-        replyTo: data.email,
-      }),
-      resend.emails.send({
-        from: `${BRAND_NAME} <${FROM_EMAIL}>`,
-        to: [ADMIN_EMAIL],
-        subject: adminEmail_.subject,
-        html: adminEmail_.html,
-        text: adminEmail_.text,
-        replyTo: data.email,
-      }),
-      resend.emails.send({
-        from: `${BRAND_NAME} <${FROM_EMAIL}>`,
-        to: [data.email],
-        subject: customerEmail_.subject,
-        html: customerEmail_.html,
-        text: customerEmail_.text,
-      }),
-    ]);
+    const [branchResult, adminResult, customerResult] =
+      await Promise.allSettled([
+        resend.emails.send({
+          from: `${BRAND_NAME} <${FROM_EMAIL}>`,
+          to: [branchEmail],
+          subject: branchEmail_.subject,
+          html: branchEmail_.html,
+          text: branchEmail_.text,
+          replyTo: data.email,
+        }),
 
-    // Log failures for observability but don't fail the request if branch email succeeded
+        resend.emails.send({
+          from: `${BRAND_NAME} <${FROM_EMAIL}>`,
+          to: [ADMIN_EMAIL],
+          subject: adminEmail_.subject,
+          html: adminEmail_.html,
+          text: adminEmail_.text,
+          replyTo: data.email,
+        }),
+
+        resend.emails.send({
+          from: `${BRAND_NAME} <${FROM_EMAIL}>`,
+          to: [data.email],
+          subject: customerEmail_.subject,
+          html: customerEmail_.html,
+          text: customerEmail_.text,
+        }),
+      ]);
+
     if (branchResult.status === "rejected") {
-      console.error("[contact/route] Branch email failed:", branchResult.reason);
+      console.error(branchResult.reason);
+
       return err(
-        "We could not send your enquiry. Please try again or call us directly.",
+        "We could not send your enquiry. Please try again later.",
         500
       );
     }
 
     if (adminResult.status === "rejected") {
-      console.error("[contact/route] Admin copy failed:", adminResult.reason);
+      console.error(adminResult.reason);
     }
 
     if (customerResult.status === "rejected") {
-      console.error("[contact/route] Customer confirmation failed:", customerResult.reason);
+      console.error(customerResult.reason);
     }
 
     return ok(
       "Your enquiry has been received! Our team will contact you within 2 hours."
     );
   } catch (error) {
-    console.error("[contact/route] Unhandled error:", error);
-    return err("Something went wrong. Please try again later.", 500);
+    console.error(error);
+
+    return err(
+      "Something went wrong. Please try again later.",
+      500
+    );
   }
 }
 
