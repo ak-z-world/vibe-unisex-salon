@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 const features = [
@@ -21,7 +20,7 @@ const features = [
     icon: "◉",
     title: "Premium Product Range",
     description:
-      "We use only top-tier professional products from globally acclaimed brands — L'Oréal, Wella, Kerastase, and more.",
+      "We use only top-tier professional products from globally acclaimed brands — L'Oréal, Wella, Kérastase, and more.",
   },
   {
     icon: "✧",
@@ -39,82 +38,88 @@ const features = [
     icon: "◇",
     title: "Modern Salon Experience",
     description:
-      "Our salons blend contemporary aesthetics with curated ambiance — a space that makes you feel elevated the moment you enter.",
+      "Our salons blend contemporary aesthetics with curated ambiance — a space that elevates you from the moment you arrive.",
   },
 ];
 
 export default function WhyChooseUsSection() {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
     <section
       ref={ref}
-      className="relative bg-[#FAF8F5] py-28 overflow-hidden"
-      aria-labelledby="why-heading"
-    >
-      {/* Decorative background element */}
-      <div className="absolute top-0 right-0 w-72 h-72 rounded-full bg-[#C9A84C]/5 blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-[#E7D8B1]/20 blur-3xl pointer-events-none" />
+      className="relative bg-[#FDFAF6] py-28 overflow-hidden"
+      aria-labelledby="why-heading">
+      {/* Warm gradient accent blobs */}
+      <div className="pointer-events-none absolute -top-32 -right-32 w-[480px] h-[480px] rounded-full bg-[#F5EAD4]/50 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-24 -left-24 w-[360px] h-[360px] rounded-full bg-[#FFF3E0]/40 blur-3xl" />
 
-      <div className="container mx-auto px-6 lg:px-16">
+      <div className="relative z-10 container mx-auto px-6 lg:px-16">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 36 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center mb-20"
-        >
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <span className="block h-px w-12 bg-[#C9A84C]" />
-            <span className="text-[#C9A84C] text-xs tracking-[0.35em] uppercase font-light">
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center mb-20">
+          <div className="flex items-center justify-center gap-4 mb-5">
+            <span className="h-px w-10 bg-gradient-to-r from-transparent to-[#C9A84C]" />
+            <span className="text-[10px] tracking-[0.38em] uppercase text-[#9A8060] font-medium">
               Why Vibe Salon
             </span>
-            <span className="block h-px w-12 bg-[#C9A84C]" />
+            <span className="h-px w-10 bg-gradient-to-l from-transparent to-[#C9A84C]" />
           </div>
           <h2
             id="why-heading"
-            className="font-display text-4xl md:text-5xl text-[#1A1410] leading-tight mb-4"
-          >
+            className="font-display text-4xl md:text-5xl text-[#2C2117] leading-tight mb-4">
             The Vibe Difference
           </h2>
-          <p className="text-[#6B5F55] text-lg max-w-xl mx-auto font-light">
-            Precision, artistry, and luxury — three pillars that define every experience at
-            Vibe Unisex Salon.
+          <p className="text-[#7A6A58] text-lg max-w-xl mx-auto font-light leading-relaxed">
+            Precision, artistry, and luxury — three pillars that define every
+            experience at Vibe Unisex Salon.
           </p>
         </motion.div>
 
-        {/* Cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, i) => (
+        {/* Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {features.map((feat, i) => (
             <motion.div
-              key={feature.title}
-              initial={{ opacity: 0, y: 50 }}
+              key={feat.title}
+              initial={{ opacity: 0, y: 44 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{
-                duration: 0.7,
-                delay: i * 0.1,
+                duration: 0.75,
+                delay: i * 0.09,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="group relative bg-white border border-[#E7D8B1]/60 p-8 hover:border-[#C9A84C]/50 hover:shadow-[0_8px_40px_rgba(201,168,76,0.12)] transition-all duration-500 cursor-default"
-            >
-              {/* Top accent line */}
-              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#C9A84C]/0 to-transparent group-hover:via-[#C9A84C] transition-all duration-500" />
+              className="group relative bg-white border border-[#EDE5D8] p-8 hover:border-[#C9A84C]/50 hover:shadow-[0_8px_32px_rgba(201,168,76,0.10)] transition-all duration-500 cursor-default">
+              {/* Top gold hairline on hover */}
+              <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#C9A84C]/0 to-transparent group-hover:via-[#C9A84C]/70 transition-all duration-500" />
 
-              <div className="text-[#C9A84C] text-3xl mb-6 font-light transition-transform duration-300 group-hover:scale-110 inline-block">
-                {feature.icon}
+              {/* Icon */}
+              <div
+                className="mb-5 text-2xl transition-transform duration-300 group-hover:scale-110 inline-block"
+                style={{
+                  background:
+                    "linear-gradient(135deg,#B8922E 0%,#E2C97E 60%,#B8922E 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}>
+                {feat.icon}
               </div>
-              <h3 className="text-[#1A1410] text-lg font-semibold mb-3 tracking-tight">
-                {feature.title}
+
+              <h3 className="text-[#2C2117] text-[15px] font-semibold mb-3 tracking-tight leading-snug">
+                {feat.title}
               </h3>
-              <p className="text-[#6B5F55] text-sm leading-relaxed font-light">
-                {feature.description}
+              <p className="text-[#7A6A58] text-sm leading-relaxed font-light">
+                {feat.description}
               </p>
 
-              {/* Corner decoration */}
-              <div className="absolute bottom-4 right-4 text-[#E7D8B1] text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              {/* Bottom-right ornament */}
+              <span className="absolute bottom-4 right-5 text-[#EDE5D8] text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 select-none">
                 ✦
-              </div>
+              </span>
             </motion.div>
           ))}
         </div>

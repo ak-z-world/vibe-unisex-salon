@@ -1,36 +1,36 @@
 import { Metadata } from "next";
 
-// This component renders SEO-rich content for Chennai local search.
-// It's a Server Component for optimal crawlability.
+// Server Component — preserved for SEO crawlability
 export default function CitySEOContent() {
   return (
     <section
-      className="bg-[#FAF8F5] py-24 border-t border-[#E7D8B1]/40"
+      className="bg-[#FDFAF6] py-24 border-t border-[#EDE5D8]"
       aria-label="About Vibe Salon Chennai — Detailed Guide"
     >
       <div className="container mx-auto px-6 lg:px-16 max-w-4xl">
         {/* Visual header */}
         <div className="flex items-center gap-4 mb-10">
-          <span className="block h-px w-12 bg-[#C9A84C]" />
-          <span className="text-[#C9A84C] text-xs tracking-[0.35em] uppercase font-light">
+          <span className="h-px w-10 bg-gradient-to-r from-[#C9A84C] to-[#E7D8B1]" />
+          <span className="text-[10px] tracking-[0.38em] uppercase text-[#9A8060] font-medium">
             Discover Vibe Salon
           </span>
         </div>
 
-        <div className="prose prose-lg max-w-none space-y-10 text-[#6B5F55] font-light leading-relaxed">
+        <div className="space-y-12 text-[#7A6A58] font-light leading-relaxed text-[15px]">
+
           {/* Section 1 */}
           <div>
-            <h2 className="font-display text-3xl text-[#1A1410] mb-4 not-prose">
+            <h2 className="font-display text-3xl text-[#2C2117] mb-5 font-normal">
               Best Unisex Salon in Chennai
             </h2>
-            <p>
+            <p className="mb-4">
               When it comes to finding the best unisex salon in Chennai, Vibe Unisex Salon stands
               in a class of its own. Since 2018, we have been serving thousands of discerning
               clients across Chennai with premium-grade hair, beauty, and grooming services — all
               delivered from elegantly designed salon spaces that reflect the international
               standards our brand embodies.
             </p>
-            <p>
+            <p className="mb-4">
               Unlike neighbourhood salons, Vibe approaches every client interaction as an
               experience. From the moment you walk in, you&apos;re welcomed into a refined
               environment where expert stylists give you their complete attention. We listen,
@@ -47,17 +47,17 @@ export default function CitySEOContent() {
 
           {/* Section 2 */}
           <div>
-            <h2 className="font-display text-3xl text-[#1A1410] mb-4 not-prose">
+            <h2 className="font-display text-3xl text-[#2C2117] mb-5 font-normal">
               Luxury Hair Salon Services in Chennai
             </h2>
-            <p>
+            <p className="mb-4">
               Vibe Salon offers a comprehensive suite of luxury hair salon services in Chennai,
               covering everything from precision haircuts and professional hair coloring to advanced
               treatments like keratin smoothening, hair spas, and scalp therapies. Every service is
-              executed using globally acclaimed professional products from brands including L&apos;Oréal
-              Professionnel, Wella Professionals, and Kérastase.
+              executed using globally acclaimed professional products from brands including
+              L&apos;Oréal Professionnel, Wella Professionals, and Kérastase.
             </p>
-            <p>
+            <p className="mb-4">
               Our hair coloring services are among the most sought-after in Chennai. Whether you
               want a natural balayage, bold ombre, rich global color, or fashion highlights, our
               Wella-certified colorists bring both artistry and technical expertise to every strand.
@@ -77,10 +77,10 @@ export default function CitySEOContent() {
 
           {/* Section 3 */}
           <div>
-            <h2 className="font-display text-3xl text-[#1A1410] mb-4 not-prose">
+            <h2 className="font-display text-3xl text-[#2C2117] mb-5 font-normal">
               Professional Bridal Makeup Services in Chennai
             </h2>
-            <p>
+            <p className="mb-4">
               Vibe Salon is one of Chennai&apos;s most respected destinations for bridal makeup.
               Our certified bridal artists specialize in creating looks that are both timeless and
               personalized — from traditional South Indian bridal aesthetics with heavy silk and
@@ -98,16 +98,16 @@ export default function CitySEOContent() {
 
           {/* Section 4 */}
           <div>
-            <h2 className="font-display text-3xl text-[#1A1410] mb-4 not-prose">
+            <h2 className="font-display text-3xl text-[#2C2117] mb-5 font-normal">
               Hair Spa and Hair Treatments in Chennai
             </h2>
-            <p>
+            <p className="mb-4">
               Regular hair spa treatments are the foundation of long-term hair health — and at Vibe
               Salon, we elevate this ritual to a luxury experience. Our hair spa services in Chennai
               address a wide range of concerns including dryness, breakage, scalp irritation, hair
               thinning, and post-chemical damage recovery.
             </p>
-            <p>
+            <p className="mb-4">
               Each session begins with a thorough hair and scalp assessment. Based on your unique
               profile, our stylists recommend the most effective treatment from our menu of
               restorative spa protocols. Using Kérastase and L&apos;Oréal Professionnel treatment
@@ -124,15 +124,15 @@ export default function CitySEOContent() {
 
           {/* Section 5 */}
           <div>
-            <h2 className="font-display text-3xl text-[#1A1410] mb-4 not-prose">
+            <h2 className="font-display text-3xl text-[#2C2117] mb-5 font-normal">
               Men&apos;s Grooming Services at Vibe Salon Chennai
             </h2>
-            <p>
+            <p className="mb-4">
               The modern Chennai man understands that personal grooming is not an indulgence — it
               is an investment. Vibe Unisex Salon&apos;s men&apos;s grooming suite is designed to
               meet this need with precision and sophistication.
             </p>
-            <p>
+            <p className="mb-4">
               Our men&apos;s grooming services in Chennai include precision haircuts styled to your
               face structure and lifestyle, detailed beard shaping and sculpting, scalp treatments
               for dandruff or thinning hair, skin-specific facial services, and professional hair
@@ -148,10 +148,10 @@ export default function CitySEOContent() {
 
           {/* Section 6 */}
           <div>
-            <h2 className="font-display text-3xl text-[#1A1410] mb-4 not-prose">
+            <h2 className="font-display text-3xl text-[#2C2117] mb-5 font-normal">
               Why Chennai Clients Choose Vibe Salon
             </h2>
-            <p>
+            <p className="mb-4">
               Clients across Chennai choose Vibe Salon for three core reasons: expertise,
               consistency, and the experience. Our team of certified stylists, colorists, and
               beauty artists undergoes continuous training and stays updated with international
@@ -159,7 +159,7 @@ export default function CitySEOContent() {
               from the most classic cuts to the most complex color transformations — with equal
               confidence.
             </p>
-            <p>
+            <p className="mb-4">
               Consistency is the hallmark of a truly premium salon brand. At Vibe, we have built
               systems and training standards that ensure you receive the same elevated experience
               across all five of our Chennai branches. The products, protocols, hygiene standards,
@@ -181,7 +181,6 @@ export default function CitySEOContent() {
   );
 }
 
-// Export metadata object for use in parent if needed
 export const citySEOMetadata: Partial<Metadata> = {
   keywords: [
     "Best Unisex Salon in Chennai",

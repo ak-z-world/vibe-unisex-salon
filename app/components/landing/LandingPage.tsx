@@ -10,7 +10,10 @@ import CTASection from "./CTASection";
 
 export default function LandingPage() {
   return (
-    <main id="main-content" className="font-body">
+    <main
+      id="main-content"
+      className="font-body bg-[#FDFAF6] antialiased"
+    >
       <HeroSection />
       <WhyChooseUsSection />
       <ServicesSection />

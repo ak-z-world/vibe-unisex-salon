@@ -1,7 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 
 const faqs = [
@@ -49,7 +48,7 @@ const faqs = [
 
 export default function FAQSection() {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-60px" });
   const [open, setOpen] = useState<number | null>(0);
 
   const toggle = (i: number) => setOpen(open === i ? null : i);
@@ -57,49 +56,68 @@ export default function FAQSection() {
   return (
     <section
       ref={ref}
-      className="relative bg-[#1A1410] py-28 overflow-hidden"
+      className="relative py-28 overflow-hidden"
+      style={{
+        background: "linear-gradient(160deg,#FAF6F0 0%,#FFF8EE 50%,#F5EFE6 100%)",
+      }}
       aria-labelledby="faq-heading"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_50%_0%,rgba(201,168,76,0.05)_0%,transparent_70%)] pointer-events-none" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#C9A84C]/30 to-transparent" />
+      {/* Rule */}
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#C9A84C]/30 to-transparent" />
 
-      <div className="container mx-auto px-6 lg:px-16">
+      {/* Blobs */}
+      <div className="pointer-events-none absolute -top-24 right-0 w-[400px] h-[400px] rounded-full bg-[#FFF3DA]/50 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-0 left-0 w-[360px] h-[360px] rounded-full bg-[#F5EAD4]/40 blur-3xl" />
+
+      <div className="relative z-10 container mx-auto px-6 lg:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-          {/* Left — label */}
+
+          {/* Left — label + contact nudge */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-4"
           >
-            <div className="flex items-center gap-4 mb-6">
-              <span className="block h-px w-12 bg-[#C9A84C]" />
-              <span className="text-[#C9A84C] text-xs tracking-[0.35em] uppercase font-light">
+            <div className="flex items-center gap-3 mb-7">
+              <span className="h-px w-10 bg-gradient-to-r from-[#C9A84C] to-[#E7D8B1]" />
+              <span className="text-[10px] tracking-[0.38em] uppercase text-[#9A8060] font-medium">
                 FAQ
               </span>
             </div>
             <h2
               id="faq-heading"
-              className="font-display text-4xl md:text-5xl text-[#FAF8F5] leading-tight mb-6"
+              className="font-display text-4xl md:text-5xl text-[#2C2117] leading-tight mb-5"
             >
               Frequently
               <br />
-              <span className="text-[#C9A84C] italic">Asked</span>
+              <span
+                className="italic"
+                style={{
+                  background:
+                    "linear-gradient(135deg,#B8922E 0%,#E2C97E 50%,#B8922E 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                Asked
+              </span>
               <br />
               Questions
             </h2>
-            <p className="text-[#6B5F55] text-base font-light leading-relaxed">
-              Everything you need to know about Vibe Salon — Chennai&apos;s premium beauty and
-              grooming destination.
+            <p className="text-[#7A6A58] text-[15px] font-light leading-relaxed">
+              Everything you need to know about Vibe Salon — Chennai&apos;s
+              premium beauty and grooming destination.
             </p>
 
-            <div className="mt-10 border border-[#C9A84C]/15 p-6 bg-[#C9A84C]/[0.02]">
-              <p className="text-[#E7D8B1]/70 text-sm font-light mb-4">
+            <div className="mt-10 border border-[#EDE5D8] bg-white p-6">
+              <p className="text-[#7A6A58] text-sm font-light mb-4">
                 Have a different question?
               </p>
               <a
                 href="tel:+919876543210"
-                className="inline-flex items-center gap-2 text-[#C9A84C] text-sm tracking-[0.15em] uppercase hover:gap-3 transition-all duration-300"
+                className="inline-flex items-center gap-2 text-[9px] tracking-[0.22em] uppercase text-[#9A7840] font-medium hover:gap-3 transition-all duration-300"
                 aria-label="Call Vibe Salon Chennai"
               >
                 Call Us Now →
@@ -107,14 +125,13 @@ export default function FAQSection() {
             </div>
           </motion.div>
 
-          {/* Right — accordion */}
+          {/* Right — Schema-compatible accordion */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-8"
           >
-            {/* Schema-compatible FAQ structure */}
             <div
               itemScope
               itemType="https://schema.org/FAQPage"
@@ -126,7 +143,7 @@ export default function FAQSection() {
                   itemScope
                   itemProp="mainEntity"
                   itemType="https://schema.org/Question"
-                  className="border-b border-[#C9A84C]/10 last:border-b-0"
+                  className="border-b border-[#EDE5D8] last:border-b-0"
                 >
                   <button
                     onClick={() => toggle(i)}
@@ -136,16 +153,31 @@ export default function FAQSection() {
                   >
                     <span
                       itemProp="name"
-                      className={`text-base font-medium pr-6 transition-colors duration-300 ${
-                        open === i ? "text-[#C9A84C]" : "text-[#FAF8F5] group-hover:text-[#C9A84C]"
-                      }`}
+                      className="text-[15px] font-medium pr-6 transition-colors duration-300 text-[#2C2117] group-hover:text-[#9A7840]"
+                      style={
+                        open === i
+                          ? {
+                              background:
+                                "linear-gradient(135deg,#B8922E 0%,#C9A030 100%)",
+                              WebkitBackgroundClip: "text",
+                              WebkitTextFillColor: "transparent",
+                              backgroundClip: "text",
+                            }
+                          : {}
+                      }
                     >
                       {faq.question}
                     </span>
                     <span
-                      className={`text-[#C9A84C] text-lg shrink-0 transition-transform duration-300 mt-0.5 ${
-                        open === i ? "rotate-45" : ""
-                      }`}
+                      className="text-lg shrink-0 mt-0.5 transition-all duration-300"
+                      style={{
+                        transform: open === i ? "rotate(45deg)" : "none",
+                        background:
+                          "linear-gradient(135deg,#B8922E 0%,#E2C97E 60%,#B8922E 100%)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
+                      }}
                       aria-hidden="true"
                     >
                       +
@@ -163,13 +195,13 @@ export default function FAQSection() {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                        transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
                         className="overflow-hidden"
                       >
                         <div className="pb-6 pr-10">
                           <p
                             itemProp="text"
-                            className="text-[#6B5F55] text-sm leading-relaxed font-light"
+                            className="text-[#7A6A58] text-sm leading-relaxed font-light"
                           >
                             {faq.answer}
                           </p>

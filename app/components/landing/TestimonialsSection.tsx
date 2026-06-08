@@ -1,7 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useRef, useState, useCallback } from "react";
 
 const testimonials = [
@@ -59,7 +58,17 @@ function StarRating({ count }: { count: number }) {
   return (
     <div className="flex gap-0.5" aria-label={`${count} star rating`}>
       {Array.from({ length: count }).map((_, i) => (
-        <span key={i} className="text-[#C9A84C] text-sm">
+        <span
+          key={i}
+          className="text-sm"
+          style={{
+            background:
+              "linear-gradient(135deg,#B8922E 0%,#E2C97E 60%,#B8922E 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
+        >
           ★
         </span>
       ))}
@@ -69,7 +78,7 @@ function StarRating({ count }: { count: number }) {
 
 export default function TestimonialsSection() {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-60px" });
   const [active, setActive] = useState(0);
   const [direction, setDirection] = useState(1);
 
@@ -81,46 +90,58 @@ export default function TestimonialsSection() {
     [active]
   );
 
-  const prev = () => navigate(active === 0 ? testimonials.length - 1 : active - 1);
-  const next = () => navigate(active === testimonials.length - 1 ? 0 : active + 1);
+  const prev = () =>
+    navigate(active === 0 ? testimonials.length - 1 : active - 1);
+  const next = () =>
+    navigate(active === testimonials.length - 1 ? 0 : active + 1);
 
   const variants = {
-    enter: (dir: number) => ({ opacity: 0, x: dir * 60 }),
+    enter: (dir: number) => ({ opacity: 0, x: dir * 50 }),
     center: { opacity: 1, x: 0 },
-    exit: (dir: number) => ({ opacity: 0, x: dir * -60 }),
+    exit: (dir: number) => ({ opacity: 0, x: dir * -50 }),
   };
 
   return (
     <section
       ref={ref}
-      className="relative bg-[#FAF8F5] py-28 overflow-hidden"
+      className="relative bg-[#FDFAF6] py-28 overflow-hidden"
       aria-labelledby="testimonials-heading"
     >
-      {/* Decorative */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full bg-[#C9A84C]/5 blur-3xl pointer-events-none" />
+      {/* Ambient */}
+      <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-[#FFF3DA]/40 blur-3xl" />
 
-      <div className="container mx-auto px-6 lg:px-16">
+      <div className="relative z-10 container mx-auto px-6 lg:px-16">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 36 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-20"
         >
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <span className="block h-px w-12 bg-[#C9A84C]" />
-            <span className="text-[#C9A84C] text-xs tracking-[0.35em] uppercase font-light">
+          <div className="flex items-center justify-center gap-4 mb-5">
+            <span className="h-px w-10 bg-gradient-to-r from-transparent to-[#C9A84C]" />
+            <span className="text-[10px] tracking-[0.38em] uppercase text-[#9A8060] font-medium">
               Client Stories
             </span>
-            <span className="block h-px w-12 bg-[#C9A84C]" />
+            <span className="h-px w-10 bg-gradient-to-l from-transparent to-[#C9A84C]" />
           </div>
           <h2
             id="testimonials-heading"
-            className="font-display text-4xl md:text-5xl text-[#1A1410] leading-tight mb-4"
+            className="font-display text-4xl md:text-5xl text-[#2C2117] leading-tight"
           >
-            What Chennai Says
-            <br />
-            <span className="text-[#C9A84C] italic">About Vibe Salon</span>
+            What Chennai Says{" "}
+            <span
+              className="italic"
+              style={{
+                background:
+                  "linear-gradient(135deg,#B8922E 0%,#E2C97E 50%,#B8922E 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              About Vibe
+            </span>
           </h2>
         </motion.div>
 
@@ -131,7 +152,7 @@ export default function TestimonialsSection() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="max-w-4xl mx-auto"
         >
-          {/* Main testimonial */}
+          {/* Main card */}
           <div className="relative overflow-hidden">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
@@ -141,21 +162,20 @@ export default function TestimonialsSection() {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="relative bg-[#1A1410] p-10 md:p-14"
+                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                className="relative bg-white border border-[#EDE5D8] p-10 md:p-14 shadow-[0_4px_40px_rgba(201,168,76,0.07)]"
               >
-                {/* Ambient */}
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_50%,rgba(201,168,76,0.06)_0%,transparent_70%)] pointer-events-none" />
-                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#C9A84C]/40 to-transparent" />
+                {/* Gold top hairline */}
+                <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#C9A84C]/50 to-transparent" />
 
-                {/* Quote mark */}
-                <div className="font-display text-8xl text-[#C9A84C]/10 leading-none absolute top-6 left-10 select-none pointer-events-none">
+                {/* Decorative quote mark */}
+                <div className="font-display text-9xl text-[#C9A84C]/[0.06] leading-none absolute top-4 left-8 select-none pointer-events-none">
                   &ldquo;
                 </div>
 
                 <div className="relative z-10">
                   <div className="mb-2">
-                    <span className="text-[#C9A84C] text-xs tracking-[0.25em] uppercase font-light">
+                    <span className="text-[9px] tracking-[0.28em] uppercase text-[#9A8060] font-medium">
                       {testimonials[active].service}
                     </span>
                   </div>
@@ -163,22 +183,26 @@ export default function TestimonialsSection() {
                   <StarRating count={testimonials[active].rating} />
 
                   <blockquote className="mt-6 mb-8">
-                    <p className="text-[#E7D8B1]/85 text-lg md:text-xl font-light leading-relaxed italic">
+                    <p className="text-[#4A3D33] text-lg md:text-xl font-light leading-relaxed italic">
                       {testimonials[active].text}
                     </p>
                   </blockquote>
 
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-[#C9A84C]/15 border border-[#C9A84C]/30 flex items-center justify-center">
-                      <span className="text-[#C9A84C] text-sm font-semibold">
-                        {testimonials[active].initials}
-                      </span>
+                    <div
+                      className="w-12 h-12 flex items-center justify-center text-sm font-semibold text-white"
+                      style={{
+                        background:
+                          "linear-gradient(135deg,#B8922E 0%,#E2C97E 50%,#C9A030 100%)",
+                      }}
+                    >
+                      {testimonials[active].initials}
                     </div>
                     <div>
-                      <div className="text-[#FAF8F5] font-semibold text-sm">
+                      <div className="text-[#2C2117] font-semibold text-sm">
                         {testimonials[active].name}
                       </div>
-                      <div className="text-[#6B5F55] text-xs tracking-wider">
+                      <div className="text-[#9A8878] text-xs tracking-wide">
                         {testimonials[active].location}
                       </div>
                     </div>
@@ -190,32 +214,37 @@ export default function TestimonialsSection() {
 
           {/* Navigation */}
           <div className="flex items-center justify-between mt-8">
-            {/* Dots */}
+            {/* Progress dots */}
             <div className="flex gap-2">
               {testimonials.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => navigate(i)}
                   aria-label={`Go to testimonial ${i + 1}`}
-                  className={`h-px transition-all duration-300 ${
-                    i === active ? "w-10 bg-[#C9A84C]" : "w-4 bg-[#6B5F55]"
-                  }`}
+                  className="h-px transition-all duration-400"
+                  style={{
+                    width: i === active ? "40px" : "16px",
+                    background:
+                      i === active
+                        ? "linear-gradient(90deg,#B8922E,#E2C97E)"
+                        : "#D4C4B0",
+                  }}
                 />
               ))}
             </div>
 
-            {/* Arrows */}
+            {/* Arrow buttons */}
             <div className="flex gap-3">
               <button
                 onClick={prev}
-                className="w-11 h-11 border border-[#1A1410]/20 flex items-center justify-center text-[#1A1410] hover:bg-[#1A1410] hover:text-[#C9A84C] hover:border-[#1A1410] transition-all duration-300"
+                className="w-11 h-11 border border-[#EDE5D8] flex items-center justify-center text-[#7A6A58] hover:bg-[#FFF8EE] hover:border-[#C9A84C]/50 transition-all duration-300"
                 aria-label="Previous testimonial"
               >
                 ←
               </button>
               <button
                 onClick={next}
-                className="w-11 h-11 border border-[#1A1410]/20 flex items-center justify-center text-[#1A1410] hover:bg-[#1A1410] hover:text-[#C9A84C] hover:border-[#1A1410] transition-all duration-300"
+                className="w-11 h-11 border border-[#EDE5D8] flex items-center justify-center text-[#7A6A58] hover:bg-[#FFF8EE] hover:border-[#C9A84C]/50 transition-all duration-300"
                 aria-label="Next testimonial"
               >
                 →
@@ -224,22 +253,32 @@ export default function TestimonialsSection() {
           </div>
 
           {/* Thumbnail strip */}
-          <div className="grid grid-cols-6 gap-2 mt-8">
+          <div className="grid grid-cols-6 gap-2 mt-7">
             {testimonials.map((t, i) => (
               <button
                 key={i}
                 onClick={() => navigate(i)}
                 aria-label={`View testimonial from ${t.name}`}
-                className={`p-3 text-center border transition-all duration-300 ${
-                  i === active
-                    ? "border-[#C9A84C]/60 bg-[#C9A84C]/5"
-                    : "border-[#E7D8B1]/40 hover:border-[#C9A84C]/30"
-                }`}
+                className="py-3 text-center border transition-all duration-300"
+                style={{
+                  borderColor:
+                    i === active ? "rgba(201,168,76,0.6)" : "#EDE5D8",
+                  background: i === active ? "#FFF8EE" : "transparent",
+                }}
               >
                 <div
-                  className={`text-xs font-semibold transition-colors duration-300 ${
-                    i === active ? "text-[#C9A84C]" : "text-[#6B5F55]"
-                  }`}
+                  className="text-xs font-semibold"
+                  style={{
+                    background:
+                      i === active
+                        ? "linear-gradient(135deg,#B8922E 0%,#E2C97E 60%,#B8922E 100%)"
+                        : "none",
+                    WebkitBackgroundClip: i === active ? "text" : "unset",
+                    WebkitTextFillColor:
+                      i === active ? "transparent" : "#9A8878",
+                    backgroundClip: i === active ? "text" : "unset",
+                    color: i === active ? undefined : "#9A8878",
+                  }}
                 >
                   {t.initials}
                 </div>
