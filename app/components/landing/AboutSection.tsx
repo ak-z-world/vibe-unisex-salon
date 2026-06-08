@@ -101,7 +101,7 @@ export default function AboutSection() {
                 <div className="absolute bottom-0 right-0 w-10 h-10 border-b-2 border-r-2 border-[#C9A84C]/50" />
               </div>
               <Image
-                src="/images/about-facial.jpg"
+                src="/images/salone2.jpeg"
                 alt="Professional facial treatment at Vibe Unisex Salon Chennai"
                 fill
                 className="object-cover object-center"
@@ -119,7 +119,7 @@ export default function AboutSection() {
               className="absolute -bottom-8 -right-6 lg:-right-10 w-40 h-40 md:w-52 md:h-52 overflow-hidden border-4 border-[#FDFAF6] shadow-xl shadow-[#9A8060]/15 z-20"
             >
               <Image
-                src="/images/about-facial-relax.jpg"
+                src="/images/salon6.jpeg"
                 alt="Client relaxing after luxury facial at Vibe Salon Chennai"
                 fill
                 className="object-cover object-center"

@@ -196,7 +196,7 @@ export default function HeroSection() {
             <div className="absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-[#FDFAF6] to-transparent z-10 hidden lg:block" />
 
             <Image
-              src="/images/hero-hair-spa.jpg"
+              src="/images/salon5.jpeg"
               alt="Luxury hair spa treatment at Vibe Unisex Salon Chennai"
               fill
               priority
@@ -232,7 +232,7 @@ export default function HeroSection() {
             transition={{ delay: 0.9, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             className="absolute -bottom-8 -left-8 lg:-left-14 w-36 h-36 md:w-44 md:h-44 overflow-hidden border-4 border-[#FDFAF6] shadow-xl shadow-[#9A8060]/15 z-20 hidden sm:block">
             <Image
-              src="/images/hero-hair-wash.jpg"
+              src="/images/salone3.jpeg"
               alt="Professional hair wash service at Vibe Salon Chennai"
               fill
               className="object-cover object-center"

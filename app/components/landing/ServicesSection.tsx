@@ -13,7 +13,7 @@ const services = [
       "Precision cuts crafted to complement your face shape, hair texture, and personal style — for men, women, and children.",
     keywords: "Hair Cut Chennai, Professional Hairstylist Chennai",
     icon: "✂",
-    image: "/images/salon2.jpg",
+    image: "/images/salon7.jpeg",
     imagePlaceholder: "bg-gradient-to-br from-[#F5EAD4] to-[#EDD8B8]",
   },
   {
@@ -23,7 +23,7 @@ const services = [
       "From subtle highlights to bold balayage and full transformations — executed with globally premium color brands.",
     keywords: "Hair Coloring Chennai, Best hair salon for coloring Chennai",
     icon: "◎",
-    image: "/images/salon2.jpg",
+    image: "/images/salone2.jpeg",
     imagePlaceholder: "bg-gradient-to-br from-[#EDE5D8] to-[#DDD0C0]",
   },
   {
@@ -34,7 +34,7 @@ const services = [
     keywords: "Hair Spa Chennai, Hair Care Chennai",
     icon: "❋",
     // Image 2 — steamy luxury hair spa
-    image: "/images/salon4.jpg",
+    image: "/images/salone4.jpeg",
     imageAlt: "Luxury hair spa treatment at Vibe Salon Chennai",
     imagePlaceholder: "bg-gradient-to-br from-[#F0E8D8] to-[#E2D4C0]",
   },
@@ -45,7 +45,7 @@ const services = [
       "Professional keratin smoothing treatments that eliminate frizz and deliver salon-quality results lasting months.",
     keywords: "Keratin Treatment Chennai, Best keratin treatment salon Chennai",
     icon: "⟁",
-    image: "/images/salon2.jpg",
+    image: "/images/salon8.jpeg",
     imagePlaceholder: "bg-gradient-to-br from-[#F5EAD4] to-[#EDD8B8]",
   },
   {
@@ -56,7 +56,7 @@ const services = [
     keywords: "Hair Smoothening Chennai, Professional hair treatment Chennai",
     icon: "∿",
     // Image 1 — hair wash / shampoo (cinematic, 1-2 people)
-    image: "/images/salon3.jpg",
+    image: "/images/salone3.jpeg",
     imageAlt: "Hair wash and smoothening treatment at Vibe Salon Chennai",
     imagePlaceholder: "bg-gradient-to-br from-[#EDE5D8] to-[#DDD0C0]",
   },
@@ -67,7 +67,7 @@ const services = [
       "Bespoke bridal makeup by our certified artists — timeless, camera-ready looks for your most cherished day.",
     keywords: "Bridal Makeup Chennai, Best bridal makeup artist Chennai",
     icon: "✦",
-    image: "/images/salon2.jpg",
+    image: "/images/makeup.jpeg",
     imagePlaceholder: "bg-gradient-to-br from-[#F0E8D8] to-[#E2D4C0]",
   },
   {
@@ -78,7 +78,7 @@ const services = [
     keywords: "Facial Treatment Chennai, Women beauty services Chennai",
     icon: "◈",
     // Image 3 — professional facial (two staff, one client, clinical yet premium)
-    image: "/images/salon2.jpg",
+    image: "/images/salone2.jpeg",
     imageAlt: "Professional facial treatment at Vibe Salon Chennai",
     imagePlaceholder: "bg-gradient-to-br from-[#F5EAD4] to-[#EDD8B8]",
   },
@@ -89,7 +89,7 @@ const services = [
       "Complete grooming suite for modern men — haircuts, beard shaping, skin treatments, and scalp services.",
     keywords: "Men's Grooming Chennai, Hair Cut Chennai for men",
     icon: "◇",
-    image: "/images/salon2.jpg",
+    image: "/images/men.jpeg",
     imagePlaceholder: "bg-gradient-to-br from-[#EDE5D8] to-[#DDD0C0]",
   },
 ];
