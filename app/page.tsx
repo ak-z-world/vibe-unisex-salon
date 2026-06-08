@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://vibe-unisex-salon.vercel.app/og-image.jpg",
+        url: "https://vibe-unisex-salon.vercel.app/og-image.png",
         width: 1200,
         height: 630,
         alt: "Vibe Unisex Salon Chennai — Premium Luxury Salon",
