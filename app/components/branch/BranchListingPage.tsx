@@ -5,11 +5,15 @@ import Link from "next/link";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { SALON_BRANCHES } from "@/lib/branches";
 
-/* ─── tiny helpers ─── */
+/* ─── design tokens ─── */
 const gold = "#C9A84C";
 const charcoal = "#1A1410";
+const taupe = "#6B5F55";
 const cream = "#FAF8F5";
+const pearl = "#FDFAF6";
+const champagne = "#FAF4E8";
 
+/* ─── FadeUp helper ─── */
 function FadeUp({
   children,
   delay = 0,
@@ -26,7 +30,7 @@ function FadeUp({
       ref={ref}
       initial={{ opacity: 0, y: 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] as const }}
       className={className}
     >
       {children}
@@ -34,7 +38,19 @@ function FadeUp({
   );
 }
 
-/* ─── services ─── */
+/* ─── Gold divider ─── */
+function GoldRule({ className = "w-16" }: { className?: string }) {
+  return (
+    <div
+      className={`mt-5 mx-auto h-px ${className}`}
+      style={{
+        background: `linear-gradient(90deg, transparent, ${gold}, transparent)`,
+      }}
+    />
+  );
+}
+
+/* ─── data (preserved exactly) ─── */
 const SERVICES = [
   { icon: "✂", label: "Hair Cut & Styling", desc: "Precision cuts tailored to your face shape and lifestyle." },
   { icon: "🎨", label: "Hair Color", desc: "Balayage, highlights, global colour — international techniques." },
@@ -95,18 +111,29 @@ function FAQItem({ faq, index }: { faq: { q: string; a: string }; index: number 
       ref={ref}
       initial={{ opacity: 0, x: -20 }}
       animate={inView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.07 }}
-      className="group border-b border-[#C9A84C]/20 last:border-b-0"
+      transition={{ duration: 0.5, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] as const }}
+      className="group border-b last:border-b-0"
+      style={{ borderColor: "rgba(201,168,76,0.2)" }}
     >
-      <summary className="flex items-start justify-between cursor-pointer py-5 gap-4 list-none">
-        <span className="font-semibold text-[#FAF8F5] text-base leading-snug group-open:text-[#C9A84C] transition-colors">
+      <summary
+        className="flex items-start justify-between cursor-pointer py-5 gap-4 list-none"
+      >
+        <span
+          className="font-semibold text-base leading-snug transition-colors duration-200"
+          style={{ color: charcoal }}
+        >
           {faq.q}
         </span>
-        <span className="text-[#C9A84C] text-xl flex-shrink-0 mt-0.5 group-open:rotate-45 transition-transform duration-300">
+        <span
+          className="text-xl flex-shrink-0 mt-0.5 group-open:rotate-45 transition-transform duration-300"
+          style={{ color: gold }}
+        >
           +
         </span>
       </summary>
-      <p className="pb-5 text-[#FAF8F5]/70 text-sm leading-relaxed">{faq.a}</p>
+      <p className="pb-5 text-sm leading-relaxed" style={{ color: taupe }}>
+        {faq.a}
+      </p>
     </motion.details>
   );
 }
@@ -121,8 +148,21 @@ function BranchCard({ branch, index }: { branch: (typeof SALON_BRANCHES)[0]; ind
       ref={ref}
       initial={{ opacity: 0, y: 50 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      className="group relative bg-[#1E1814] border border-[#C9A84C]/20 rounded-none overflow-hidden hover:border-[#C9A84C]/60 transition-all duration-500"
+      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] as const }}
+      className="group relative overflow-hidden rounded-2xl border transition-all duration-500"
+      style={{
+        background: pearl,
+        borderColor: "rgba(201,168,76,0.2)",
+        boxShadow: "0 2px 16px rgba(201,168,76,0.07)",
+      }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLElement).style.borderColor = "rgba(201,168,76,0.55)";
+        (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 40px rgba(201,168,76,0.14)";
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLElement).style.borderColor = "rgba(201,168,76,0.2)";
+        (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 16px rgba(201,168,76,0.07)";
+      }}
     >
       {/* image */}
       <div className="relative overflow-hidden h-56">
@@ -131,46 +171,87 @@ function BranchCard({ branch, index }: { branch: (typeof SALON_BRANCHES)[0]; ind
           alt={`Vibe Unisex Salon ${branch.name} Chennai`}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1A1410] via-[#1A1410]/30 to-transparent" />
-        <span className="absolute top-4 left-4 bg-[#C9A84C] text-[#1A1410] text-xs font-bold tracking-widest uppercase px-3 py-1">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to top, rgba(250,248,245,0.85) 0%, rgba(250,248,245,0.15) 60%, transparent 100%)",
+          }}
+        />
+        <span
+          className="absolute top-4 left-4 text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full"
+          style={{
+            background: "linear-gradient(135deg, #C9A84C 0%, #B8942E 100%)",
+            color: pearl,
+            boxShadow: "0 2px 10px rgba(201,168,76,0.3)",
+          }}
+        >
           Chennai
         </span>
       </div>
 
       {/* content */}
       <div className="p-6 space-y-4">
-        <h2 className="text-xl font-bold text-[#FAF8F5] tracking-wide">
+        <h2 className="text-xl font-bold tracking-wide" style={{ color: charcoal }}>
           Vibe Salon –{" "}
-          <span className="text-[#C9A84C]">{branch.name}</span>
+          <span style={{ color: gold }}>{branch.name}</span>
         </h2>
 
-        <div className="space-y-2 text-sm text-[#FAF8F5]/70">
-          <div className="flex gap-3">
-            <span className="text-[#C9A84C]">📍</span>
+        <div className="space-y-2 text-sm" style={{ color: taupe }}>
+          <div className="flex gap-3 items-start">
+            <span style={{ color: gold }}>📍</span>
             <span>{branch.address}</span>
           </div>
-          <div className="flex gap-3">
-            <span className="text-[#C9A84C]">📞</span>
-            <a href={`tel:${branch.phone}`} className="hover:text-[#C9A84C] transition-colors">
+          <div className="flex gap-3 items-start">
+            <span style={{ color: gold }}>📞</span>
+            <a
+              href={`tel:${branch.phone}`}
+              className="transition-colors duration-200 hover:underline"
+              style={{ color: taupe }}
+              onMouseEnter={(e) => ((e.target as HTMLElement).style.color = gold)}
+              onMouseLeave={(e) => ((e.target as HTMLElement).style.color = taupe)}
+            >
               {branch.phone}
             </a>
           </div>
-          <div className="flex gap-3">
-            <span className="text-[#C9A84C]">🕐</span>
+          <div className="flex gap-3 items-start">
+            <span style={{ color: gold }}>🕐</span>
             <span>{branch.hours}</span>
           </div>
         </div>
 
         <Link
           href={`/branches/${branch.slug}`}
-          className="inline-flex items-center gap-2 mt-2 border border-[#C9A84C] text-[#C9A84C] text-xs font-bold tracking-widest uppercase px-5 py-3 hover:bg-[#C9A84C] hover:text-[#1A1410] transition-all duration-300 w-full justify-center"
+          className="inline-flex items-center gap-2 mt-2 text-xs font-bold tracking-widest uppercase px-5 py-3 rounded-full w-full justify-center border transition-all duration-300"
+          style={{
+            borderColor: "rgba(201,168,76,0.4)",
+            color: gold,
+            background: "rgba(201,168,76,0.06)",
+          }}
+          onMouseEnter={(e) => {
+            const el = e.currentTarget as HTMLElement;
+            el.style.background = "linear-gradient(135deg, #C9A84C 0%, #B8942E 100%)";
+            el.style.color = pearl;
+            el.style.borderColor = "transparent";
+            el.style.boxShadow = "0 4px 18px rgba(201,168,76,0.3)";
+          }}
+          onMouseLeave={(e) => {
+            const el = e.currentTarget as HTMLElement;
+            el.style.background = "rgba(201,168,76,0.06)";
+            el.style.color = gold;
+            el.style.borderColor = "rgba(201,168,76,0.4)";
+            el.style.boxShadow = "none";
+          }}
         >
           View Branch →
         </Link>
       </div>
 
       {/* corner decoration */}
-      <div className="absolute top-0 right-0 w-12 h-12 border-t-2 border-r-2 border-[#C9A84C]/30 group-hover:border-[#C9A84C] transition-colors duration-500" />
+      <div
+        className="absolute top-0 right-0 w-10 h-10 border-t-2 border-r-2 rounded-tr-2xl transition-colors duration-500"
+        style={{ borderColor: "rgba(201,168,76,0.25)" }}
+      />
     </motion.article>
   );
 }
@@ -187,13 +268,13 @@ export default function BranchListingPage() {
   return (
     <main
       className="min-h-screen font-serif"
-      style={{ background: charcoal, color: cream }}
+      style={{ background: cream, color: charcoal }}
     >
       {/* ──────────── HERO ──────────── */}
       <header
         ref={heroRef}
         className="relative h-[92vh] min-h-[600px] flex items-center justify-center overflow-hidden"
-        style={{ background: charcoal }}
+        style={{ background: champagne }}
       >
         {/* parallax bg */}
         <motion.div style={{ y: heroY }} className="absolute inset-0">
@@ -202,10 +283,17 @@ export default function BranchListingPage() {
             alt="Vibe Unisex Salon Chennai luxury interior"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#1A1410]/80 via-[#1A1410]/60 to-[#1A1410]" />
+          {/* light-mode overlay: soft warm white wash, preserves image but readable */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to bottom, rgba(250,244,232,0.72) 0%, rgba(250,248,245,0.82) 60%, rgba(250,248,245,0.97) 100%)",
+            }}
+          />
         </motion.div>
 
-        {/* gold decorative lines */}
+        {/* ambient gold vertical lines */}
         <div
           className="absolute left-0 top-0 h-full w-px opacity-30"
           style={{ background: `linear-gradient(to bottom, transparent, ${gold}, transparent)` }}
@@ -224,7 +312,8 @@ export default function BranchListingPage() {
             initial={{ opacity: 0, letterSpacing: "0.5em" }}
             animate={{ opacity: 1, letterSpacing: "0.3em" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
-            className="text-xs font-sans tracking-[0.3em] uppercase text-[#C9A84C] mb-6"
+            className="text-xs font-sans tracking-[0.3em] uppercase mb-6"
+            style={{ color: gold }}
           >
             Chennai's Premier Luxury Salon Group
           </motion.p>
@@ -232,8 +321,9 @@ export default function BranchListingPage() {
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight text-[#FAF8F5] mb-6"
+            transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] as const }}
+            className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight mb-6"
+            style={{ color: charcoal }}
           >
             Best Premium Unisex
             <br />
@@ -253,8 +343,9 @@ export default function BranchListingPage() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-[#FAF8F5]/70 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-sans leading-relaxed"
+            transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
+            className="text-lg md:text-xl max-w-2xl mx-auto mb-10 font-sans leading-relaxed"
+            style={{ color: taupe }}
           >
             Five luxury locations across Chennai. One uncompromising standard of beauty.
           </motion.p>
@@ -262,18 +353,28 @@ export default function BranchListingPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
+            transition={{ duration: 0.8, delay: 0.9, ease: [0.22, 1, 0.36, 1] as const }}
             className="flex flex-wrap gap-4 justify-center"
           >
             <a
               href="#branches"
-              className="bg-[#C9A84C] text-[#1A1410] px-8 py-4 text-xs font-bold tracking-widest uppercase hover:bg-[#E8C96A] transition-colors font-sans"
+              className="px-8 py-4 text-xs font-bold tracking-widest uppercase font-sans rounded-full transition-all duration-300"
+              style={{
+                background: "linear-gradient(135deg, #C9A84C 0%, #B8942E 100%)",
+                color: pearl,
+                boxShadow: "0 4px 20px rgba(201,168,76,0.35)",
+              }}
             >
               Find a Branch
             </a>
             <a
               href="tel:+919876543210"
-              className="border border-[#C9A84C]/60 text-[#FAF8F5] px-8 py-4 text-xs font-bold tracking-widest uppercase hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors font-sans"
+              className="px-8 py-4 text-xs font-bold tracking-widest uppercase font-sans rounded-full border transition-all duration-300"
+              style={{
+                borderColor: "rgba(201,168,76,0.5)",
+                color: "#8A6E35",
+                background: "rgba(201,168,76,0.08)",
+              }}
             >
               Book Now
             </a>
@@ -288,8 +389,12 @@ export default function BranchListingPage() {
           >
             {["5 Branches", "10+ Years", "500+ Bridal", "4.9★ Rated"].map((s) => (
               <div key={s} className="text-center">
-                <span className="text-[#C9A84C] font-bold text-lg">{s.split(" ")[0]}</span>
-                <span className="text-[#FAF8F5]/50 text-xs font-sans ml-1">{s.split(" ").slice(1).join(" ")}</span>
+                <span className="font-bold text-lg" style={{ color: gold }}>
+                  {s.split(" ")[0]}
+                </span>
+                <span className="text-xs font-sans ml-1" style={{ color: taupe }}>
+                  {s.split(" ").slice(1).join(" ")}
+                </span>
               </div>
             ))}
           </motion.div>
@@ -302,11 +407,19 @@ export default function BranchListingPage() {
           transition={{ delay: 1.5 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         >
-          <span className="text-[#C9A84C]/50 text-xs tracking-widest font-sans uppercase">Scroll</span>
+          <span
+            className="text-xs tracking-widest font-sans uppercase"
+            style={{ color: "rgba(201,168,76,0.6)" }}
+          >
+            Scroll
+          </span>
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.4 }}
-            className="w-px h-10 bg-gradient-to-b from-[#C9A84C]/60 to-transparent"
+            className="w-px h-10"
+            style={{
+              background: `linear-gradient(to bottom, ${gold}, transparent)`,
+            }}
           />
         </motion.div>
       </header>
@@ -314,12 +427,21 @@ export default function BranchListingPage() {
       {/* ──────────── BRANCH GRID ──────────── */}
       <section id="branches" className="py-24 px-6 max-w-7xl mx-auto">
         <FadeUp className="text-center mb-16">
-          <p className="text-xs tracking-[0.3em] uppercase text-[#C9A84C] font-sans mb-4">Our Locations</p>
-          <h2 className="text-3xl md:text-5xl font-bold text-[#FAF8F5]">
-            5 Premium Branches <br className="hidden md:block" />
-            <span className="text-[#C9A84C]">Across Chennai</span>
+          <p
+            className="text-xs tracking-[0.3em] uppercase font-sans mb-4"
+            style={{ color: gold }}
+          >
+            Our Locations
+          </p>
+          <h2
+            className="text-3xl md:text-5xl font-bold"
+            style={{ color: charcoal }}
+          >
+            5 Premium Branches{" "}
+            <br className="hidden md:block" />
+            <span style={{ color: gold }}>Across Chennai</span>
           </h2>
-          <div className="mt-6 mx-auto w-16 h-px bg-[#C9A84C]" />
+          <GoldRule />
         </FadeUp>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -332,25 +454,64 @@ export default function BranchListingPage() {
       {/* ──────────── WHY VIBE ──────────── */}
       <section
         className="py-24 px-6"
-        style={{ background: "linear-gradient(180deg, #1E1814 0%, #120F0C 100%)" }}
+        style={{
+          background: `linear-gradient(180deg, ${champagne} 0%, #F5EDD8 100%)`,
+        }}
       >
         <div className="max-w-6xl mx-auto">
           <FadeUp className="text-center mb-16">
-            <p className="text-xs tracking-[0.3em] uppercase text-[#C9A84C] font-sans mb-4">Our Promise</p>
-            <h2 className="text-3xl md:text-5xl font-bold text-[#FAF8F5]">
-              Why Chennai Chooses <span className="text-[#C9A84C]">Vibe</span>
+            <p
+              className="text-xs tracking-[0.3em] uppercase font-sans mb-4"
+              style={{ color: gold }}
+            >
+              Our Promise
+            </p>
+            <h2
+              className="text-3xl md:text-5xl font-bold"
+              style={{ color: charcoal }}
+            >
+              Why Chennai Chooses{" "}
+              <span style={{ color: gold }}>Vibe</span>
             </h2>
-            <div className="mt-6 mx-auto w-16 h-px bg-[#C9A84C]" />
+            <GoldRule />
           </FadeUp>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {WHYS.map((item, i) => (
               <FadeUp key={item.title} delay={i * 0.08}>
-                <div className="group p-8 border border-[#C9A84C]/15 hover:border-[#C9A84C]/40 transition-all duration-500 relative overflow-hidden">
+                <div
+                  className="group p-8 rounded-2xl border transition-all duration-500 relative overflow-hidden h-full"
+                  style={{
+                    background: pearl,
+                    borderColor: "rgba(201,168,76,0.18)",
+                    boxShadow: "0 2px 12px rgba(201,168,76,0.06)",
+                  }}
+                  onMouseEnter={(e) => {
+                    const el = e.currentTarget as HTMLElement;
+                    el.style.borderColor = "rgba(201,168,76,0.45)";
+                    el.style.boxShadow = "0 6px 32px rgba(201,168,76,0.12)";
+                  }}
+                  onMouseLeave={(e) => {
+                    const el = e.currentTarget as HTMLElement;
+                    el.style.borderColor = "rgba(201,168,76,0.18)";
+                    el.style.boxShadow = "0 2px 12px rgba(201,168,76,0.06)";
+                  }}
+                >
                   <div className="text-4xl mb-4">{item.icon}</div>
-                  <h3 className="text-[#C9A84C] font-bold text-lg mb-3 font-sans">{item.title}</h3>
-                  <p className="text-[#FAF8F5]/60 text-sm leading-relaxed font-sans">{item.desc}</p>
-                  <div className="absolute inset-0 bg-[#C9A84C]/3 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <h3
+                    className="font-bold text-lg mb-3 font-sans"
+                    style={{ color: gold }}
+                  >
+                    {item.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed font-sans" style={{ color: taupe }}>
+                    {item.desc}
+                  </p>
+                  {/* subtle hover sheen */}
+                  <div
+                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{ background: "rgba(201,168,76,0.03)" }}
+                  />
                 </div>
               </FadeUp>
             ))}
@@ -361,22 +522,64 @@ export default function BranchListingPage() {
       {/* ──────────── SERVICES ──────────── */}
       <section className="py-24 px-6 max-w-7xl mx-auto">
         <FadeUp className="text-center mb-16">
-          <p className="text-xs tracking-[0.3em] uppercase text-[#C9A84C] font-sans mb-4">What We Offer</p>
-          <h2 className="text-3xl md:text-5xl font-bold text-[#FAF8F5]">
-            Luxury Services at <br className="hidden md:block" />
-            <span className="text-[#C9A84C]">Every Branch</span>
+          <p
+            className="text-xs tracking-[0.3em] uppercase font-sans mb-4"
+            style={{ color: gold }}
+          >
+            What We Offer
+          </p>
+          <h2
+            className="text-3xl md:text-5xl font-bold"
+            style={{ color: charcoal }}
+          >
+            Luxury Services at{" "}
+            <br className="hidden md:block" />
+            <span style={{ color: gold }}>Every Branch</span>
           </h2>
-          <div className="mt-6 mx-auto w-16 h-px bg-[#C9A84C]" />
+          <GoldRule />
         </FadeUp>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {SERVICES.map((svc, i) => (
             <FadeUp key={svc.label} delay={i * 0.07}>
-              <div className="group relative bg-[#1E1814] p-7 border border-[#C9A84C]/15 hover:border-[#C9A84C]/50 transition-all duration-500 h-full">
+              <div
+                className="group relative p-7 rounded-2xl border transition-all duration-500 h-full overflow-hidden"
+                style={{
+                  background: pearl,
+                  borderColor: "rgba(201,168,76,0.18)",
+                  boxShadow: "0 2px 10px rgba(201,168,76,0.05)",
+                }}
+                onMouseEnter={(e) => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.borderColor = "rgba(201,168,76,0.5)";
+                  el.style.boxShadow = "0 6px 28px rgba(201,168,76,0.12)";
+                }}
+                onMouseLeave={(e) => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.borderColor = "rgba(201,168,76,0.18)";
+                  el.style.boxShadow = "0 2px 10px rgba(201,168,76,0.05)";
+                }}
+              >
                 <span className="text-3xl block mb-4">{svc.icon}</span>
-                <h3 className="text-[#FAF8F5] font-bold mb-2 font-sans">{svc.label}</h3>
-                <p className="text-[#FAF8F5]/50 text-sm leading-relaxed font-sans">{svc.desc}</p>
-                <div className="absolute bottom-0 left-0 h-px w-0 bg-[#C9A84C] group-hover:w-full transition-all duration-500" />
+                <h3
+                  className="font-bold mb-2 font-sans"
+                  style={{ color: charcoal }}
+                >
+                  {svc.label}
+                </h3>
+                <p
+                  className="text-sm leading-relaxed font-sans"
+                  style={{ color: taupe }}
+                >
+                  {svc.desc}
+                </p>
+                {/* bottom gold sweep */}
+                <div
+                  className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full transition-all duration-500 rounded-full"
+                  style={{
+                    background: `linear-gradient(90deg, ${gold}, #E8C96A)`,
+                  }}
+                />
               </div>
             </FadeUp>
           ))}
@@ -386,28 +589,59 @@ export default function BranchListingPage() {
       {/* ──────────── FAQ ──────────── */}
       <section
         className="py-24 px-6"
-        style={{ background: "#120F0C" }}
+        style={{ background: champagne }}
         itemScope
         itemType="https://schema.org/FAQPage"
       >
         <div className="max-w-3xl mx-auto">
           <FadeUp className="text-center mb-14">
-            <p className="text-xs tracking-[0.3em] uppercase text-[#C9A84C] font-sans mb-4">FAQ</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#FAF8F5]">
-              Frequently Asked <span className="text-[#C9A84C]">Questions</span>
+            <p
+              className="text-xs tracking-[0.3em] uppercase font-sans mb-4"
+              style={{ color: gold }}
+            >
+              FAQ
+            </p>
+            <h2
+              className="text-3xl md:text-4xl font-bold"
+              style={{ color: charcoal }}
+            >
+              Frequently Asked{" "}
+              <span style={{ color: gold }}>Questions</span>
             </h2>
-            <div className="mt-6 mx-auto w-16 h-px bg-[#C9A84C]" />
+            <GoldRule />
           </FadeUp>
 
-          <div itemScope itemType="https://schema.org/FAQPage">
-            {FAQS.map((faq, i) => (
-              <div key={i} itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
-                <FAQItem faq={faq} index={i} />
-                <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer" className="hidden">
-                  <span itemProp="text">{faq.a}</span>
+          {/* Schema wrapper preserved exactly */}
+          <div
+            className="rounded-2xl border overflow-hidden"
+            style={{
+              background: pearl,
+              borderColor: "rgba(201,168,76,0.2)",
+              boxShadow: "0 4px 24px rgba(201,168,76,0.08)",
+            }}
+            itemScope
+            itemType="https://schema.org/FAQPage"
+          >
+            <div className="px-8 py-2">
+              {FAQS.map((faq, i) => (
+                <div
+                  key={i}
+                  itemScope
+                  itemProp="mainEntity"
+                  itemType="https://schema.org/Question"
+                >
+                  <FAQItem faq={faq} index={i} />
+                  <div
+                    itemScope
+                    itemProp="acceptedAnswer"
+                    itemType="https://schema.org/Answer"
+                    className="hidden"
+                  >
+                    <span itemProp="text">{faq.a}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -415,17 +649,21 @@ export default function BranchListingPage() {
       {/* ──────────── SEO CONTENT ──────────── */}
       <section className="py-20 px-6 max-w-4xl mx-auto">
         <FadeUp>
-          <article className="prose prose-invert max-w-none space-y-6 text-[#FAF8F5]/75 font-sans leading-relaxed text-base">
-            <h2 className="text-2xl md:text-3xl font-bold text-[#FAF8F5] not-prose">
+          <article className="prose max-w-none space-y-6 font-sans leading-relaxed text-base">
+            <h2
+              className="text-2xl md:text-3xl font-bold not-prose"
+              style={{ color: charcoal }}
+            >
               Best Unisex Salon in Chennai — Vibe Salon Across 5 Locations
             </h2>
-            <p>
-              When it comes to finding a <strong className="text-[#C9A84C]">premium salon in Chennai</strong> that
-              consistently delivers internationally inspired results, Vibe Unisex Salon stands in a class of its own.
-              With five strategically located branches — Anna Nagar, T Nagar, Ekkatuthangal, Porur, and Velachery —
+            <p style={{ color: taupe }}>
+              When it comes to finding a{" "}
+              <strong style={{ color: gold }}>premium salon in Chennai</strong> that consistently delivers
+              internationally inspired results, Vibe Unisex Salon stands in a class of its own. With five
+              strategically located branches — Anna Nagar, T Nagar, Ekkatuthangal, Porur, and Velachery —
               Vibe brings luxury hair and beauty experiences to every major neighbourhood in the city.
             </p>
-            <p>
+            <p style={{ color: taupe }}>
               Chennai's beauty landscape has evolved dramatically over the last decade. Today's discerning clients
               expect more than a routine haircut; they seek a holistic grooming experience that combines skilled
               artistry, premium products, and an ambiance that transports them far from the everyday. Vibe Unisex
@@ -433,88 +671,105 @@ export default function BranchListingPage() {
               unwavering commitment to that standard.
             </p>
 
-            <h3 className="text-xl font-bold text-[#FAF8F5] not-prose">
+            <h3
+              className="text-xl font-bold not-prose"
+              style={{ color: charcoal }}
+            >
               Luxury Hair Salon Chennai — Setting International Benchmarks
             </h3>
-            <p>
-              At every <strong className="text-[#C9A84C]">hair salon in Chennai</strong> bearing the Vibe name, you
-              will find stylists who have trained at leading academies and are conversant with the latest global
-              techniques. Our colour specialists are certified in balayage, ombre, foilyage, and vivid colour
-              correction — skills that define a{" "}
-              <strong className="text-[#C9A84C]">luxury salon in Chennai</strong>. Whether you walk into our Anna
+            <p style={{ color: taupe }}>
+              At every <strong style={{ color: gold }}>hair salon in Chennai</strong> bearing the Vibe name,
+              you will find stylists who have trained at leading academies and are conversant with the latest
+              global techniques. Our colour specialists are certified in balayage, ombre, foilyage, and vivid
+              colour correction — skills that define a{" "}
+              <strong style={{ color: gold }}>luxury salon in Chennai</strong>. Whether you walk into our Anna
               Nagar flagship or our busy T Nagar studio, the tools, products, and talent are identical.
             </p>
-            <p>
+            <p style={{ color: taupe }}>
               We exclusively use professional-grade product lines from global houses such as L'Oréal Professionnel,
               Wella Professionals, Schwarzkopf Professional, and Kérastase. This commitment to premium products
               ensures that every treatment — from a simple blow-dry to a complex colour correction — delivers
               lasting, healthy results without compromising the integrity of your hair.
             </p>
 
-            <h3 className="text-xl font-bold text-[#FAF8F5] not-prose">
+            <h3
+              className="text-xl font-bold not-prose"
+              style={{ color: charcoal }}
+            >
               Best Bridal Makeup Chennai — A Dedicated Bridal Studio Experience
             </h3>
-            <p>
+            <p style={{ color: taupe }}>
               Chennai is a city of grand weddings, and brides deserve nothing less than perfection on their special
               day. Our dedicated bridal team at Vibe Unisex Salon specialises in{" "}
-              <strong className="text-[#C9A84C]">bridal makeup in Chennai</strong> across traditions — South Indian,
+              <strong style={{ color: gold }}>bridal makeup in Chennai</strong> across traditions — South Indian,
               North Indian, Christian, Indo-Western, and fusion styles. Each bridal consultation is personalised,
               incorporating skin type analysis, a full trial session, and a bespoke hair and makeup plan that
               complements the bride's outfit and jewellery. With more than 500 weddings styled across Chennai, our
               bridal experts are trusted by families across the city.
             </p>
 
-            <h3 className="text-xl font-bold text-[#FAF8F5] not-prose">
+            <h3
+              className="text-xl font-bold not-prose"
+              style={{ color: charcoal }}
+            >
               Hair Spa Chennai — Rejuvenation Beyond the Surface
             </h3>
-            <p>
-              Our{" "}
-              <strong className="text-[#C9A84C]">hair spa in Chennai</strong> is not an add-on service — it is a
-              cornerstone of the Vibe experience. We offer customised therapeutic spa programmes targeting
+            <p style={{ color: taupe }}>
+              Our <strong style={{ color: gold }}>hair spa in Chennai</strong> is not an add-on service — it is
+              a cornerstone of the Vibe experience. We offer customised therapeutic spa programmes targeting
               damage-repair, hydration restoration, scalp detox, and anti-breakage strengthening. Each session
               begins with a professional scalp analysis, allowing our trichology-trained staff to prescribe the
               most effective treatment from our curated menu. The result is noticeably healthier, more lustrous
               hair after just one session.
             </p>
 
-            <h3 className="text-xl font-bold text-[#FAF8F5] not-prose">
+            <h3
+              className="text-xl font-bold not-prose"
+              style={{ color: charcoal }}
+            >
               Keratin Treatment Chennai — Frizz-Free Smoothness That Lasts
             </h3>
-            <p>
+            <p style={{ color: taupe }}>
               Chennai's humid climate can be relentless on hair, making{" "}
-              <strong className="text-[#C9A84C]">keratin treatment in Chennai</strong> one of our most popular
-              services. Vibe Salon offers three tiers of keratin smoothening — express, classic, and Brazilian — to
-              suit different hair types, budgets, and lifestyle requirements. Our formaldehyde-free keratin options
-              are safe for chemically treated, coloured, and sensitive hair. Results last up to five months,
-              keeping hair glossy, manageable, and frizz-free throughout Chennai's monsoon season.
+              <strong style={{ color: gold }}>keratin treatment in Chennai</strong> one of our most popular
+              services. Vibe Salon offers three tiers of keratin smoothening — express, classic, and Brazilian —
+              to suit different hair types, budgets, and lifestyle requirements. Our formaldehyde-free keratin
+              options are safe for chemically treated, coloured, and sensitive hair. Results last up to five
+              months, keeping hair glossy, manageable, and frizz-free throughout Chennai's monsoon season.
             </p>
 
-            <h3 className="text-xl font-bold text-[#FAF8F5] not-prose">
+            <h3
+              className="text-xl font-bold not-prose"
+              style={{ color: charcoal }}
+            >
               Hair Color Chennai — Precision Colour Artistry
             </h3>
-            <p>
+            <p style={{ color: taupe }}>
               Colour is the soul of modern hair styling, and our team of certified colourists at every{" "}
-              <strong className="text-[#C9A84C]">beauty salon in Chennai</strong> that bears the Vibe name are
+              <strong style={{ color: gold }}>beauty salon in Chennai</strong> that bears the Vibe name are
               artists first. From sun-kissed balayage and dimensional highlights to bold fashion shades and
               seamless grey blending, we handle every colour story with equal mastery. We use Wella Koleston
-              Perfect and L'Oréal INOA ammonia-free colour systems to deliver vibrant, long-lasting results that
-              also prioritise the health of your hair.
+              Perfect and L'Oréal INOA ammonia-free colour systems to deliver vibrant, long-lasting results
+              that also prioritise the health of your hair.
             </p>
 
-            <h3 className="text-xl font-bold text-[#FAF8F5] not-prose">
+            <h3
+              className="text-xl font-bold not-prose"
+              style={{ color: charcoal }}
+            >
               Vibe Unisex Salon — Chennai's Most Trusted Premium Salon Group
             </h3>
-            <p>
-              Across all five branches, Vibe Unisex Salon maintains a 4.9-star average rating on Google, drawn from
-              more than 3,000 verified reviews from satisfied clients across Chennai. Our hygiene protocols follow
-              NABH-aligned standards — tools are sterilised before every client, stations are sanitised between
-              appointments, and all products are stored in controlled conditions. This meticulous attention to
-              detail is what distinguishes Vibe as the{" "}
-              <strong className="text-[#C9A84C]">best unisex salon in Chennai</strong>.
+            <p style={{ color: taupe }}>
+              Across all five branches, Vibe Unisex Salon maintains a 4.9-star average rating on Google, drawn
+              from more than 3,000 verified reviews from satisfied clients across Chennai. Our hygiene protocols
+              follow NABH-aligned standards — tools are sterilised before every client, stations are sanitised
+              between appointments, and all products are stored in controlled conditions. This meticulous
+              attention to detail is what distinguishes Vibe as the{" "}
+              <strong style={{ color: gold }}>best unisex salon in Chennai</strong>.
             </p>
-            <p>
+            <p style={{ color: taupe }}>
               Whether you are seeking a transformative colour experience at our{" "}
-              <strong className="text-[#C9A84C]">hair salon in Anna Nagar</strong>, a pre-wedding makeover at our T
+              <strong style={{ color: gold }}>hair salon in Anna Nagar</strong>, a pre-wedding makeover at our T
               Nagar studio, a rejuvenating hair spa in Velachery, or precision men's grooming in Porur, the Vibe
               promise is the same: world-class artistry, premium products, and an experience that leaves you
               looking and feeling extraordinary. Book your appointment at the nearest Vibe Unisex Salon branch
@@ -528,43 +783,91 @@ export default function BranchListingPage() {
       {/* ──────────── CTA ──────────── */}
       <section
         className="relative py-28 px-6 overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #1A1410 0%, #2A1F14 50%, #1A1410 100%)" }}
+        style={{
+          background: `linear-gradient(135deg, ${champagne} 0%, #F5EDD8 50%, ${champagne} 100%)`,
+        }}
       >
-        {/* decorative */}
+        {/* ambient orbs */}
         <div
-          className="absolute inset-0 opacity-10"
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 overflow-hidden"
+        >
+          <div
+            className="absolute -top-32 -left-32 h-96 w-96 rounded-full opacity-20 blur-3xl"
+            style={{ background: `radial-gradient(circle, ${gold} 0%, transparent 70%)` }}
+          />
+          <div
+            className="absolute -bottom-32 -right-32 h-80 w-80 rounded-full opacity-15 blur-3xl"
+            style={{ background: `radial-gradient(circle, #D4B896 0%, transparent 70%)` }}
+          />
+        </div>
+
+        {/* top gold rule */}
+        <div
+          aria-hidden="true"
+          className="absolute top-0 left-1/2 -translate-x-1/2 h-px w-2/3 max-w-lg"
           style={{
-            backgroundImage: `repeating-linear-gradient(45deg, #C9A84C 0, #C9A84C 1px, transparent 0, transparent 50%)`,
-            backgroundSize: "24px 24px",
+            background:
+              "linear-gradient(90deg, transparent 0%, #C9A84C 30%, #E8C97A 50%, #C9A84C 70%, transparent 100%)",
           }}
         />
 
         <FadeUp className="relative z-10 text-center max-w-3xl mx-auto">
-          <p className="text-xs tracking-[0.3em] uppercase text-[#C9A84C] font-sans mb-4">
+          <p
+            className="text-xs tracking-[0.3em] uppercase font-sans mb-4"
+            style={{ color: gold }}
+          >
             Book Your Experience
           </p>
-          <h2 className="text-3xl md:text-5xl font-bold text-[#FAF8F5] mb-6">
-            Ready for a Luxury <span className="text-[#C9A84C]">Transformation?</span>
+          <h2
+            className="text-3xl md:text-5xl font-bold mb-6"
+            style={{ color: charcoal }}
+          >
+            Ready for a Luxury{" "}
+            <span style={{ color: gold }}>Transformation?</span>
           </h2>
-          <p className="text-[#FAF8F5]/60 font-sans text-lg mb-10 leading-relaxed">
+          <p
+            className="font-sans text-lg mb-10 leading-relaxed"
+            style={{ color: taupe }}
+          >
             Walk in to any of our five Chennai branches or book an appointment to secure your preferred time slot.
           </p>
 
           <div className="flex flex-wrap gap-5 justify-center">
             <a
               href="tel:+919876543210"
-              className="bg-[#C9A84C] text-[#1A1410] px-10 py-4 text-xs font-bold tracking-widest uppercase hover:bg-[#E8C96A] transition-colors font-sans"
+              className="px-10 py-4 text-xs font-bold tracking-widest uppercase font-sans rounded-full transition-all duration-300"
+              style={{
+                background: "linear-gradient(135deg, #C9A84C 0%, #B8942E 100%)",
+                color: pearl,
+                boxShadow: "0 4px 20px rgba(201,168,76,0.35)",
+              }}
             >
               📞 Call Us Now
             </a>
             <a
               href="#branches"
-              className="border border-[#C9A84C] text-[#C9A84C] px-10 py-4 text-xs font-bold tracking-widest uppercase hover:bg-[#C9A84C]/10 transition-colors font-sans"
+              className="px-10 py-4 text-xs font-bold tracking-widest uppercase font-sans rounded-full border transition-all duration-300"
+              style={{
+                borderColor: "rgba(201,168,76,0.45)",
+                color: "#8A6E35",
+                background: "rgba(201,168,76,0.07)",
+              }}
             >
               🗺 Find a Branch
             </a>
           </div>
         </FadeUp>
+
+        {/* bottom gold rule */}
+        <div
+          aria-hidden="true"
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 h-px w-2/3 max-w-lg"
+          style={{
+            background:
+              "linear-gradient(90deg, transparent 0%, #C9A84C 30%, #E8C97A 50%, #C9A84C 70%, transparent 100%)",
+          }}
+        />
       </section>
     </main>
   );

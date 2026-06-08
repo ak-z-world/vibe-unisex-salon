@@ -139,7 +139,7 @@ export default function HeroSection() {
             </Link>
 
             <Link
-              href="#services"
+              href="/services"
               className="inline-flex items-center gap-3 border border-[#C9A84C]/50 text-[#9A7840] px-9 py-4 text-sm tracking-[0.16em] uppercase font-light hover:bg-[#C9A84C]/6 hover:border-[#C9A84C] transition-all duration-300"
               aria-label="Explore Vibe Salon services">
               Explore Services →
@@ -196,7 +196,7 @@ export default function HeroSection() {
             <div className="absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-[#FDFAF6] to-transparent z-10 hidden lg:block" />
 
             <Image
-              src="/images/salon5.jpeg"
+              src="/images/hairspa.jpg"
               alt="Luxury hair spa treatment at Vibe Unisex Salon Chennai"
               fill
               priority

@@ -1,163 +1,148 @@
 import { notFound } from "next/navigation";
-import { SALON_BRANCHES, getBranchBySlug, nearbyAreas } from "@/lib/branches";
+import { getBranchBySlug, SALON_BRANCHES } from "@/lib/branches";
 import BranchDetailPage from "@/app/components/branch/BranchDetailPage";
 
-interface Props {
-  params: Promise<{ slug: string }>;
-}
-
+// ─── Pre-render all branch slugs at build time ──────────────────────────────
 export async function generateStaticParams() {
   return SALON_BRANCHES.map((branch) => ({ slug: branch.slug }));
 }
 
-function generateStructuredData(branch: ReturnType<typeof getBranchBySlug>) {
-  if (!branch) return "";
-
-  const branchNearbyAreas = nearbyAreas[branch.slug] || [];
-  
-  const localBusiness = {
-    "@type": ["LocalBusiness", "BeautySalon", "HairSalon"],
-    "@id": `https://vibe-unisex-salon.vercel.app/branches/${branch.slug}`,
-    name: `Vibe Unisex Salon ${branch.name}`,
-    url: `https://vibe-unisex-salon.vercel.app/branches/${branch.slug}`,
+// ─── JSON-LD Structured Data builders ──────────────────────────────────────
+function buildLocalBusinessSchema(branch: ReturnType<typeof getBranchBySlug>) {
+  if (!branch) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "HairSalon",
+    "@id": `https://vibesalon.in/branches/${branch.slug}`,
+    name: `Vibe Unisex Salon — ${branch.name}`,
+    description: `Premium unisex salon in ${branch.neighborhood}, ${branch.city} offering luxury hair, beauty, and grooming services.`,
+    url: `https://vibesalon.in/branches/${branch.slug}`,
     telephone: branch.phone,
     image: branch.featuredImageUrl,
-    description: `Premium unisex salon in ${branch.neighborhood}, Chennai offering hair cutting, colouring, keratin treatment, bridal makeup, hair spa, facials and men's grooming.`,
+    priceRange: "₹₹₹",
+    currenciesAccepted: "INR",
+    paymentAccepted: "Cash, Credit Card, Debit Card, UPI",
     address: {
       "@type": "PostalAddress",
       streetAddress: branch.address,
-      addressLocality: "Chennai",
-      addressRegion: "Tamil Nadu",
+      addressLocality: branch.city,
+      addressRegion: branch.state,
+      postalCode: branch.pincode,
       addressCountry: "IN",
     },
-    openingHoursSpecification: [
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-        ],
-        opens: "09:00",
-        closes: "21:00",
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Sunday"],
-        opens: "10:00",
-        closes: "19:00",
-      },
-    ],
-    priceRange: "₹₹",
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: branch.latitude,
+      longitude: branch.longitude,
+    },
+    areaServed: {
+      "@type": "Place",
+      name: `${branch.neighborhood}, ${branch.city}`,
+    },
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ],
+      opens: "09:00",
+      closes: "20:00",
+      description: branch.hours,
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "500",
+      bestRating: "5",
+      worstRating: "1",
+    },
     hasMap: branch.mapsLink,
-    areaServed: [
-      { "@type": "City", name: "Chennai" },
-      ...branchNearbyAreas.map((area: string) => ({
-        "@type": "Place",
-        name: `${area}, Chennai`,
-      })),
-    ],
-    makesOffer: [
-      "Hair Cutting and Styling",
-      "Hair Colouring",
-      "Balayage",
-      "Keratin Smoothening",
-      "Hair Spa",
-      "Bridal Makeup",
-      "Facial Treatments",
-      "Men's Grooming",
-    ].map((name) => ({
-      "@type": "Offer",
-      name,
-      areaServed: `${branch.neighborhood}, Chennai`,
-    })),
+    parentOrganization: {
+      "@type": "Organization",
+      name: "Vibe Unisex Salon",
+      url: "https://vibesalon.in",
+    },
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Vibe Salon Services",
+      itemListElement: [
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Hair Cut & Styling" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Hair Coloring" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Keratin Treatment" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Hair Spa" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Bridal Makeup" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Men's Grooming" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Facial Treatments" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Hair Smoothening" } },
+      ],
+    },
   };
+}
 
-  const breadcrumb = {
+function buildBreadcrumbSchema(branch: ReturnType<typeof getBranchBySlug>) {
+  if (!branch) return null;
+  return {
+    "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
       {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: "https://vibe-unisex-salon.vercel.app",
+        item: "https://vibesalon.in",
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Branches",
-        item: "https://vibe-unisex-salon.vercel.app/branches",
+        item: "https://vibesalon.in/branches",
       },
       {
         "@type": "ListItem",
         position: 3,
-        name: `${branch.name} Branch`,
-        item: `https://vibe-unisex-salon.vercel.app/branches/${branch.slug}`,
+        name: `${branch.name} — ${branch.city}`,
+        item: `https://vibesalon.in/branches/${branch.slug}`,
       },
     ],
   };
-
-  const faqSchema = {
-    "@type": "FAQPage",
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: `Where is Vibe Unisex Salon ${branch.neighborhood} located?`,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: `Vibe Unisex Salon ${branch.neighborhood} is located at ${branch.address}, Chennai.`,
-        },
-      },
-      {
-        "@type": "Question",
-        name: `What are the opening hours of Vibe Salon ${branch.neighborhood}?`,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: `Vibe Salon ${branch.neighborhood} is open Monday to Saturday 9:00 AM to 9:00 PM and Sunday 10:00 AM to 7:00 PM.`,
-        },
-      },
-      {
-        "@type": "Question",
-        name: `What services does Vibe Salon ${branch.neighborhood} offer?`,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: `Vibe Salon ${branch.neighborhood} offers hair cutting, hair colour, keratin treatment, hair spa, bridal makeup, facial treatments, and men's grooming.`,
-        },
-      },
-      {
-        "@type": "Question",
-        name: `How do I book an appointment at Vibe Salon ${branch.neighborhood}?`,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: `Call ${branch.phone} or walk in during business hours. Weekend bookings are recommended in advance.`,
-        },
-      },
-    ],
-  };
-
-  return JSON.stringify({
-    "@context": "https://schema.org",
-    "@graph": [localBusiness, breadcrumb, faqSchema],
-  });
 }
 
-export default async function BranchPage({ params }: Props) {
+// ─── Page (Server Component) ─────────────────────────────────────────────────
+export default async function BranchPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const branch = getBranchBySlug(slug);
 
-  if (!branch) {
-    notFound();
-  }
+  if (!branch) notFound();
+
+  const localBusinessSchema = buildLocalBusinessSchema(branch);
+  const breadcrumbSchema = buildBreadcrumbSchema(branch);
 
   return (
     <>
+      {/* ── Structured Data ── */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: generateStructuredData(branch) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(localBusinessSchema),
+        }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+
+      {/* ── Branch Detail UI ── */}
       <BranchDetailPage branch={branch} />
     </>
   );

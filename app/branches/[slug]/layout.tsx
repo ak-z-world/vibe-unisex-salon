@@ -1,53 +1,56 @@
 import type { Metadata } from "next";
-import { SALON_BRANCHES, getBranchBySlug, nearbyAreas } from "@/lib/branches";
+import { getBranchBySlug, SALON_BRANCHES } from "@/lib/branches";
 
-interface Props {
-  params: Promise<{ slug: string }>;
-  children: React.ReactNode;
-}
-
+// ─── Static params for all branch slugs ────────────────────────────────────
 export async function generateStaticParams() {
   return SALON_BRANCHES.map((branch) => ({ slug: branch.slug }));
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+// ─── Per-branch metadata ────────────────────────────────────────────────────
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
   const { slug } = await params;
-
   const branch = getBranchBySlug(slug);
 
   if (!branch) {
     return {
-      title: "Branch Not Found | Vibe Unisex Salon Chennai",
+      title: "Branch Not Found | Vibe Unisex Salon",
+      description: "This salon branch could not be found.",
     };
   }
 
-  const branchNearbyAreas = nearbyAreas[branch.slug] || [];
+  const title = `Vibe Unisex Salon ${branch.name} | Premium Salon in ${branch.neighborhood}, ${branch.city}`;
+  const description = `Experience luxury hair, beauty & grooming at Vibe Unisex Salon ${branch.name}, ${branch.neighborhood}, ${branch.city}. Certified stylists, premium products, easy appointment booking. Call ${branch.phone}.`;
+  const canonicalUrl = `https://vibesalon.in/branches/${branch.slug}`;
 
   return {
-    title: `${branch.neighborhood} | Vibe Unisex Salon`,
-    description: `Visit Vibe Unisex Salon at ${branch.address}. Expert hair salon, bridal makeup, hair spa, keratin treatment & beauty salon in ${branch.neighborhood}, Chennai. Call ${branch.phone}.`,
+    title,
+    description,
     keywords: [
-      `Best Salon in ${branch.neighborhood}`,
-      `Hair Salon in ${branch.neighborhood}`,
-      `Beauty Salon in ${branch.neighborhood}`,
-      `Bridal Makeup in ${branch.neighborhood}`,
-      `Hair Spa in ${branch.neighborhood}`,
-      `Keratin Treatment in ${branch.neighborhood}`,
-      `Premium Salon in ${branch.neighborhood}`,
-      `Unisex Salon ${branch.neighborhood} Chennai`,
-      `Hair Color ${branch.neighborhood}`,
-      `Men's Grooming ${branch.neighborhood}`,
-      `Luxury Salon ${branch.neighborhood} Chennai`,
-      ...branchNearbyAreas.map((a: string) => `Salon near ${a} Chennai`),
+      `Best salon in ${branch.neighborhood} ${branch.city}`,
+      `Premium salon ${branch.city}`,
+      `Luxury unisex salon ${branch.neighborhood}`,
+      `Hair salon ${branch.neighborhood} ${branch.city}`,
+      `Beauty salon ${branch.city}`,
+      `Hair cut ${branch.city}`,
+      `Hair spa ${branch.city}`,
+      `Keratin treatment ${branch.city}`,
+      `Hair coloring ${branch.city}`,
+      `Bridal makeup ${branch.city}`,
+      `Salon near me ${branch.neighborhood}`,
+      `Vibe salon ${branch.city}`,
     ],
     alternates: {
-      canonical: `https://vibe-unisex-salon.vercel.app/branches/${branch.slug}`,
+      canonical: canonicalUrl,
     },
     openGraph: {
-      title: `${branch.neighborhood} | Vibe Unisex Salon`,
-      description: `Luxury hair & beauty salon in ${branch.neighborhood}, Chennai. Expert stylists, premium products, bridal makeup, keratin & more. ${branch.address}.`,
-      url: `https://vibe-unisex-salon.vercel.app/branches/${branch.slug}`,
-      siteName: "Vibe Unisex Salon Chennai",
+      title,
+      description,
+      url: canonicalUrl,
+      siteName: "Vibe Unisex Salon",
       locale: "en_IN",
       type: "website",
       images: [
@@ -55,27 +58,45 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           url: branch.featuredImageUrl,
           width: 1200,
           height: 630,
-          alt: `Vibe Unisex Salon ${branch.neighborhood} Chennai`,
+          alt: `Vibe Unisex Salon — ${branch.name}, ${branch.city}`,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${branch.neighborhood} | Vibe Unisex Salon`,
-      description: `Visit Vibe Unisex Salon in ${branch.neighborhood} — luxury hair cuts, colour, keratin, bridal makeup & more. ${branch.phone}`,
+      title,
+      description,
+      images: [branch.featuredImageUrl],
     },
     robots: {
       index: true,
       follow: true,
-      googleBot: { index: true, follow: true, "max-image-preview": "large" },
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-snippet": -1,
+        "max-image-preview": "large",
+        "max-video-preview": -1,
+      },
+    },
+    other: {
+      "geo.region": `IN-${branch.state}`,
+      "geo.placename": `${branch.neighborhood}, ${branch.city}`,
+      "geo.position": `${branch.latitude};${branch.longitude}`,
+      ICBM: `${branch.latitude}, ${branch.longitude}`,
     },
   };
 }
 
+// ─── Layout shell ────────────────────────────────────────────────────────────
 export default function BranchLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    // No additional wrapper needed — inherits RootLayout fonts/globals.
+    // Keep it transparent so the branch page controls its own background.
+    <>{children}</>
+  );
 }
