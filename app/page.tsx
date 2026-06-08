@@ -31,19 +31,19 @@ export const metadata: Metadata = {
     "Hair spa and facial packages Chennai",
   ],
   alternates: {
-    canonical: "https://vibesalon.in",
+    canonical: "https://vibe-unisex-salon.vercel.app",
   },
   openGraph: {
     title: "Best Premium Unisex Salon in Chennai | Vibe Salon",
     description:
       "Experience luxury hair, beauty & grooming at Vibe Unisex Salon — Chennai's most trusted premium salon with 5 locations, 15,000+ happy clients, and a 4.9 rating.",
-    url: "https://vibesalon.in",
+    url: "https://vibe-unisex-salon.vercel.app",
     siteName: "Vibe Unisex Salon",
     locale: "en_IN",
     type: "website",
     images: [
       {
-        url: "https://vibesalon.in/og-image.jpg",
+        url: "https://vibe-unisex-salon.vercel.app/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Vibe Unisex Salon Chennai — Premium Luxury Salon",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     title: "Best Premium Unisex Salon in Chennai | Vibe Salon",
     description:
       "Luxury hair, beauty & grooming at Vibe Unisex Salon, Chennai. 5 locations · 15,000+ clients · 4.9 rating.",
-    images: ["https://vibesalon.in/og-image.jpg"],
+    images: ["https://vibe-unisex-salon.vercel.app/og-image.jpg"],
   },
   robots: {
     index: true,
@@ -125,7 +125,7 @@ const localBusinessStructuredData = {
   name: "Vibe Unisex Salon",
   description:
     "Premium unisex salon in Chennai offering luxury hair, beauty, and grooming services including hair cut, hair coloring, keratin treatment, bridal makeup, and men's grooming.",
-  url: "https://vibesalon.in",
+  url: "https://vibe-unisex-salon.vercel.app",
   telephone: "+919876543210",
   priceRange: "₹₹₹",
   currenciesAccepted: "INR",

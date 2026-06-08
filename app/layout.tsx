@@ -57,8 +57,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "@vibeunisexsalon",
-    creator: "@vibeunisexsalon",
+    title: "Best Premium Unisex Salon in Chennai | Vibe Salon",
+    description:
+      "Experience luxury hair, beauty & grooming at Vibe Unisex Salon.",
+    images: ["https://vibe-unisex-salon.vercel.app/og-image.png"],
   },
   robots: {
     index: true,
