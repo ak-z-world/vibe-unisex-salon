@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     title: "Best Premium Unisex Salon in Chennai | Vibe Salon",
     description:
       "Luxury hair, beauty & grooming at Vibe Unisex Salon, Chennai. 5 locations · 15,000+ clients · 4.9 rating.",
-    images: ["https://vibe-unisex-salon.vercel.app/og-image.jpg"],
+    images: ["https://vibe-unisex-salon.vercel.app/og-image.png"],
   },
   robots: {
     index: true,
