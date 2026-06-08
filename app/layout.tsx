@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     siteName: "Vibe Unisex Salon",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Vibe Unisex Salon – Premium Hair & Beauty Care",
