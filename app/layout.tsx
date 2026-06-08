@@ -39,16 +39,19 @@ export const metadata: Metadata = {
   authors: [{ name: "Vibe Unisex Salon" }],
   creator: "Vibe Unisex Salon",
   openGraph: {
-    type: "website",
-    locale: "en_IN",
+    title: "Best Premium Unisex Salon in Chennai | Vibe Salon",
+    description:
+      "Experience luxury hair, beauty & grooming at Vibe Unisex Salon.",
     url: "https://vibe-unisex-salon.vercel.app",
     siteName: "Vibe Unisex Salon",
+    locale: "en_IN",
+    type: "website",
     images: [
       {
         url: "https://vibe-unisex-salon.vercel.app/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Vibe Unisex Salon – Premium Hair & Beauty Care",
+        alt: "Vibe Unisex Salon",
       },
     ],
   },
@@ -82,8 +85,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${playfair.variable} ${dmSans.variable}`}
-      suppressHydrationWarning
-    >
+      suppressHydrationWarning>
       <body className="bg-[#FAF8F5] text-[#1A1410] antialiased font-sans">
         <Navbar />
         {children}
