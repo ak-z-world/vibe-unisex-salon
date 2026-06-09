@@ -52,9 +52,30 @@ export default function HeroSection() {
       className="relative w-full overflow-hidden bg-[#FDFAF6]"
       style={{ minHeight: "100svh" }}
       aria-label="Vibe Unisex Salon — Best Premium Unisex Salon in Chennai">
-      {/* ── Background texture ── */}
+      {/* Video */}
+      <div className="absolute inset-0 z-0">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="
+    absolute
+    inset-0
+    w-full
+    h-full
+    object-cover
+    object-center
+  ">
+          <source src="/images/video1.mp4" type="video/mp4" />
+        </video>
+      </div>
+
+      {/* Left-side overlay only */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-r from-black/75 via-black/45 to-black/15" />
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.018]"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-br"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
           backgroundSize: "256px",
@@ -62,7 +83,7 @@ export default function HeroSection() {
       />
 
       {/* ── Warm gradient wash ── */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#FFF8EE]/60 via-[#FDFAF6] to-[#F5EFE6]/40" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#FFF8EE]/15 via-transparent to-[#F5EFE6]/10" />
 
       {/* ── Gold accent line top ── */}
       <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#C9A84C]/50 to-transparent" />
@@ -83,7 +104,7 @@ export default function HeroSection() {
             variants={fadeUp}
             className="flex items-center gap-3 mb-8">
             <span className="h-px w-10 bg-gradient-to-r from-[#C9A84C] to-[#E7D8B1]" />
-            <span className="text-[10px] tracking-[0.38em] uppercase text-[#9A8060] font-medium">
+            <span className="text-[10px] tracking-[0.38em] uppercase bg-gradient-to-r from-[#F6D98B] to-[#FFF3C4] font-medium">
               Since 2018 · Chennai&apos;s Finest
             </span>
           </motion.div>
@@ -91,7 +112,7 @@ export default function HeroSection() {
           {/* H1 — single line each */}
           <motion.h1
             variants={fadeUp}
-            className="font-display leading-[1.0] tracking-tight text-[#2C2117]">
+            className="font-display leading-[1.0] tracking-tight text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
             <span className="block text-5xl sm:text-6xl md:text-7xl whitespace-nowrap">
               Best Premium
             </span>
@@ -99,7 +120,7 @@ export default function HeroSection() {
               className="block text-5xl sm:text-6xl md:text-7xl italic"
               style={{
                 background:
-                  "linear-gradient(135deg,#B8922E 0%,#E2C97E 45%,#B8922E 100%)",
+                  "linear-gradient(135deg,#F7D774 0%,#FFD95C 50%,#D4A63C 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -114,7 +135,7 @@ export default function HeroSection() {
           {/* Sub */}
           <motion.p
             variants={fadeUp}
-            className="mt-7 text-[#7A6A58] text-lg md:text-xl font-light leading-relaxed max-w-lg">
+            className="mt-7 text-white/85 text-lg md:text-xl font-light leading-relaxed max-w-lg drop-shadow-lg">
             Luxury hair, beauty &amp; grooming experiences crafted by expert
             stylists — where every visit is a transformation.
           </motion.p>
@@ -140,7 +161,24 @@ export default function HeroSection() {
 
             <Link
               href="/services"
-              className="inline-flex items-center gap-3 border border-[#C9A84C]/50 text-[#9A7840] px-9 py-4 text-sm tracking-[0.16em] uppercase font-light hover:bg-[#C9A84C]/6 hover:border-[#C9A84C] transition-all duration-300"
+              className="
+                inline-flex
+                items-center
+                gap-3
+                border
+                border-white/40
+                text-white
+                px-9
+                py-4
+                text-sm
+                tracking-[0.16em]
+                uppercase
+                font-light
+                hover:bg-white/10
+                hover:border-[#FFD95C]
+                transition-all
+                duration-300
+                "
               aria-label="Explore Vibe Salon services">
               Explore Services →
             </Link>
@@ -165,79 +203,11 @@ export default function HeroSection() {
                   }}>
                   {s.value}
                 </span>
-                <span className="text-[9px] mt-1 tracking-[0.22em] uppercase text-[#9A8878]">
+                <span className="mt-2 text-[10px] uppercase tracking-[0.2em] text-white/80">
                   {s.label}
                 </span>
               </div>
             ))}
-          </motion.div>
-        </motion.div>
-
-        {/* ── RIGHT — Hero images ── */}
-        <motion.div
-          style={{ y: imageY }}
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="flex-1 lg:flex-none lg:w-[46%] xl:w-[44%] relative self-stretch flex items-end pb-0">
-          {/* Primary image — hair spa (image 2 — most cinematic) */}
-          <div className="relative w-full aspect-[3/4] lg:aspect-auto lg:h-[88vh] overflow-hidden">
-            {/* Gold border frame */}
-            <div className="absolute inset-0 z-20 pointer-events-none">
-              <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-[#C9A84C]/60" />
-              <div className="absolute top-0 right-0 w-12 h-12 border-t-2 border-r-2 border-[#C9A84C]/60" />
-              <div className="absolute bottom-0 left-0 w-12 h-12 border-b-2 border-l-2 border-[#C9A84C]/60" />
-              <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-[#C9A84C]/60" />
-            </div>
-
-            {/* Gradient fade — bottom */}
-            <div className="absolute bottom-0 inset-x-0 h-1/3 bg-gradient-to-t from-[#FDFAF6] to-transparent z-10" />
-            {/* Gradient fade — left to blend with content */}
-            <div className="absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-[#FDFAF6] to-transparent z-10 hidden lg:block" />
-
-            <Image
-              src="/images/hairspa.jpg"
-              alt="Luxury hair spa treatment at Vibe Unisex Salon Chennai"
-              fill
-              priority
-              className="object-cover object-center scale-105 transition-transform duration-[8000ms] ease-out"
-              sizes="(max-width:1024px) 100vw, 46vw"
-            />
-
-            {/* Floating badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
-              className="absolute bottom-10 left-6 z-20 bg-white/90 backdrop-blur-sm border border-[#E8DDD0] px-6 py-4 shadow-lg shadow-[#C9A84C]/10">
-              <p className="text-[9px] tracking-[0.3em] uppercase text-[#9A8060] mb-1">
-                Rated
-              </p>
-              <div className="flex items-baseline gap-2">
-                <span className="font-display text-2xl text-[#2C2117] font-light">
-                  4.9
-                </span>
-                <span className="text-[#C9A84C] text-sm">★★★★★</span>
-              </div>
-              <p className="text-[9px] tracking-[0.2em] text-[#9A8878] mt-0.5">
-                Chennai&apos;s #1 Luxury Salon
-              </p>
-            </motion.div>
-          </div>
-
-          {/* Secondary image thumbnail — hair wash (image 1) */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.9, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute -bottom-8 -left-8 lg:-left-14 w-36 h-36 md:w-44 md:h-44 overflow-hidden border-4 border-[#FDFAF6] shadow-xl shadow-[#9A8060]/15 z-20 hidden sm:block">
-            <Image
-              src="/images/salone3.jpeg"
-              alt="Professional hair wash service at Vibe Salon Chennai"
-              fill
-              className="object-cover object-center"
-              sizes="176px"
-            />
           </motion.div>
         </motion.div>
       </div>
