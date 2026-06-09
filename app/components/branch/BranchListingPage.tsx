@@ -273,22 +273,33 @@ export default function BranchListingPage() {
       {/* ──────────── HERO ──────────── */}
       <header
         ref={heroRef}
-        className="relative h-[92vh] min-h-[600px] flex items-center justify-center overflow-hidden"
-        style={{ background: champagne }}
+        className="relative h-[92vh] min-h-[700px] flex items-center justify-center overflow-hidden pt-20 md:pt-24"
       >
         {/* parallax bg */}
         <motion.div style={{ y: heroY }} className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1600948836101-f9ffda59d250?w=1600&q=80"
-            alt="Vibe Unisex Salon Chennai luxury interior"
-            className="w-full h-full object-cover"
-          />
-          {/* light-mode overlay: soft warm white wash, preserves image but readable */}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            className="absolute inset-0 w-full h-full object-cover"
+          >
+            <source src="/images/video2.mp4" type="video/mp4" />
+          </video>
+
+          {/* Premium overlay */}
           <div
             className="absolute inset-0"
             style={{
-              background:
-                "linear-gradient(to bottom, rgba(250,244,232,0.72) 0%, rgba(250,248,245,0.82) 60%, rgba(250,248,245,0.97) 100%)",
+              background: `
+      linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.35) 0%,
+        rgba(0,0,0,0.25) 85%,
+        rgba(250,248,245,0.75) 100%
+      )
+    `,
             }}
           />
         </motion.div>
@@ -306,7 +317,7 @@ export default function BranchListingPage() {
         {/* hero content */}
         <motion.div
           style={{ opacity: heroOpacity }}
-          className="relative z-10 text-center px-6 max-w-4xl mx-auto"
+          className="relative z-10 text-center px-6 max-w-4xl mx-auto pt-15 md:pt-15"
         >
           <motion.p
             initial={{ opacity: 0, letterSpacing: "0.5em" }}
@@ -323,13 +334,16 @@ export default function BranchListingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] as const }}
             className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight mb-6"
-            style={{ color: charcoal }}
+            style={{
+              color: "#FAF8F5",
+              textShadow: "0 4px 30px rgba(0,0,0,0.45)",
+            }}
           >
             Best Premium Unisex
             <br />
             <span
               style={{
-                background: `linear-gradient(135deg, #C9A84C 0%, #E8C96A 50%, #A8882C 100%)`,
+                background: "linear-gradient(135deg, #F4D06F 0%, #FFE7A3 50%, #D4AF37 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
@@ -345,7 +359,10 @@ export default function BranchListingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
             className="text-lg md:text-xl max-w-2xl mx-auto mb-10 font-sans leading-relaxed"
-            style={{ color: taupe }}
+            style={{
+  color: "rgba(255,255,255,0.88)",
+  textShadow: "0 2px 15px rgba(0,0,0,0.55)",
+}}
           >
             Five luxury locations across Chennai. One uncompromising standard of beauty.
           </motion.p>

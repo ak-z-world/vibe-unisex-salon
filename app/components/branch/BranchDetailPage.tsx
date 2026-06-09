@@ -27,9 +27,9 @@ const fadeUp = {
   visible: (delay = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { 
-      duration: 0.9, 
-      delay, 
+    transition: {
+      duration: 0.9,
+      delay,
       ease: [0.22, 1, 0.36, 1] as const // <-- Add 'as const' right here
     },
   }),
@@ -57,202 +57,143 @@ export default function BranchDetailPage({ branch }: { branch: Branch }) {
     <main className="font-body bg-[#FDFAF6] antialiased" id="main-content">
 
       {/* ════════════════════════════════════════════
-          BREADCRUMB NAV
-      ════════════════════════════════════════════ */}
-      <nav
-        className="relative z-50 bg-white border-b border-[#EDE5D8] px-6 lg:px-16"
-        aria-label="Breadcrumb"
-      >
-        <div className="container mx-auto max-w-screen-xl py-3 flex items-center gap-2 text-xs text-[#9A8878] tracking-wide">
-          <Link href="/" className="hover:text-[#9A7840] transition-colors duration-200">
-            Home
-          </Link>
-          <span className="text-[#D4C4B0]">/</span>
-          <Link href="/branches" className="hover:text-[#9A7840] transition-colors duration-200">
-            Branches
-          </Link>
-          <span className="text-[#D4C4B0]">/</span>
-          <span className="text-[#4A3D33] font-medium">
-            {branch.name}
-          </span>
-        </div>
-      </nav>
-
-      {/* ════════════════════════════════════════════
           HERO SECTION
       ════════════════════════════════════════════ */}
       <section
         ref={heroRef}
-        className="relative w-full overflow-hidden"
-        style={{ minHeight: "90svh" }}
-        aria-label={`Vibe Unisex Salon ${branch.name} — ${branch.city}`}
+        className="relative min-h-[100svh] overflow-hidden bg-[#FDFAF6]"
+        aria-label={`Vibe Unisex Salon ${branch.name}`}
       >
-        {/* Background texture */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.018] z-10"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-            backgroundSize: "256px",
-          }}
-        />
-
-        {/* Parallax image — right column */}
+        {/* FULL VIDEO BACKGROUND */}
         <motion.div
           style={{ y: heroImageY }}
-          className="absolute inset-y-0 right-0 w-full lg:w-[54%] will-change-transform"
+          className="absolute inset-0 w-full h-full"
         >
-          <div className="relative w-full h-full min-h-[90svh]">
-            <Image
-              src={branch.featuredImageUrl}
-              alt={`Vibe Unisex Salon ${branch.name}, ${branch.neighborhood}, ${branch.city}`}
-              fill
-              priority
-              className="object-cover object-center"
-              sizes="(max-width:1024px) 100vw, 54vw"
-            />
-            {/* Cinematic overlay — left fade into content area */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#FDFAF6] via-[#FDFAF6]/70 to-transparent lg:via-[#FDFAF6]/40" />
-            {/* Bottom fade */}
-            <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-[#FDFAF6] to-transparent" />
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            className="absolute inset-0 h-full w-full object-cover object-right md:object-center"
+          >
+            <source src="/images/video3.mp4" type="video/mp4" />
+          </video>
+
+          {/* Responsive Luxury Overlay */}
+          {/* Mobile: Uniform fade for readability. Desktop: Left-heavy cinematic fade */}
+          <div className="absolute inset-0 md:hidden" />
+          <div
+            className="hidden md:block absolute inset-0"
+            style={{
+              background: `
+          linear-gradient(
+            90deg,
+            rgba(253,250,246,0.95) 0%,
+            rgba(253,250,246,0.10) 0%,
+            rgba(253,250,246,0.30) 0%,
+            transparent 10%
+          )
+        `,
+            }}
+          />
+
+          {/* Premium Vignette */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.06) 100%)",
+            }}
+          />
+        </motion.div>
+
+        {/* Gold Top Line */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#C9A84C]/50 to-transparent z-20" />
+
+        {/* CONTENT */}
+        <motion.div
+          style={{ opacity: heroOpacity }}
+          className="relative z-20 min-h-[100svh] flex items-center pt-24 pb-16"
+        >
+          <div className="w-full max-w-7xl mx-auto px-6 lg:px-16">
+            <div className="max-w-2xl flex flex-col items-start text-left">
+
+              {/* Eyebrow */}
+              <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8">
+                <div className="w-8 md:w-12 h-px bg-[#C9A84C]" />
+                <span className="text-[10px] md:text-xs tracking-[0.3em] md:tracking-[0.45em] uppercase text-[#C9A84C] font-semibold md:whitespace-nowrap">
+                  {branch.neighborhood} • {branch.city}
+                </span>
+              </div>
+
+              {/* Heading */}
+              <h1 className="leading-[1.1] md:leading-[0.95] flex flex-col gap-2">
+                <span className="block text-[#1A1410] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight">
+                  Vibe Unisex Salon
+                </span>
+
+                <span
+                  className="block italic text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] pb-1.5 font-light md:whitespace-nowrap"
+                  style={{
+                    background: "linear-gradient(135deg, #C9A84C 0%, #E7D8B1 50%, #A8882C 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                  }}
+                >
+                  {branch.name}
+                </span>
+              </h1>
+
+              {/* Description */}
+              <p className="mt-6 md:mt-5 text-base md:text-lg lg:text-xl leading-relaxed text-[#ffffff] max-w-[540px]">
+                Premium hair, beauty & grooming in{" "}
+                <strong className="text-[#f8e0ab] font-medium">{branch.neighborhood}</strong>,{" "}
+                {branch.city}. Expert stylists, international-grade products and
+                luxury experiences crafted for modern lifestyles.
+              </p>
+
+              {/* Stats */}
+              <div className="flex flex-wrap gap-3 mt-8 md:mt-10">
+                {[branch.hours, branch.city, "4.9 ★ Luxury Rated"].map((item) => (
+                  <div
+                    key={item}
+                    className="bg-white/80 backdrop-blur-md border border-[#E7D8B1]/50 px-4 py-2 md:px-5 md:py-3 rounded-none text-xs md:text-sm text-[#1A1410] font-medium shadow-sm"
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
+
+              {/* Buttons */}
+              <div className="flex flex-col sm:flex-row flex-wrap gap-4 md:gap-5 mt-10 md:mt-12 w-full sm:w-auto">
+                <a
+                  href={`tel:${branch.phone.replace(/\s/g, "")}`}
+                  className="w-full sm:w-auto text-center px-8 md:px-10 py-4 md:py-5 uppercase tracking-[0.15em] md:tracking-[0.18em] text-xs md:text-sm font-semibold transition-transform duration-300 hover:-translate-y-0.5"
+                  style={{
+                    background: "linear-gradient(135deg, #C9A84C, #E7D8B1, #C9A84C)",
+                    color: "#1A1410",
+                    boxShadow: "0 10px 30px rgba(201,168,76,0.25)",
+                  }}
+                >
+                  Book Appointment
+                </a>
+
+                <a
+                  href={branch.mapsLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto text-center px-8 md:px-10 py-4 md:py-5 border border-[#C9A88C]/40 bg-white/40 backdrop-blur-md uppercase tracking-[0.15em] md:tracking-[0.18em] text-xs md:text-sm text-[#b18305] font-semibold transition-all duration-300 hover:bg-white/70 hover:border-[#C9A84C]"
+                >
+                  Get Directions
+                </a>
+              </div>
+            </div>
           </div>
         </motion.div>
 
-        {/* Gold corner frames on image area */}
-        <div className="absolute top-8 right-8 w-14 h-14 border-t-2 border-r-2 border-[#C9A84C]/35 z-20 hidden lg:block" aria-hidden="true" />
-        <div className="absolute bottom-12 right-8 w-14 h-14 border-b-2 border-r-2 border-[#C9A84C]/25 z-20 hidden lg:block" aria-hidden="true" />
-
-        {/* Gold rule — top */}
-        <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#C9A84C]/40 to-transparent z-20" />
-
-        {/* Content area — left */}
-        <motion.div
-          style={{ opacity: heroOpacity }}
-          className="relative z-20 container mx-auto max-w-screen-xl px-6 lg:px-16 flex items-center min-h-[90svh]"
-        >
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            className="max-w-xl lg:max-w-[52%] xl:max-w-[46%] py-32"
-          >
-            {/* Eyebrow */}
-            <motion.div
-              variants={fadeUp}
-              custom={0.1}
-              className="flex items-center gap-3 mb-8"
-            >
-              <span className="h-px w-10 bg-gradient-to-r from-[#C9A84C] to-[#E7D8B1]" />
-              <span className="text-[10px] tracking-[0.38em] uppercase text-[#9A8060] font-medium whitespace-nowrap">
-                {branch.neighborhood} · {branch.city}
-              </span>
-            </motion.div>
-
-            {/* H1 */}
-            <motion.h1
-              variants={fadeUp}
-              custom={0.18}
-              className="font-display text-[#2C2117] leading-[1.0] tracking-tight"
-            >
-              <span className="block text-4xl sm:text-5xl md:text-6xl whitespace-nowrap">
-                Vibe Unisex Salon
-              </span>
-              <span
-                className="block text-4xl sm:text-5xl md:text-6xl italic mt-1"
-                style={goldText}
-              >
-                {branch.name}
-              </span>
-            </motion.h1>
-
-            {/* Subheadline */}
-            <motion.p
-              variants={fadeUp}
-              custom={0.26}
-              className="mt-6 text-[#7A6A58] text-lg font-light leading-relaxed"
-            >
-              Premium hair, beauty &amp; grooming in{" "}
-              <strong className="font-medium text-[#4A3D33]">
-                {branch.neighborhood}
-              </strong>
-              , {branch.city}. Expert stylists, international-grade products,
-              and a luxurious experience every visit.
-            </motion.p>
-
-            {/* Quick info pills */}
-            <motion.div
-              variants={fadeUp}
-              custom={0.34}
-              className="mt-8 flex flex-wrap gap-3"
-            >
-              {[
-                { icon: "◉", text: branch.hours },
-                { icon: "◈", text: branch.city },
-                { icon: "✦", text: "4.9 ★ Rating" },
-              ].map((pill) => (
-                <div
-                  key={pill.text}
-                  className="flex items-center gap-2 border border-[#EDE5D8] bg-white/80 backdrop-blur-sm px-4 py-2 text-xs text-[#4A3D33]"
-                >
-                  <span style={goldText} className="text-sm">
-                    {pill.icon}
-                  </span>
-                  {pill.text}
-                </div>
-              ))}
-            </motion.div>
-
-            {/* CTAs */}
-            <motion.div
-              variants={fadeUp}
-              custom={0.42}
-              className="mt-10 flex flex-wrap gap-4"
-            >
-              <a
-                href={`tel:${branch.phone.replace(/\s/g, "")}`}
-                className="group relative inline-flex items-center gap-3 overflow-hidden px-9 py-4 text-sm tracking-[0.16em] uppercase font-semibold text-[#2C2117]"
-                style={{
-                  background:
-                    "linear-gradient(135deg,#D4A840 0%,#EDD58A 50%,#C9A030 100%)",
-                  boxShadow: "0 4px 24px rgba(201,168,76,0.22)",
-                }}
-                aria-label={`Call Vibe Salon ${branch.name}`}
-              >
-                <span className="relative z-10">Book Now</span>
-                <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1">
-                  →
-                </span>
-                <span className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" />
-              </a>
-
-              <a
-                href={branch.mapsLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 border border-[#C9A84C]/50 text-[#9A7840] px-9 py-4 text-sm tracking-[0.16em] uppercase font-light hover:bg-[#FFF8EE] hover:border-[#C9A84C] transition-all duration-300"
-                aria-label={`Get directions to Vibe Salon ${branch.name}`}
-              >
-                Get Directions →
-              </a>
-            </motion.div>
-
-            {/* Address block */}
-            <motion.div
-              variants={fadeUp}
-              custom={0.5}
-              className="mt-10 flex gap-3 border-l-2 border-[#C9A84C]/40 pl-5"
-            >
-              <div>
-                <div className="text-[9px] tracking-[0.28em] uppercase text-[#9A8060] mb-1 font-medium">
-                  Address
-                </div>
-                <address className="text-[#4A3D33] text-sm font-light not-italic leading-relaxed">
-                  {branch.address}
-                  <br />
-                  {branch.neighborhood}, {branch.city} — {branch.pincode}
-                </address>
-              </div>
-            </motion.div>
-          </motion.div>
-        </motion.div>
+        {/* Bottom Fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-24 md:h-32 bg-gradient-to-t from-[#FDFAF6] to-transparent z-10" />
       </section>
 
       {/* ════════════════════════════════════════════

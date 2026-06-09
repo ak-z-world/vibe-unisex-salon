@@ -51,46 +51,59 @@ export default function HeroSection() {
       ref={ref}
       className="relative w-full overflow-hidden bg-[#FDFAF6]"
       style={{ minHeight: "100svh" }}
-      aria-label="Vibe Unisex Salon — Best Premium Unisex Salon in Chennai">
-      {/* Video */}
+      aria-label="Vibe Unisex Salon — Best Premium Unisex Salon in Chennai"
+    >
+      {/* Video Background */}
       <div className="absolute inset-0 z-0">
+        {/* Desktop / Tablet Video */}
         <video
           autoPlay
           muted
           loop
           playsInline
           preload="auto"
-          className="
-    absolute
-    inset-0
-    w-full
-    h-full
-    object-cover
-    object-center
-  ">
+          className="hidden md:block absolute inset-0 w-full h-full object-cover object-center"
+        >
           <source src="/images/video1.mp4" type="video/mp4" />
+        </video>
+
+        {/* Mobile Portrait Video */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="block md:hidden absolute inset-0 w-full h-full object-cover object-center"
+        >
+          <source src="/images/video4.mp4" type="video/mp4" />
         </video>
       </div>
 
-      {/* Left-side overlay only */}
-      <div className="absolute inset-0 z-[1] bg-gradient-to-r from-black/75 via-black/45 to-black/15" />
+      {/* ── CLEAN, LIGHT OVERLAY FOR TEXT READABILITY (No Blur/Noise) ── */}
+      {/* Mobile gets a uniform light wash; Desktop gets a smooth left-to-right fade */}
+      <div className="absolute inset-0 z-[1] md:hidden" />
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-br"
+        className="hidden md:block absolute inset-0 z-[1]"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-          backgroundSize: "256px",
+          background: `
+        linear-gradient(
+          90deg,
+          rgba(253,250,246,0.95) 0%,
+          rgba(253,250,246,0.75) 0%,
+          rgba(253,250,246,0.15) 5%,
+          transparent 10%
+        )
+      `
         }}
       />
 
-      {/* ── Warm gradient wash ── */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#FFF8EE]/15 via-transparent to-[#F5EFE6]/10" />
-
       {/* ── Gold accent line top ── */}
-      <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#C9A84C]/50 to-transparent" />
+      <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#C9A84C]/50 to-transparent z-[2]" />
 
       {/* ════════════════════════════════════════
-          MAIN HERO GRID
-      ════════════════════════════════════════ */}
+      MAIN HERO GRID
+  ════════════════════════════════════════ */}
       <div className="relative z-10 mx-auto max-w-screen-xl px-6 lg:px-14 xl:px-20 pt-32 pb-0 flex flex-col lg:flex-row items-center gap-12 lg:gap-0 min-h-screen">
         {/* ── LEFT — Copy ── */}
         <motion.div
@@ -98,13 +111,15 @@ export default function HeroSection() {
           variants={stagger}
           initial="hidden"
           animate="visible"
-          className="flex-1 lg:pr-16 xl:pr-24 pb-16 lg:pb-28">
+          className="flex-1 lg:pr-16 xl:pr-24 pb-16 lg:pb-28"
+        >
           {/* Eyebrow */}
           <motion.div
             variants={fadeUp}
-            className="flex items-center gap-3 mb-8">
-            <span className="h-px w-10 bg-gradient-to-r from-[#C9A84C] to-[#E7D8B1]" />
-            <span className="text-[10px] tracking-[0.38em] uppercase bg-gradient-to-r from-[#F6D98B] to-[#FFF3C4] font-medium">
+            className="flex items-center gap-3 mb-8"
+          >
+            <span className="h-px w-10 bg-[#866406]" />
+            <span className="text-[10px] tracking-[0.38em] uppercase text-[#8d6804] font-semibold">
               Since 2018 · Chennai&apos;s Finest
             </span>
           </motion.div>
@@ -135,7 +150,7 @@ export default function HeroSection() {
           {/* Sub */}
           <motion.p
             variants={fadeUp}
-            className="mt-7 text-white/85 text-lg md:text-xl font-light leading-relaxed max-w-lg drop-shadow-lg">
+            className="mt-7 text-black text-lg md:text-xl font-light leading-relaxed max-w-lg drop-shadow-lg">
             Luxury hair, beauty &amp; grooming experiences crafted by expert
             stylists — where every visit is a transformation.
           </motion.p>
