@@ -118,8 +118,8 @@ export default function HeroSection() {
             variants={fadeUp}
             className="flex items-center gap-3 mb-8"
           >
-            <span className="h-px w-10 bg-[#866406]" />
-            <span className="text-[10px] tracking-[0.38em] uppercase text-[#8d6804] font-semibold">
+            <span className="h-px w-10 bg-[#ffffff]" />
+            <span className="text-[10px] tracking-[0.38em] uppercase text-[#ffffff] font-semibold">
               Since 2018 · Chennai&apos;s Finest
             </span>
           </motion.div>
@@ -150,7 +150,7 @@ export default function HeroSection() {
           {/* Sub */}
           <motion.p
             variants={fadeUp}
-            className="mt-7 text-black text-lg md:text-xl font-light leading-relaxed max-w-lg drop-shadow-lg">
+            className="mt-7 text-white text-lg md:text-xl font-light leading-relaxed max-w-lg drop-shadow-lg">
             Luxury hair, beauty &amp; grooming experiences crafted by expert
             stylists — where every visit is a transformation.
           </motion.p>
