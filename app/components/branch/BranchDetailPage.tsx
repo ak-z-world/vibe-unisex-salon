@@ -30,7 +30,7 @@ const fadeUp = {
     transition: {
       duration: 0.9,
       delay,
-      ease: [0.22, 1, 0.36, 1] as const // <-- Add 'as const' right here
+      ease: [0.22, 1, 0.36, 1] as const, // <-- Add 'as const' right here
     },
   }),
 };
@@ -55,46 +55,68 @@ export default function BranchDetailPage({ branch }: { branch: Branch }) {
 
   return (
     <main className="font-body bg-[#FDFAF6] antialiased" id="main-content">
-
       {/* ════════════════════════════════════════════
           HERO SECTION
       ════════════════════════════════════════════ */}
       <section
         ref={heroRef}
         className="relative min-h-[100svh] overflow-hidden bg-[#FDFAF6]"
-        aria-label={`Vibe Unisex Salon ${branch.name}`}
-      >
+        aria-label={`Vibe Unisex Salon ${branch.name}`}>
         {/* FULL VIDEO BACKGROUND */}
         <motion.div
           style={{ y: heroImageY }}
-          className="absolute inset-0 w-full h-full"
-        >
+          className="absolute inset-0 w-full h-full">
+          {/* MOBILE VIDEO */}
           <video
             autoPlay
             muted
             loop
             playsInline
             preload="auto"
-            className="absolute inset-0 h-full w-full object-cover object-right md:object-center"
-          >
+            className="absolute inset-0 h-full w-full object-cover object-center md:hidden">
+            <source src="/images/video5.mp4" type="video/mp4" />
+          </video>
+
+          {/* DESKTOP VIDEO */}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            className="absolute inset-0 h-full w-full object-cover object-center hidden md:block">
             <source src="/images/video3.mp4" type="video/mp4" />
           </video>
 
-          {/* Responsive Luxury Overlay */}
-          {/* Mobile: Uniform fade for readability. Desktop: Left-heavy cinematic fade */}
-          <div className="absolute inset-0 md:hidden" />
+          {/* MOBILE OVERLAY */}
+          <div
+            className="absolute inset-0 md:hidden"
+            style={{
+              background: `
+        linear-gradient(
+          180deg,
+          rgba(0,0,0,0.35) 0%,
+          rgba(0,0,0,0.25) 30%,
+          rgba(0,0,0,0.45) 100%
+        )
+      `,
+            }}
+          />
+
+          {/* DESKTOP OVERLAY */}
           <div
             className="hidden md:block absolute inset-0"
             style={{
               background: `
-          linear-gradient(
-            90deg,
-            rgba(253,250,246,0.95) 0%,
-            rgba(253,250,246,0.10) 0%,
-            rgba(253,250,246,0.30) 0%,
-            transparent 10%
-          )
-        `,
+        linear-gradient(
+          90deg,
+          rgba(253,250,246,0.92) 0%,
+          rgba(253,250,246,0.82) 25%,
+          rgba(253,250,246,0.45) 50%,
+          rgba(253,250,246,0.10) 75%,
+          transparent 100%
+        )
+      `,
             }}
           />
 
@@ -103,7 +125,7 @@ export default function BranchDetailPage({ branch }: { branch: Branch }) {
             className="absolute inset-0 pointer-events-none"
             style={{
               background:
-                "radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.06) 100%)",
+                "radial-gradient(circle at center, transparent 45%, rgba(0,0,0,0.08) 100%)",
             }}
           />
         </motion.div>
@@ -114,11 +136,9 @@ export default function BranchDetailPage({ branch }: { branch: Branch }) {
         {/* CONTENT */}
         <motion.div
           style={{ opacity: heroOpacity }}
-          className="relative z-20 min-h-[100svh] flex items-center pt-24 pb-16"
-        >
+          className="relative z-20 min-h-[100svh] flex items-center pt-24 pb-16">
           <div className="w-full max-w-7xl mx-auto px-6 lg:px-16">
             <div className="max-w-2xl flex flex-col items-start text-left">
-
               {/* Eyebrow */}
               <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8">
                 <div className="w-8 md:w-12 h-px bg-[#C9A84C]" />
@@ -129,18 +149,24 @@ export default function BranchDetailPage({ branch }: { branch: Branch }) {
 
               {/* Heading */}
               <h1 className="leading-[1.1] md:leading-[0.95] flex flex-col gap-2">
-                <span className="block text-[#1A1410] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight">
+                <span
+                  className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight"
+                  style={{
+                    color: "#2B1E16",
+                    textShadow: "0 2px 20px rgba(255,255,255,0.15)",
+                  }}>
                   Vibe Unisex Salon
                 </span>
 
                 <span
                   className="block italic text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] pb-1.5 font-light md:whitespace-nowrap"
                   style={{
-                    background: "linear-gradient(135deg, #C9A84C 0%, #E7D8B1 50%, #A8882C 100%)",
+                    background:
+                      "linear-gradient(135deg,#EED89A 0%,#D8B45C 35%,#F4E4B0 55%,#B68B2A 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
-                  }}
-                >
+                    textShadow: "0 4px 30px rgba(212,175,55,0.25)",
+                  }}>
                   {branch.name}
                 </span>
               </h1>
@@ -148,21 +174,24 @@ export default function BranchDetailPage({ branch }: { branch: Branch }) {
               {/* Description */}
               <p className="mt-6 md:mt-5 text-base md:text-lg lg:text-xl leading-relaxed text-[#ffffff] max-w-[540px]">
                 Premium hair, beauty & grooming in{" "}
-                <strong className="text-[#f8e0ab] font-medium">{branch.neighborhood}</strong>,{" "}
-                {branch.city}. Expert stylists, international-grade products and
-                luxury experiences crafted for modern lifestyles.
+                <strong className="text-[#f8e0ab] font-medium">
+                  {branch.neighborhood}
+                </strong>
+                , {branch.city}. Expert stylists, international-grade products
+                and luxury experiences crafted for modern lifestyles.
               </p>
 
               {/* Stats */}
               <div className="flex flex-wrap gap-3 mt-8 md:mt-10">
-                {[branch.hours, branch.city, "4.9 ★ Luxury Rated"].map((item) => (
-                  <div
-                    key={item}
-                    className="bg-white/80 backdrop-blur-md border border-[#E7D8B1]/50 px-4 py-2 md:px-5 md:py-3 rounded-none text-xs md:text-sm text-[#1A1410] font-medium shadow-sm"
-                  >
-                    {item}
-                  </div>
-                ))}
+                {[branch.hours, branch.city, "4.9 ★ Luxury Rated"].map(
+                  (item) => (
+                    <div
+                      key={item}
+                      className="bg-white/80 backdrop-blur-md border border-[#E7D8B1]/50 px-4 py-2 md:px-5 md:py-3 rounded-none text-xs md:text-sm text-[#1A1410] font-medium shadow-sm">
+                      {item}
+                    </div>
+                  ),
+                )}
               </div>
 
               {/* Buttons */}
@@ -171,11 +200,11 @@ export default function BranchDetailPage({ branch }: { branch: Branch }) {
                   href={`tel:${branch.phone.replace(/\s/g, "")}`}
                   className="w-full sm:w-auto text-center px-8 md:px-10 py-4 md:py-5 uppercase tracking-[0.15em] md:tracking-[0.18em] text-xs md:text-sm font-semibold transition-transform duration-300 hover:-translate-y-0.5"
                   style={{
-                    background: "linear-gradient(135deg, #C9A84C, #E7D8B1, #C9A84C)",
+                    background:
+                      "linear-gradient(135deg, #C9A84C, #E7D8B1, #C9A84C)",
                     color: "#1A1410",
                     boxShadow: "0 10px 30px rgba(201,168,76,0.25)",
-                  }}
-                >
+                  }}>
                   Book Appointment
                 </a>
 
@@ -183,8 +212,7 @@ export default function BranchDetailPage({ branch }: { branch: Branch }) {
                   href={branch.mapsLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto text-center px-8 md:px-10 py-4 md:py-5 border border-[#C9A88C]/40 bg-white/40 backdrop-blur-md uppercase tracking-[0.15em] md:tracking-[0.18em] text-xs md:text-sm text-[#b18305] font-semibold transition-all duration-300 hover:bg-white/70 hover:border-[#C9A84C]"
-                >
+                  className="w-full sm:w-auto text-center px-8 md:px-10 py-4 md:py-5 border border-[#C9A88C]/40 bg-white/40 backdrop-blur-md uppercase tracking-[0.15em] md:tracking-[0.18em] text-xs md:text-sm text-[#b18305] font-semibold transition-all duration-300 hover:bg-white/70 hover:border-[#C9A84C]">
                   Get Directions
                 </a>
               </div>
@@ -245,8 +273,7 @@ function BranchInfoStrip({ branch }: { branch: Branch }) {
     <section
       ref={ref}
       className="relative bg-white border-y border-[#EDE5D8]"
-      aria-label="Branch quick information"
-    >
+      aria-label="Branch quick information">
       <div className="container mx-auto max-w-screen-xl px-6 lg:px-16">
         <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-[#EDE5D8]">
           {items.map((item, i) => (
@@ -254,21 +281,25 @@ function BranchInfoStrip({ branch }: { branch: Branch }) {
               key={item.label}
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="py-8 px-6 flex flex-col gap-1 hover:bg-[#FFF8EE]/60 transition-colors duration-300"
-            >
+              transition={{
+                duration: 0.7,
+                delay: i * 0.08,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="py-8 px-6 flex flex-col gap-1 hover:bg-[#FFF8EE]/60 transition-colors duration-300">
               <span className="text-[9px] tracking-[0.3em] uppercase text-[#9A8060] font-medium">
                 {item.label}
               </span>
               {item.isPhone ? (
                 <a
                   href={`tel:${item.value.replace(/\s/g, "")}`}
-                  className="text-[#2C2117] text-sm font-medium hover:text-[#9A7840] transition-colors duration-200"
-                >
+                  className="text-[#2C2117] text-sm font-medium hover:text-[#9A7840] transition-colors duration-200">
                   {item.value}
                 </a>
               ) : (
-                <span className="text-[#2C2117] text-sm font-medium">{item.value}</span>
+                <span className="text-[#2C2117] text-sm font-medium">
+                  {item.value}
+                </span>
               )}
             </motion.div>
           ))}
@@ -288,10 +319,10 @@ function BranchServicesGrid({ branch }: { branch: Branch }) {
       ref={ref}
       className="relative py-24 overflow-hidden"
       style={{
-        background: "linear-gradient(160deg,#FAF6F0 0%,#FFF8EE 50%,#F5EFE6 100%)",
+        background:
+          "linear-gradient(160deg,#FAF6F0 0%,#FFF8EE 50%,#F5EFE6 100%)",
       }}
-      aria-labelledby="services-heading"
-    >
+      aria-labelledby="services-heading">
       {/* Ambient blobs */}
       <div className="pointer-events-none absolute -top-24 -right-24 w-96 h-96 rounded-full bg-[#FFF3DA]/60 blur-3xl" />
       <div className="pointer-events-none absolute bottom-0 left-0 w-80 h-80 rounded-full bg-[#F5EAD4]/50 blur-3xl" />
@@ -302,8 +333,7 @@ function BranchServicesGrid({ branch }: { branch: Branch }) {
           initial={{ opacity: 0, y: 32 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-14"
-        >
+          className="mb-14">
           <div className="flex items-center gap-3 mb-5">
             <span className="h-px w-10 bg-gradient-to-r from-[#C9A84C] to-[#E7D8B1]" />
             <span className="text-[10px] tracking-[0.38em] uppercase text-[#9A8060] font-medium">
@@ -312,8 +342,7 @@ function BranchServicesGrid({ branch }: { branch: Branch }) {
           </div>
           <h2
             id="services-heading"
-            className="font-display text-3xl md:text-4xl text-[#2C2117] leading-tight"
-          >
+            className="font-display text-3xl md:text-4xl text-[#2C2117] leading-tight">
             Services at{" "}
             <span style={goldText} className="italic">
               {branch.name}
@@ -334,15 +363,13 @@ function BranchServicesGrid({ branch }: { branch: Branch }) {
                 delay: i * 0.07,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="group bg-white border border-[#EDE5D8] p-6 hover:border-[#C9A84C]/50 hover:shadow-[0_6px_28px_rgba(201,168,76,0.10)] transition-all duration-500"
-            >
+              className="group bg-white border border-[#EDE5D8] p-6 hover:border-[#C9A84C]/50 hover:shadow-[0_6px_28px_rgba(201,168,76,0.10)] transition-all duration-500">
               {/* Gold top hairline */}
               <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#C9A84C]/0 to-transparent group-hover:via-[#C9A84C]/60 transition-all duration-500" />
 
               <div
                 className="text-xl mb-4 transition-transform duration-300 group-hover:scale-110 inline-block"
-                style={goldText}
-              >
+                style={goldText}>
                 {svc.icon}
               </div>
               <h3 className="text-[#2C2117] text-sm font-semibold leading-snug tracking-tight">
@@ -370,21 +397,18 @@ function BranchMapPanel({ branch }: { branch: Branch }) {
     <section
       ref={ref}
       className="relative bg-[#FDFAF6] py-24 overflow-hidden"
-      aria-labelledby="location-heading"
-    >
+      aria-labelledby="location-heading">
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#C9A84C]/25 to-transparent" />
       <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#C9A84C]/20 to-transparent" />
       <div className="pointer-events-none absolute -right-32 top-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-[#FFF3DA]/40 blur-3xl" />
 
       <div className="relative z-10 container mx-auto max-w-screen-xl px-6 lg:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-
           {/* Left — contact details */}
           <motion.div
             initial={{ opacity: 0, x: -36 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          >
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}>
             <div className="flex items-center gap-3 mb-7">
               <span className="h-px w-10 bg-gradient-to-r from-[#C9A84C] to-[#E7D8B1]" />
               <span className="text-[10px] tracking-[0.38em] uppercase text-[#9A8060] font-medium">
@@ -394,8 +418,7 @@ function BranchMapPanel({ branch }: { branch: Branch }) {
 
             <h2
               id="location-heading"
-              className="font-display text-3xl md:text-4xl text-[#2C2117] leading-tight mb-8"
-            >
+              className="font-display text-3xl md:text-4xl text-[#2C2117] leading-tight mb-8">
               Visit{" "}
               <span style={goldText} className="italic">
                 {branch.name}
@@ -405,7 +428,9 @@ function BranchMapPanel({ branch }: { branch: Branch }) {
             <div className="space-y-6">
               {/* Address */}
               <div className="flex gap-4 p-5 bg-white border border-[#EDE5D8] hover:border-[#C9A84C]/40 hover:shadow-[0_4px_16px_rgba(201,168,76,0.08)] transition-all duration-300">
-                <span className="text-base mt-0.5 shrink-0" style={goldText}>◈</span>
+                <span className="text-base mt-0.5 shrink-0" style={goldText}>
+                  ◈
+                </span>
                 <div>
                   <div className="text-[9px] tracking-[0.28em] uppercase text-[#9A8060] mb-1.5 font-medium">
                     Address
@@ -422,7 +447,9 @@ function BranchMapPanel({ branch }: { branch: Branch }) {
 
               {/* Phone */}
               <div className="flex gap-4 p-5 bg-white border border-[#EDE5D8] hover:border-[#C9A84C]/40 hover:shadow-[0_4px_16px_rgba(201,168,76,0.08)] transition-all duration-300">
-                <span className="text-base mt-0.5 shrink-0" style={goldText}>◉</span>
+                <span className="text-base mt-0.5 shrink-0" style={goldText}>
+                  ◉
+                </span>
                 <div>
                   <div className="text-[9px] tracking-[0.28em] uppercase text-[#9A8060] mb-1.5 font-medium">
                     Phone
@@ -430,8 +457,7 @@ function BranchMapPanel({ branch }: { branch: Branch }) {
                   <a
                     href={`tel:${branch.phone.replace(/\s/g, "")}`}
                     className="text-[#4A3D33] text-sm font-medium hover:text-[#9A7840] transition-colors duration-200"
-                    aria-label={`Call Vibe Salon ${branch.name}`}
-                  >
+                    aria-label={`Call Vibe Salon ${branch.name}`}>
                     {branch.phone}
                   </a>
                 </div>
@@ -439,12 +465,16 @@ function BranchMapPanel({ branch }: { branch: Branch }) {
 
               {/* Hours */}
               <div className="flex gap-4 p-5 bg-white border border-[#EDE5D8] hover:border-[#C9A84C]/40 hover:shadow-[0_4px_16px_rgba(201,168,76,0.08)] transition-all duration-300">
-                <span className="text-base mt-0.5 shrink-0" style={goldText}>✧</span>
+                <span className="text-base mt-0.5 shrink-0" style={goldText}>
+                  ✧
+                </span>
                 <div>
                   <div className="text-[9px] tracking-[0.28em] uppercase text-[#9A8060] mb-1.5 font-medium">
                     Hours
                   </div>
-                  <div className="text-[#4A3D33] text-sm font-light">{branch.hours}</div>
+                  <div className="text-[#4A3D33] text-sm font-light">
+                    {branch.hours}
+                  </div>
                 </div>
               </div>
             </div>
@@ -456,10 +486,11 @@ function BranchMapPanel({ branch }: { branch: Branch }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-3 border border-[#C9A84C]/50 text-[#9A7840] px-8 py-4 text-sm tracking-[0.16em] uppercase font-light hover:bg-[#FFF8EE] hover:border-[#C9A84C] transition-all duration-300"
-                aria-label={`Open Google Maps for Vibe Salon ${branch.name}`}
-              >
+                aria-label={`Open Google Maps for Vibe Salon ${branch.name}`}>
                 Open in Google Maps
-                <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                <span className="transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
               </a>
             </div>
           </motion.div>
@@ -468,12 +499,21 @@ function BranchMapPanel({ branch }: { branch: Branch }) {
           <motion.div
             initial={{ opacity: 0, x: 36 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="relative"
-          >
+            transition={{
+              duration: 0.9,
+              delay: 0.15,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="relative">
             {/* Gold corner frames */}
-            <div className="absolute -top-3 -left-3 w-10 h-10 border-t-2 border-l-2 border-[#C9A84C]/45 z-10" aria-hidden="true" />
-            <div className="absolute -bottom-3 -right-3 w-10 h-10 border-b-2 border-r-2 border-[#C9A84C]/35 z-10" aria-hidden="true" />
+            <div
+              className="absolute -top-3 -left-3 w-10 h-10 border-t-2 border-l-2 border-[#C9A84C]/45 z-10"
+              aria-hidden="true"
+            />
+            <div
+              className="absolute -bottom-3 -right-3 w-10 h-10 border-b-2 border-r-2 border-[#C9A84C]/35 z-10"
+              aria-hidden="true"
+            />
 
             <div className="relative w-full aspect-[4/3] border border-[#EDE5D8] overflow-hidden shadow-[0_8px_40px_rgba(201,168,76,0.10)]">
               <iframe
