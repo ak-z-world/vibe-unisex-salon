@@ -26,7 +26,7 @@ export const SALON_BRANCHES: Branch[] = [
       "No:42/9, First Floor, Shanthiniketan Colony, Anna Nagar, Chennai, Tamil Nadu 600101",
     state: "Tamil Nadu",
     pincode: "600101",
-    phone: "+91 98765 43210",
+    phone: "+91 9677377316",
     hours: "Mon–Sun: 9:00 AM – 9:00 PM",
     mapsLink: "https://maps.app.goo.gl/iozjgAmAGrgFqRJE7",
     featuredImageUrl:
