@@ -1,116 +1,147 @@
 "use client";
 
-import { motion, AnimatePresence, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import Image from "next/image";
+import { motion, useInView } from "framer-motion";
+import { FaInstagram } from "react-icons/fa";
+import { useRef } from "react";
 
-interface ReelItem {
-  id: string;
-  reelId: string;       // Extracted from your actual URL shortcodes
-  title: string;
-}
-
-// Top performing Reel IDs from your Instagram account: vibe_unisex_salon4
-const VIBE_LIVE_REELS: ReelItem[] = [
+const POSTS = [
   {
-    id: "vibe-embed-1",
-    reelId: "DE3PvebS9B3", // Swap with your exact high-performing Reel shortcodes
-    title: "Vibe Hair Makeover Chennai",
+    id: "3",
+    image: "/images/reels/reels4.png",
+    url: "https://www.instagram.com/p/DZZ5IzDp9gy/",
   },
   {
-    id: "vibe-embed-2",
-    reelId: "DFX_89GhjK8", 
-    title: "Bridal Makeup Transformation Vibe",
+    id: "6",
+    image: "/images/reels/reels2.png",
+    url: "https://www.instagram.com/p/DUQTf1vkjH-/",
   },
   {
-    id: "vibe-embed-3",
-    reelId: "C_xYz123gHj",
-    title: "Premium Keratin Treatment Salon",
+    id: "4",
+    image: "/images/reels/reels5.png",
+    url: "https://www.instagram.com/p/DZkTSUXA3yW/",
+  },
+  {
+    id: "5",
+    image: "/images/reels/reels3.png",
+    url: "https://www.instagram.com/p/DYHdl-epEWm/",
+  },
+  
+  {
+    id: "1",
+    image: "/images/reels/reels6.png",
+    url: "https://www.instagram.com/p/C-pjG8Gy8xf/",
   },
 ];
 
-export default function DirectInstagramReels() {
+export default function InstagramSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(sectionRef, { once: true, margin: "-60px" });
+
+  const inView = useInView(sectionRef, {
+    once: true,
+    margin: "-100px",
+  });
 
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[#FDFAF6] py-24 overflow-hidden"
-      aria-labelledby="live-reels-heading"
+      className="relative overflow-hidden bg-[#FDFAF6] py-20 md:py-24"
     >
-      {/* Luxury Background Glow */}
-      <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-[#FFF3DA]/40 blur-3xl" />
+      {/* Background Glow */}
+      <div className="pointer-events-none absolute left-1/2 top-0 h-[400px] w-[700px] -translate-x-1/2 rounded-full bg-[#FFF3DA]/40 blur-3xl" />
 
-      <div className="relative z-10 container mx-auto px-4 lg:px-12">
-        
-        {/* Luxury Section Header */}
+      <div className="container relative z-10 mx-auto px-4 lg:px-8">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center mb-16"
+          transition={{ duration: 0.8 }}
+          className="mb-12 text-center"
         >
-          <div className="flex items-center justify-center gap-4 mb-4">
+          <div className="mb-4 flex items-center justify-center gap-4">
             <span className="h-px w-8 bg-gradient-to-r from-transparent to-[#C9A84C]" />
-            <span className="text-[10px] tracking-[0.4em] uppercase text-[#9A8060] font-medium">
+            <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-[#9A8060]">
               Live Feed
             </span>
             <span className="h-px w-8 bg-gradient-to-l from-transparent to-[#C9A84C]" />
           </div>
-          <h2
-            id="live-reels-heading"
-            className="font-display text-3xl md:text-5xl text-[#2C2117] leading-tight"
-          >
+
+          <h2 className="font-display text-3xl md:text-5xl text-[#2C2117]">
             Trending on{" "}
             <span
               className="italic"
               style={{
-                background: "linear-gradient(135deg,#B8922E 0%,#E2C97E 50%,#B8922E 100%)",
+                background:
+                  "linear-gradient(135deg,#B8922E 0%,#E2C97E 50%,#B8922E 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
               }}
             >
               Instagram
             </span>
           </h2>
-          <a 
-            href="https://www.instagram.com/vibe_unisex_salon4" 
-            target="_blank" 
+
+          <a
+            href="https://www.instagram.com/vibe_unisex_salon4/"
+            target="_blank"
             rel="noopener noreferrer"
-            className="inline-block mt-3 text-xs tracking-widest uppercase text-[#9A8060] hover:text-[#B8922E] transition-colors duration-300"
+            className="mt-3 inline-block text-xs uppercase tracking-widest text-[#9A8060] transition-colors duration-300 hover:text-[#C9A84C]"
           >
             @vibe_unisex_salon4 →
           </a>
         </motion.div>
 
-        {/* Direct Embed responsive flex/grid ecosystem */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {VIBE_LIVE_REELS.map((reel, index) => (
-            <motion.div
-              key={reel.id}
-              initial={{ opacity: 0, y: 40 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="relative w-full bg-white border border-[#EDE5D8] p-3 shadow-[0_4px_30px_rgba(201,168,76,0.04)]"
-            >
-              {/* Card Accent Top Line */}
-              <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#C9A84C]/40 to-transparent" />
-              
-              {/* Native Frame Aspect Ratio Container */}
-              <div className="relative w-full aspect-[9/16] rounded-sm overflow-hidden bg-black">
-                <iframe
-                  src={`https://www.instagram.com/reel/${reel.reelId}/embed`}
-                  className="absolute top-0 left-0 w-full h-full border-0"
-                  allowTransparency
-                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                  scrolling="no"
-                  loading="lazy"
-                  title={reel.title}
-                />
-              </div>
-            </motion.div>
-          ))}
+        {/* Reels Grid */}
+        <div className="mx-auto max-w-7xl">
+          <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {POSTS.map((post, index) => (
+              <motion.a
+                key={post.id}
+                href={post.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 40 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{
+                  duration: 0.7,
+                  delay: index * 0.08,
+                }}
+                className="group mx-auto w-full max-w-[240px] overflow-hidden rounded-2xl border border-[#EDE5D8] bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
+              >
+                <div className="relative h-[280px] sm:h-[320px] md:h-[340px] lg:h-[360px] overflow-hidden">
+                  <Image
+                    src={post.image}
+                    alt="Instagram Reel"
+                    fill
+                    sizes="(max-width:768px) 50vw, (max-width:1200px) 33vw, 20vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+
+                  {/* Instagram Icon */}
+                  <div className="absolute right-3 top-3">
+                    <div className="rounded-full bg-white/90 p-1.5 backdrop-blur-sm">
+                      <FaInstagram
+                        size={14}
+                      />
+                    </div>
+                  </div>
+
+                  {/* View Reel Badge */}
+                  <div className="absolute bottom-3 left-3">
+                    <div className="inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1.5 text-[10px] font-medium text-[#2C2117] backdrop-blur-sm">
+                      <FaInstagram
+                        size={12}
+                      />
+                      View Reel
+                    </div>
+                  </div>
+                </div>
+              </motion.a>
+            ))}
+          </div>
         </div>
       </div>
     </section>

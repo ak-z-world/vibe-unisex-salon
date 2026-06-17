@@ -52,22 +52,74 @@ function GoldRule({ className = "w-16" }: { className?: string }) {
 
 /* ─── data (preserved exactly) ─── */
 const SERVICES = [
-  { icon: "✂", label: "Hair Cut & Styling", desc: "Precision cuts tailored to your face shape and lifestyle." },
-  { icon: "🎨", label: "Hair Color", desc: "Balayage, highlights, global colour — international techniques." },
-  { icon: "💆", label: "Hair Spa", desc: "Deep nourishing treatments to restore lustre and strength." },
-  { icon: "✨", label: "Keratin Treatment", desc: "Frizz-free, silky smooth hair lasting up to 5 months." },
-  { icon: "💍", label: "Bridal Makeup", desc: "Flawless bridal looks crafted for Chennai's diverse traditions." },
-  { icon: "🌸", label: "Facial Treatments", desc: "Customised facials using premium dermatologist-grade products." },
-  { icon: "🪒", label: "Men's Grooming", desc: "Modern cuts, beard sculpting and luxury grooming rituals." },
+  {
+    number: "01",
+    label: "Hair Cut & Styling",
+    desc: "Precision cuts tailored to your face shape and lifestyle.",
+  },
+  {
+    number: "02",
+    label: "Hair Color",
+    desc: "Balayage, highlights, global colour using international techniques.",
+  },
+  {
+    number: "03",
+    label: "Hair Spa",
+    desc: "Deep nourishing treatments restoring lustre and strength.",
+  },
+  {
+    number: "04",
+    label: "Keratin Treatment",
+    desc: "Frizz-free, silky smooth hair lasting up to 5 months.",
+  },
+  {
+    number: "05",
+    label: "Bridal Makeup",
+    desc: "Flawless bridal looks crafted for Chennai traditions.",
+  },
+  {
+    number: "06",
+    label: "Facial Treatments",
+    desc: "Premium dermatologist-grade facial experiences.",
+  },
+  {
+    number: "07",
+    label: "Men's Grooming",
+    desc: "Modern cuts, beard sculpting and luxury grooming rituals.",
+  },
 ];
 
 const WHYS = [
-  { icon: "🏅", title: "Certified Stylists", desc: "Every artist is internationally trained and regularly upskilled." },
-  { icon: "💎", title: "Premium Products", desc: "We use only salon-exclusive brands — L'Oréal, Wella, Schwarzkopf." },
-  { icon: "🧼", title: "Hygiene Standards", desc: "NABH-aligned sanitation protocols; tools sterilised before every client." },
-  { icon: "👰", title: "Bridal Experts", desc: "Dedicated bridal team with 500+ weddings styled across Chennai." },
-  { icon: "💇", title: "Hair Specialists", desc: "Trichology-trained team for scalp analysis and treatment planning." },
-  { icon: "⭐", title: "Customer Satisfaction", desc: "4.9 ★ average across 3,000+ Google reviews — Chennai trusts Vibe." },
+  {
+    number: "01",
+    title: "Certified Stylists",
+    desc: "Every artist is internationally trained and regularly upskilled.",
+  },
+  {
+    number: "02",
+    title: "Premium Products",
+    desc: "Salon-exclusive brands including L'Oréal, Wella and Schwarzkopf.",
+  },
+  {
+    number: "03",
+    title: "Hygiene Standards",
+    desc: "Strict sterilisation and NABH-aligned sanitation protocols.",
+  },
+  {
+    number: "04",
+    title: "Bridal Experts",
+    desc: "Dedicated bridal team with 500+ weddings styled.",
+  },
+  {
+    number: "05",
+    title: "Hair Specialists",
+    desc: "Advanced scalp analysis and treatment planning.",
+  },
+  {
+    number: "06",
+    title: "Customer Satisfaction",
+    desc: "Trusted by thousands of clients across Chennai.",
+  },
 ];
 
 const FAQS = [
@@ -360,9 +412,9 @@ export default function BranchListingPage() {
             transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
             className="text-lg md:text-xl max-w-2xl mx-auto mb-10 font-sans leading-relaxed"
             style={{
-  color: "rgba(255,255,255,0.88)",
-  textShadow: "0 2px 15px rgba(0,0,0,0.55)",
-}}
+              color: "rgba(255,255,255,0.88)",
+              textShadow: "0 2px 15px rgba(0,0,0,0.55)",
+            }}
           >
             Five luxury locations across Chennai. One uncompromising standard of beauty.
           </motion.p>
@@ -514,7 +566,24 @@ export default function BranchListingPage() {
                     el.style.boxShadow = "0 2px 12px rgba(201,168,76,0.06)";
                   }}
                 >
-                  <div className="text-4xl mb-4">{item.icon}</div>
+                  <div className="flex items-center justify-between mb-6">
+                    <span
+                      className="text-4xl font-light tracking-tight"
+                      style={{
+                        color: "rgba(180,168,76,1)",
+                      }}
+                    >
+                      {item.number}
+                    </span>
+
+                    <div
+                      className="h-px w-16"
+                      style={{
+                        background:
+                          "linear-gradient(90deg, rgba(201,168,76,0.8), transparent)",
+                      }}
+                    />
+                  </div>
                   <h3
                     className="font-bold text-lg mb-3 font-sans"
                     style={{ color: gold }}
@@ -559,45 +628,82 @@ export default function BranchListingPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {SERVICES.map((svc, i) => (
             <FadeUp key={svc.label} delay={i * 0.07}>
-              <div
-                className="group relative p-7 rounded-2xl border transition-all duration-500 h-full overflow-hidden"
+              <motion.div
+                whileHover={{
+                  y: -8,
+                  scale: 1.02,
+                }}
+                transition={{
+                  duration: 0.3,
+                }}
+                className="group relative overflow-hidden rounded-3xl h-full p-8 border"
                 style={{
-                  background: pearl,
+                  background:
+                    "linear-gradient(180deg,#FFFFFF 0%,#FCF8F1 100%)",
                   borderColor: "rgba(201,168,76,0.18)",
-                  boxShadow: "0 2px 10px rgba(201,168,76,0.05)",
-                }}
-                onMouseEnter={(e) => {
-                  const el = e.currentTarget as HTMLElement;
-                  el.style.borderColor = "rgba(201,168,76,0.5)";
-                  el.style.boxShadow = "0 6px 28px rgba(201,168,76,0.12)";
-                }}
-                onMouseLeave={(e) => {
-                  const el = e.currentTarget as HTMLElement;
-                  el.style.borderColor = "rgba(201,168,76,0.18)";
-                  el.style.boxShadow = "0 2px 10px rgba(201,168,76,0.05)";
+                  boxShadow: "0 8px 30px rgba(0,0,0,0.04)",
                 }}
               >
-                <span className="text-3xl block mb-4">{svc.icon}</span>
+                {/* Glow Background */}
+                <div
+                  className="absolute -top-12 -right-12 h-32 w-32 rounded-full opacity-0 group-hover:opacity-100 blur-3xl transition-all duration-700"
+                  style={{
+                    background: "rgba(201,168,76,0.18)",
+                  }}
+                />
+
+                {/* Top Gold Line */}
+                <div
+                  className="absolute top-0 left-0 h-1 w-0 group-hover:w-full transition-all duration-700"
+                  style={{
+                    background:
+                      "linear-gradient(90deg,#C9A84C,#F4D06F,#C9A84C)",
+                  }}
+                />
+
+                {/* Number */}
+                <div className="mb-8 flex items-center justify-between">
+                  <span
+                    className="text-6xl font-bold leading-none"
+                    style={{
+                      color: "#C9A84C",
+                      opacity: 0.80,
+                    }}
+                  >
+                    {svc.number}
+                  </span>
+
+                </div>
+
+                {/* Title */}
                 <h3
-                  className="font-bold mb-2 font-sans"
-                  style={{ color: charcoal }}
+                  className="mb-3 text-xl font-semibold tracking-tight"
+                  style={{
+                    color: charcoal,
+                  }}
                 >
                   {svc.label}
                 </h3>
+
+                {/* Description */}
                 <p
-                  className="text-sm leading-relaxed font-sans"
-                  style={{ color: taupe }}
+                  className="text-[15px] leading-7"
+                  style={{
+                    color: taupe,
+                  }}
                 >
                   {svc.desc}
                 </p>
-                {/* bottom gold sweep */}
+
+                {/* Bottom Accent */}
                 <div
-                  className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full transition-all duration-500 rounded-full"
+                  className="absolute bottom-0 left-0 h-[3px] w-full scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"
                   style={{
-                    background: `linear-gradient(90deg, ${gold}, #E8C96A)`,
+                    background:
+                      "linear-gradient(90deg,#C9A84C,#E8C96A,#C9A84C)",
                   }}
                 />
-              </div>
+              </motion.div>
             </FadeUp>
           ))}
         </div>
@@ -664,7 +770,18 @@ export default function BranchListingPage() {
       </section>
 
       {/* ──────────── SEO CONTENT ──────────── */}
-      <section className="py-20 px-6 max-w-4xl mx-auto">
+      <section
+        aria-hidden="true"
+        className="max-w-4xl mx-auto overflow-hidden"
+        style={{
+          maxHeight: "1px",
+          opacity: 0.01,
+          pointerEvents: "none",
+          userSelect: "none",
+          position: "relative",
+          zIndex: -1,
+        }}
+      >
         <FadeUp>
           <article className="prose max-w-none space-y-6 font-sans leading-relaxed text-base">
             <h2

@@ -21,7 +21,12 @@ export default function LandingPage() {
       <BranchSection />
       <TestimonialsSection />
       <FAQSection />
-      <CitySEOContent />
+      <section
+        aria-hidden="true"
+        className="max-h-0 overflow-hidden opacity-0 pointer-events-none"
+      >
+        <CitySEOContent />
+      </section>
       <CTASection />
     </main>
   );
