@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import LandingPage from "./components/landing/LandingPage";
 import { OrganizationSchema } from "./components/SEO/StructuredData";
 import { SALON_BRANCHES } from "@/lib/branches";
+import OfferPopup from "@/app/components/offers/OfferPopup";
 
 export const metadata: Metadata = {
   title: "Best Premium Unisex Salon in Chennai | Vibe Salon",
@@ -201,6 +202,7 @@ export default function HomePage() {
       />
 
       <LandingPage />
+      <OfferPopup />
     </>
   );
 }
