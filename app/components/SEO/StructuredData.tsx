@@ -34,7 +34,7 @@ export function LocalBusinessSchema({ branch }: LocalBusinessSchemaProps) {
       latitude: branch.latitude,
       longitude: branch.longitude,
     },
-    openingHours: ["Mo-Su 09:00-21:00"],
+    openingHours: ["Mo-Su 10:00-21:00"],
     sameAs: [branch.mapsLink],
     hasMap: branch.mapsLink,
     servesCuisine: undefined,

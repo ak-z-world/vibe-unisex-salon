@@ -9,28 +9,37 @@ const POSTS = [
   {
     id: "3",
     image: "/images/reels/reels4.png",
-    url: "https://www.instagram.com/p/DZZ5IzDp9gy/",
+    url: "https://www.instagram.com/reels/DY9oXQ2JeFS/",
   },
   {
     id: "6",
     image: "/images/reels/reels2.png",
-    url: "https://www.instagram.com/p/DUQTf1vkjH-/",
+    url: "https://www.instagram.com/reels/DUamoK9EsAY/",
   },
   {
     id: "4",
     image: "/images/reels/reels5.png",
-    url: "https://www.instagram.com/p/DZkTSUXA3yW/",
+    url: "https://www.instagram.com/reels/DRmW8bpkSlA/",
   },
   {
     id: "5",
     image: "/images/reels/reels3.png",
-    url: "https://www.instagram.com/p/DYHdl-epEWm/",
+    url: "https://www.instagram.com/reels/DTfYYOQjQnz/",
   },
-  
   {
     id: "1",
     image: "/images/reels/reels6.png",
-    url: "https://www.instagram.com/p/C-pjG8Gy8xf/",
+    url: "https://www.instagram.com/reels/DX_xZHGyVqh/",
+  },
+  {
+    id: "2",
+    image: "/images/reels/reels6.png",
+    url: "https://www.instagram.com/reels/DSM7fEnjPB4/",
+  },
+  {
+    id: "7",
+    image: "/images/reels/reels6.png",
+    url: "https://www.instagram.com/reels/DRzO8WLjJz_/",
   },
 ];
 

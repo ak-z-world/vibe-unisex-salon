@@ -67,7 +67,7 @@ function generateStructuredData() {
       latitude: 13.0827,
       longitude: 80.2707,
     },
-    openingHours: ["Mo-Sa 09:00-21:00", "Su 10:00-19:00"],
+    openingHours: ["Mo-Sa 10:00-21:00", "Su 10:00-21:00"],
     priceRange: "₹₹",
     image: branch.featuredImageUrl,
     hasMap: branch.mapsLink,
