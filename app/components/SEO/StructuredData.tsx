@@ -68,7 +68,7 @@ export function OrganizationSchema({
     name: "Vibe Unisex Salon",
     url: siteUrl,
     logo: `${siteUrl}/logo.png`,
-    sameAs: ["https://instagram.com/vibeunisexsalon"],
+    sameAs: ["https://www.instagram.com/vibe_unisex_salon4"],
     contactPoint: branches.map((b) => ({
       "@type": "ContactPoint",
       telephone: b.phone,

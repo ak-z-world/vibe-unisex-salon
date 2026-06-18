@@ -26,7 +26,7 @@ export default function Footer() {
             </p>
             <div className="flex gap-4 mt-6">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/vibe_unisex_salon4"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Vibe Salon on Instagram"
@@ -39,7 +39,7 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/p/Vibe-unisex-salon-61556825887339/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Vibe Salon on Facebook"
