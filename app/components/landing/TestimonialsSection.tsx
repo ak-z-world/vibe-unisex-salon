@@ -36,11 +36,6 @@ const POSTS = [
     image: "/images/reels/reels6.png",
     url: "https://www.instagram.com/reels/DSM7fEnjPB4/",
   },
-  {
-    id: "7",
-    image: "/images/reels/reels7.png",
-    url: "https://www.instagram.com/reels/DRzO8WLjJz_/",
-  },
 ];
 
 export default function InstagramSection() {
