@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Best Premium Unisex Salon in Chennai | Vibe Salon",
     description:
-      "Experience luxury hair, beauty & grooming at Vibe Unisex Salon.",
+      "Experience Best hair, beauty & grooming at Vibe Unisex Salon.",
     url: "https://vibe-unisex-salon.vercel.app",
     siteName: "Vibe Unisex Salon",
     locale: "en_IN",

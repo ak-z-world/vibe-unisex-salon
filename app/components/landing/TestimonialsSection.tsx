@@ -7,38 +7,38 @@ import { useRef } from "react";
 
 const POSTS = [
   {
-    id: "3",
-    image: "/images/reels/reels4.png",
+    id: "1",
+    image: "/images/reels/reels1.png",
     url: "https://www.instagram.com/reels/DY9oXQ2JeFS/",
   },
   {
-    id: "6",
+    id: "2",
     image: "/images/reels/reels2.png",
     url: "https://www.instagram.com/reels/DUamoK9EsAY/",
   },
   {
-    id: "4",
-    image: "/images/reels/reels5.png",
+    id: "3",
+    image: "/images/reels/reels3.png",
     url: "https://www.instagram.com/reels/DRmW8bpkSlA/",
   },
   {
-    id: "5",
-    image: "/images/reels/reels3.png",
+    id: "4",
+    image: "/images/reels/reels4.png",
     url: "https://www.instagram.com/reels/DTfYYOQjQnz/",
   },
   {
-    id: "1",
-    image: "/images/reels/reels6.png",
+    id: "5",
+    image: "/images/reels/reels5.png",
     url: "https://www.instagram.com/reels/DX_xZHGyVqh/",
   },
   {
-    id: "2",
+    id: "6",
     image: "/images/reels/reels6.png",
     url: "https://www.instagram.com/reels/DSM7fEnjPB4/",
   },
   {
     id: "7",
-    image: "/images/reels/reels6.png",
+    image: "/images/reels/reels7.png",
     url: "https://www.instagram.com/reels/DRzO8WLjJz_/",
   },
 ];
@@ -102,7 +102,7 @@ export default function InstagramSection() {
 
         {/* Reels Grid */}
         <div className="mx-auto max-w-7xl">
-          <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {POSTS.map((post, index) => (
               <motion.a
                 key={post.id}
@@ -115,14 +115,14 @@ export default function InstagramSection() {
                   duration: 0.7,
                   delay: index * 0.08,
                 }}
-                className="group mx-auto w-full max-w-[240px] overflow-hidden rounded-2xl border border-[#EDE5D8] bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
+                className="group overflow-hidden rounded-2xl border border-[#EDE5D8] bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
               >
-                <div className="relative h-[280px] sm:h-[320px] md:h-[340px] lg:h-[360px] overflow-hidden">
+                <div className="relative h-[420px] md:h-[500px] overflow-hidden">
                   <Image
                     src={post.image}
                     alt="Instagram Reel"
                     fill
-                    sizes="(max-width:768px) 50vw, (max-width:1200px) 33vw, 20vw"
+                    sizes="(max-width:768px) 100vw, 33vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
 
@@ -132,18 +132,14 @@ export default function InstagramSection() {
                   {/* Instagram Icon */}
                   <div className="absolute right-3 top-3">
                     <div className="rounded-full bg-white/90 p-1.5 backdrop-blur-sm">
-                      <FaInstagram
-                        size={14}
-                      />
+                      <FaInstagram size={14} />
                     </div>
                   </div>
 
                   {/* View Reel Badge */}
                   <div className="absolute bottom-3 left-3">
                     <div className="inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1.5 text-[10px] font-medium text-[#2C2117] backdrop-blur-sm">
-                      <FaInstagram
-                        size={12}
-                      />
+                      <FaInstagram size={12} />
                       View Reel
                     </div>
                   </div>
