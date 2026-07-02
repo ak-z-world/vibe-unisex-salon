@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://vibeunisexsalon.in/og-image.png",
+        url: "https://vibeunisexsalon.in/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Vibe Unisex Salon",
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     title: "Best Premium Unisex Salon in Chennai | Vibe Salon",
     description:
       "Experience luxury hair, beauty & grooming at Vibe Unisex Salon.",
-    images: ["https://vibeunisexsalon.in/og-image.png"],
+    images: ["https://vibeunisexsalon.in/og-image.jpg"],
   },
   robots: {
     index: true,
