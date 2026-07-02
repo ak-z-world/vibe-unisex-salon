@@ -23,7 +23,7 @@ const services = [
       "From subtle highlights to bold balayage and full transformations — executed with globally premium color brands.",
     keywords: "Hair Coloring Chennai, Best hair salon for coloring Chennai",
     icon: "◎",
-    image: "/images/salone2.jpeg",
+    image: "/images/hair-color.png",
     imagePlaceholder: "bg-gradient-to-br from-[#EDE5D8] to-[#DDD0C0]",
   },
   {
@@ -56,7 +56,7 @@ const services = [
     keywords: "Hair Smoothening Chennai, Professional hair treatment Chennai",
     icon: "∿",
     // Image 1 — hair wash / shampoo (cinematic, 1-2 people)
-    image: "/images/salone3.jpeg",
+    image: "/images/smoothing.png",
     imageAlt: "Hair wash and smoothening treatment at Vibe Salon Chennai",
     imagePlaceholder: "bg-gradient-to-br from-[#EDE5D8] to-[#DDD0C0]",
   },

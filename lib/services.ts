@@ -16,6 +16,8 @@ export type ServiceItem = {
   note?: string;
   /** Price suffix hint, e.g. "+" meaning "starting from" */
   priceSuffix?: string;
+  /** Add this to highlight specific cards */
+  highlight?: boolean;
 };
 
 export type ServiceGroup = {
@@ -67,7 +69,7 @@ export const SERVICES: ServiceCategory[] = [
       {
         label: "Female",
         items: [
-          { name: "Haircut", price: 250 },
+          { name: "Haircut", price: 250, highlight: true },
           { name: "Hair Trim", price: 250 },
           { name: "Kids Haircut", price: 250 },
           { name: "Hair Blowdry & Setting", price: 250 },
@@ -77,7 +79,7 @@ export const SERVICES: ServiceCategory[] = [
       {
         label: "Male",
         items: [
-          { name: "Haircut + Wash", price: 250 },
+          { name: "Haircut + Wash", price: 250, highlight: true },
           { name: "Trim", price: 100 },
         ],
       },

@@ -878,6 +878,7 @@ export default async function ServiceSlugPage({
   );
 }
 
+
 // ─── Pricing Grid ─────────────────────────────────────────────────────────────
 /**
  * Luxury floating glass-like cards.
@@ -902,14 +903,29 @@ function PricingGrid({
         <article
           key={`${item.name}-${i}`}
           role="listitem"
-          className="group relative bg-white/70 backdrop-blur-md p-8 rounded-2xl border border-white shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_15px_40px_rgb(185,147,90,0.08)] hover:-translate-y-1 transition-all duration-500 flex flex-col gap-4"
+          // DYNAMIC STYLING: Applies gold tint and border if item.highlight is true
+          className={`group relative backdrop-blur-md p-8 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:-translate-y-1 transition-all duration-500 flex flex-col gap-4 ${
+            item.highlight
+              ? "bg-[#B9935A]/10 border-2 border-[#B9935A] shadow-[0_15px_40px_rgba(185,147,90,0.15)] hover:shadow-[0_20px_50px_rgba(185,147,90,0.25)] z-10"
+              : "bg-white/70 border border-white hover:shadow-[0_15px_40px_rgb(185,147,90,0.08)]"
+          }`}
           aria-label={`${item.name}${item.price ? ` — ₹${item.price}` : ""}`}
         >
-          {/* Left accent bar — appears on hover */}
-          <div
-            className="absolute left-0 top-8 w-1 h-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-r-md bg-gradient-to-b from-[#B9935A] to-[#E6D9C8]"
-            aria-hidden="true"
-          />
+          
+          {/* POPULAR BADGE: Only shows if item is highlighted */}
+          {item.highlight && (
+            <div className="absolute -top-3 right-6 bg-[#B9935A] text-white text-[9px] tracking-[0.2em] uppercase px-4 py-1.5 rounded-full font-bold shadow-md">
+              Popular
+            </div>
+          )}
+
+          {/* Left accent bar — appears on hover (disabled on highlighted items as they already have a full border) */}
+          {!item.highlight && (
+            <div
+              className="absolute left-0 top-8 w-1 h-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-r-md bg-gradient-to-b from-[#B9935A] to-[#E6D9C8]"
+              aria-hidden="true"
+            />
+          )}
 
           {/* Service name */}
           <h4
@@ -932,10 +948,6 @@ function PricingGrid({
           {/* Price block */}
           <div className="mt-auto pt-6 border-t border-[#EADCC8]/50">
             {item.variants && item.variants.length > 0 ? (
-              /*
-                AEO: variant prices in <dl> — each dt/dd pair is a structured
-                key-value entity independently extractable by answer engines.
-              */
               <dl className="flex flex-col gap-3">
                 {item.variants.map((v) => (
                   <div key={v.label} className="flex items-center justify-between gap-4">
