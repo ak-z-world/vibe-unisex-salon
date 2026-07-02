@@ -22,13 +22,13 @@ export const metadata: Metadata = {
     "Best Hair Salon Chennai",
   ],
   alternates: {
-    canonical: "https://www.vibeunisexsalon.in/branches",
+    canonical: "https://vibeunisexsalon.in/branches",
   },
   openGraph: {
     title: "Best Premium Unisex Salon Branches in Chennai | Vibe Unisex Salon",
     description:
       "5 luxury salon branches across Chennai — expert stylists, premium products, bridal specialists. Visit Vibe Unisex Salon at Anna Nagar, T Nagar, Ekkatuthangal, Porur or Velachery.",
-    url: "https://www.vibeunisexsalon.in/branches",
+    url: "https://vibeunisexsalon.in/branches",
     siteName: "Vibe Unisex Salon Chennai",
     locale: "en_IN",
     type: "website",
@@ -50,9 +50,9 @@ export const metadata: Metadata = {
 function generateStructuredData() {
   const localBusinesses = SALON_BRANCHES.map((branch) => ({
     "@type": ["LocalBusiness", "BeautySalon", "HairSalon"],
-    "@id": `https://www.vibeunisexsalon.in/branches/${branch.slug}`,
+    "@id": `https://vibeunisexsalon.in/branches/${branch.slug}`,
     name: `Vibe Unisex Salon ${branch.name}`,
-    url: `https://www.vibeunisexsalon.in/branches/${branch.slug}`,
+    url: `https://vibeunisexsalon.in/branches/${branch.slug}`,
     telephone: branch.phone,
     address: {
       "@type": "PostalAddress",
@@ -85,8 +85,8 @@ function generateStructuredData() {
   const breadcrumb = {
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://www.vibeunisexsalon.in" },
-      { "@type": "ListItem", position: 2, name: "Branches", item: "https://www.vibeunisexsalon.in/branches" },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://vibeunisexsalon.in/" },
+      { "@type": "ListItem", position: 2, name: "Branches", item: "https://vibeunisexsalon.in/branches" },
     ],
   };
 
