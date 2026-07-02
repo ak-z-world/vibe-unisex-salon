@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { SALON_BRANCHES } from "@/lib/branches";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://vibe-unisex-salon.vercel.app";
+  const baseUrl = "https://www.vibeunisexsalon.in";
 
   const branchUrls = SALON_BRANCHES.map((branch) => ({
     url: `${baseUrl}/branches/${branch.slug}`,

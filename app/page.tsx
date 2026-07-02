@@ -32,19 +32,19 @@ export const metadata: Metadata = {
     "Hair spa and facial packages Chennai",
   ],
   alternates: {
-    canonical: "https://vibe-unisex-salon.vercel.app",
+    canonical: "https://www.vibeunisexsalon.in",
   },
   openGraph: {
     title: "Best Premium Unisex Salon in Chennai | Vibe Salon",
     description:
       "Experience luxury hair, beauty & grooming at Vibe Unisex Salon — Chennai's most trusted premium salon with 5 locations, 15,000+ happy clients, and a 4.9 rating.",
-    url: "https://vibe-unisex-salon.vercel.app",
+    url: "https://www.vibeunisexsalon.in",
     siteName: "Vibe Unisex Salon",
     locale: "en_IN",
     type: "website",
     images: [
       {
-        url: "https://vibe-unisex-salon.vercel.app/og-image.png",
+        url: "https://www.vibeunisexsalon.in/og-image.png",
         width: 1200,
         height: 630,
         alt: "Vibe Unisex Salon Chennai — Premium Luxury Salon",
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     title: "Best Premium Unisex Salon in Chennai | Vibe Salon",
     description:
       "Luxury hair, beauty & grooming at Vibe Unisex Salon, Chennai. 5 locations · 15,000+ clients · 4.9 rating.",
-    images: ["https://vibe-unisex-salon.vercel.app/og-image.png"],
+    images: ["https://www.vibeunisexsalon.in/og-image.png"],
   },
   robots: {
     index: true,
@@ -126,7 +126,7 @@ const localBusinessStructuredData = {
   name: "Vibe Unisex Salon",
   description:
     "Premium unisex salon in Chennai offering luxury hair, beauty, and grooming services including hair cut, hair coloring, keratin treatment, bridal makeup, and men's grooming.",
-  url: "https://vibe-unisex-salon.vercel.app",
+  url: "https://www.vibeunisexsalon.in",
   telephone: "+919876543210",
   priceRange: "₹₹₹",
   currenciesAccepted: "INR",
@@ -183,7 +183,7 @@ export default function HomePage() {
   return (
     <>
       <OrganizationSchema
-        siteUrl="https://vibe-unisex-salon.vercel.app"
+        siteUrl="https://www.vibeunisexsalon.in"
         branches={SALON_BRANCHES}
       />
 

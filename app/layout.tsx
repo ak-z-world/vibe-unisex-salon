@@ -19,7 +19,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://vibe-unisex-salon.vercel.app"),
+  metadataBase: new URL("https://www.vibeunisexsalon.in"),
   title: {
     default: "Vibe Unisex Salon | Premium Hair & Beauty Care in India",
     template: "%s | Vibe Unisex Salon",
@@ -42,13 +42,13 @@ export const metadata: Metadata = {
     title: "Best Premium Unisex Salon in Chennai | Vibe Salon",
     description:
       "Experience Best hair, beauty & grooming at Vibe Unisex Salon.",
-    url: "https://vibe-unisex-salon.vercel.app",
+    url: "https://www.vibeunisexsalon.in",
     siteName: "Vibe Unisex Salon",
     locale: "en_IN",
     type: "website",
     images: [
       {
-        url: "https://vibe-unisex-salon.vercel.app/og-image.png",
+        url: "https://www.vibeunisexsalon.in/og-image.png",
         width: 1200,
         height: 630,
         alt: "Vibe Unisex Salon",
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     title: "Best Premium Unisex Salon in Chennai | Vibe Salon",
     description:
       "Experience luxury hair, beauty & grooming at Vibe Unisex Salon.",
-    images: ["https://vibe-unisex-salon.vercel.app/og-image.png"],
+    images: ["https://www.vibeunisexsalon.in/og-image.png"],
   },
   robots: {
     index: true,

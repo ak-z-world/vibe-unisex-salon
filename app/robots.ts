@@ -7,8 +7,8 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
     },
 
-    sitemap: "https://vibe-unisex-salon.vercel.app/sitemap.xml",
+    sitemap: "https://www.vibeunisexsalon.in/sitemap.xml",
 
-    host: "https://vibe-unisex-salon.vercel.app",
+    host: "https://www.vibeunisexsalon.in",
   };
 }
