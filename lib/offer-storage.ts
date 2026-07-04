@@ -4,19 +4,38 @@ import { Offer, CreateOfferPayload, UpdateOfferPayload } from "@/types/offer";
 
 const OFFERS_FILE = path.join(process.cwd(), "data", "offers.json");
 
-async function ensureFileExists(): Promise<void> {
+// In-memory fallback for serverless (read-only) environments
+let inMemoryOffers: Offer[] | null = null;
+
+async function loadOffers(): Promise<Offer[]> {
+  // Return cached memory if available
+  if (inMemoryOffers) return inMemoryOffers;
+
   try {
-    await fs.access(OFFERS_FILE);
-  } catch {
+    const raw = await fs.readFile(OFFERS_FILE, "utf-8");
+    inMemoryOffers = JSON.parse(raw) as Offer[];
+  } catch (error) {
+    // If file doesn't exist, initialize an empty array
+    inMemoryOffers = [];
+  }
+  return inMemoryOffers;
+}
+
+async function saveOffers(offers: Offer[]): Promise<void> {
+  // 1. Always update the in-memory state so the app works instantly
+  inMemoryOffers = offers;
+
+  // 2. Try to save to disk (works locally, fails silently in production)
+  try {
     await fs.mkdir(path.dirname(OFFERS_FILE), { recursive: true });
-    await fs.writeFile(OFFERS_FILE, "[]", "utf-8");
+    await fs.writeFile(OFFERS_FILE, JSON.stringify(offers, null, 2), "utf-8");
+  } catch (error) {
+    console.warn("Read-only filesystem detected. Using in-memory storage.");
   }
 }
 
 export async function getOffers(): Promise<Offer[]> {
-  await ensureFileExists();
-  const raw = await fs.readFile(OFFERS_FILE, "utf-8");
-  return JSON.parse(raw) as Offer[];
+  return await loadOffers();
 }
 
 export async function getOfferById(id: string): Promise<Offer | null> {
@@ -31,8 +50,10 @@ export async function createOffer(payload: CreateOfferPayload): Promise<Offer> {
     createdAt: new Date().toISOString(),
     ...payload,
   };
+  
   offers.push(newOffer);
-  await fs.writeFile(OFFERS_FILE, JSON.stringify(offers, null, 2), "utf-8");
+  await saveOffers(offers);
+  
   return newOffer;
 }
 
@@ -43,16 +64,20 @@ export async function updateOffer(
   const offers = await getOffers();
   const index = offers.findIndex((o) => o.id === id);
   if (index === -1) return null;
+  
   offers[index] = { ...offers[index], ...payload };
-  await fs.writeFile(OFFERS_FILE, JSON.stringify(offers, null, 2), "utf-8");
+  await saveOffers(offers);
+  
   return offers[index];
 }
 
 export async function deleteOffer(id: string): Promise<boolean> {
   const offers = await getOffers();
   const filtered = offers.filter((o) => o.id !== id);
+  
   if (filtered.length === offers.length) return false;
-  await fs.writeFile(OFFERS_FILE, JSON.stringify(filtered, null, 2), "utf-8");
+  
+  await saveOffers(filtered);
   return true;
 }
 
