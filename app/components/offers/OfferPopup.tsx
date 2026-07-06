@@ -6,7 +6,7 @@ import { Offer } from "@/types/offer";
 import { SALON_BRANCHES } from "@/lib/branches";
 
 const POPUP_STORAGE_KEY = "offer-popup-dismissed";
-const POPUP_DELAY_MS = 5000;
+const POPUP_DELAY_MS = 500;
 const SUPPRESS_HOURS = 24;
 
 const SERVICES = [
@@ -54,11 +54,6 @@ function haversineDistance(
 }
 
 function shouldShowPopup(): boolean {
-  // 📍 FIX: Always show the popup during local development testing
-  if (process.env.NODE_ENV === "development") {
-    return true;
-  }
-
   try {
     const raw = localStorage.getItem(POPUP_STORAGE_KEY);
     if (!raw) return true;
@@ -96,22 +91,11 @@ export default function OfferPopup() {
 
   useEffect(() => {
     async function init() {
-      if (!shouldShowPopup()) {
-        if (process.env.NODE_ENV === "development") {
-          console.log("OfferPopup: Hidden due to cooldown lockout (bypassed in dev mode code).");
-        }
-        return;
-      }
+      if (!shouldShowPopup()) return;
 
       try {
         const res = await fetch("/api/offers");
-        if (!res.ok) {
-          if (process.env.NODE_ENV === "development") {
-            console.error("OfferPopup: Failed to fetch from /api/offers", res.status);
-          }
-          return;
-        }
-        
+        if (!res.ok) return;
         const all: Offer[] = await res.json();
         const activeOffers = all
           .filter((o) => o.active)
@@ -120,23 +104,12 @@ export default function OfferPopup() {
               new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
           );
         
-        if (activeOffers.length === 0) {
-          if (process.env.NODE_ENV === "development") {
-            console.warn("OfferPopup: No active offers found in the database. Ensure at least one offer has active=true.");
-          }
-          return;
-        }
+        if (activeOffers.length === 0) return;
         
-        if (process.env.NODE_ENV === "development") {
-          console.log(`OfferPopup: Successfully loaded ${activeOffers.length} active offers.`);
-        }
-
         setOffers(activeOffers);
         timerRef.current = setTimeout(() => setOpen(true), POPUP_DELAY_MS);
-      } catch (err) {
-        if (process.env.NODE_ENV === "development") {
-          console.error("OfferPopup error during initialization:", err);
-        }
+      } catch {
+        // fail silently — popup is non-critical
       }
     }
 
