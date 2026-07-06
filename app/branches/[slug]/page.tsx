@@ -13,10 +13,10 @@ function buildLocalBusinessSchema(branch: ReturnType<typeof getBranchBySlug>) {
   return {
     "@context": "https://schema.org",
     "@type": "HairSalon",
-    "@id": `https://vibesalon.in/branches/${branch.slug}`,
+    "@id": `https://vibeunisexsalon.in/branches/${branch.slug}`,
     name: `Vibe Unisex Salon — ${branch.name}`,
     description: `Premium unisex salon in ${branch.neighborhood}, ${branch.city} offering luxury hair, beauty, and grooming services.`,
-    url: `https://vibesalon.in/branches/${branch.slug}`,
+    url: `https://vibeunisexsalon.in/branches/${branch.slug}`,
     telephone: branch.phone,
     image: branch.featuredImageUrl,
     priceRange: "₹₹₹",
@@ -65,7 +65,7 @@ function buildLocalBusinessSchema(branch: ReturnType<typeof getBranchBySlug>) {
     parentOrganization: {
       "@type": "Organization",
       name: "Vibe Unisex Salon",
-      url: "https://vibesalon.in",
+      url: "https://vibeunisexsalon.in",
     },
     hasOfferCatalog: {
       "@type": "OfferCatalog",
@@ -94,19 +94,19 @@ function buildBreadcrumbSchema(branch: ReturnType<typeof getBranchBySlug>) {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: "https://vibesalon.in",
+        item: "https://vibeunisexsalon.in",
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Branches",
-        item: "https://vibesalon.in/branches",
+        item: "https://vibeunisexsalon.in/branches",
       },
       {
         "@type": "ListItem",
         position: 3,
         name: `${branch.name} — ${branch.city}`,
-        item: `https://vibesalon.in/branches/${branch.slug}`,
+        item: `https://vibeunisexsalon.in/branches/${branch.slug}`,
       },
     ],
   };

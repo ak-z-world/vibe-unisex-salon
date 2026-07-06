@@ -24,7 +24,7 @@ export async function generateMetadata({
 
   const title = `Vibe Unisex Salon ${branch.name} | Premium Salon in ${branch.neighborhood}, ${branch.city}`;
   const description = `Experience luxury hair, beauty & grooming at Vibe Unisex Salon ${branch.name}, ${branch.neighborhood}, ${branch.city}. Certified stylists, premium products, easy appointment booking. Call ${branch.phone}.`;
-  const canonicalUrl = `https://vibesalon.in/branches/${branch.slug}`;
+  const canonicalUrl = `https://vibeunisexsalon.in/branches/${branch.slug}`;
 
   return {
     title,
