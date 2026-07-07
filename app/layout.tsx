@@ -7,6 +7,7 @@ import JsonLd from "@/app/components/SEO/JsonLd";
 import WebSiteSchema from "@/app/components/SEO/WebSiteSchema";
 import { buildOrganizationSchema } from "@/lib/schema-generators";
 import { SALON_BRANCHES } from "@/lib/branches";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import {
   SITE_URL,
   SITE_NAME,
@@ -139,6 +140,7 @@ export default function RootLayout({
         <Navbar />
         {children}
         <Footer />
+        <GoogleAnalytics gaId="G-XSETJZE9G2" />
       </body>
     </html>
   );
