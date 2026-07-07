@@ -78,6 +78,69 @@ export default function HeroSection() {
         >
           <source src="/images/video4.mp4" type="video/mp4" />
         </video>
+        {/* ───────── Luxury Floating Badge ───────── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.7 }}
+          className="
+hidden
+md:block
+absolute
+bottom-6
+right-6
+lg:bottom-23
+lg:right-8
+z-20
+pointer-events-none
+"
+        >
+          <motion.div
+            animate={{ y: [0, -4, 0] }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="
+      relative
+      w-[120px]
+      sm:w-[140px]
+      lg:w-[160px]
+      rounded-2xl
+      border border-[#D4AF37]/25
+      bg-black/35
+      backdrop-blur-xl
+      shadow-[0_10px_40px_rgba(0,0,0,0.35)]
+      px-4
+      py-6
+      overflow-hidden
+    "
+          >
+            {/* Soft Gold Glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/10 via-transparent to-transparent" />
+
+            <div className="relative z-10 flex flex-col items-center text-center">
+
+              <span className="text-[9px] sm:text-[10px] tracking-[0.25em] uppercase text-[#D4AF37]">
+                Premium
+              </span>
+
+              <span className="mt-1 text-base sm:text-lg text-[#D4AF37]">
+                ★★★★★
+              </span>
+
+              <span className="mt-1 text-[10px] sm:text-xs text-white font-medium">
+                4.9 Rating
+              </span>
+
+              <span className="text-[9px] sm:text-[10px] text-white/70">
+                Since 2018
+              </span>
+
+            </div>
+          </motion.div>
+        </motion.div>
       </div>
 
       {/* ── CLEAN, LIGHT OVERLAY FOR TEXT READABILITY (No Blur/Noise) ── */}
@@ -87,13 +150,6 @@ export default function HeroSection() {
         className="hidden md:block absolute inset-0 z-[1]"
         style={{
           background: `
-        linear-gradient(
-          90deg,
-          rgba(253,250,246,0.95) 0%,
-          rgba(253,250,246,0.75) 0%,
-          rgba(253,250,246,0.15) 5%,
-          transparent 10%
-        )
       `
         }}
       />
