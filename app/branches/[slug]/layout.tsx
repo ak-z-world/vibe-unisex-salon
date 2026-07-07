@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { getBranchBySlug, SALON_BRANCHES } from "@/lib/branches";
+import { getBranchBySlug, SALON_BRANCHES, nearbyAreas } from "@/lib/branches";
+import { SITE_URL, DEFAULT_OG_IMAGE } from "@/lib/seo-config";
 
 // ─── Static params for all branch slugs ────────────────────────────────────
 export async function generateStaticParams() {
@@ -24,7 +25,8 @@ export async function generateMetadata({
 
   const title = `Vibe Unisex Salon ${branch.name} | Premium Salon in ${branch.neighborhood}, ${branch.city}`;
   const description = `Experience luxury hair, beauty & grooming at Vibe Unisex Salon ${branch.name}, ${branch.neighborhood}, ${branch.city}. Certified stylists, premium products, easy appointment booking. Call ${branch.phone}.`;
-  const canonicalUrl = `https://vibeunisexsalon.in/branches/${branch.slug}`;
+  const canonicalUrl = `${SITE_URL}/branches/${branch.slug}`;
+  const extendedAreas = nearbyAreas[branch.slug] ?? [];
 
   return {
     title,
@@ -35,13 +37,14 @@ export async function generateMetadata({
       `Luxury unisex salon ${branch.neighborhood}`,
       `Hair salon ${branch.neighborhood} ${branch.city}`,
       `Beauty salon ${branch.city}`,
-      `Hair cut ${branch.city}`,
-      `Hair spa ${branch.city}`,
-      `Keratin treatment ${branch.city}`,
-      `Hair coloring ${branch.city}`,
-      `Bridal makeup ${branch.city}`,
+      `Hair cut ${branch.neighborhood}`,
+      `Hair spa ${branch.neighborhood}`,
+      `Keratin treatment ${branch.neighborhood}`,
+      `Hair coloring ${branch.neighborhood}`,
+      `Bridal makeup ${branch.neighborhood}`,
       `Salon near me ${branch.neighborhood}`,
       `Vibe salon ${branch.city}`,
+      ...extendedAreas.map((area) => `Salon near ${area} ${branch.city}`),
     ],
     alternates: {
       canonical: canonicalUrl,
@@ -55,7 +58,7 @@ export async function generateMetadata({
       type: "website",
       images: [
         {
-          url: branch.featuredImageUrl,
+          url: branch.featuredImageUrl || DEFAULT_OG_IMAGE,
           width: 1200,
           height: 630,
           alt: `Vibe Unisex Salon — ${branch.name}, ${branch.city}`,
@@ -66,7 +69,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: [branch.featuredImageUrl],
+      images: [branch.featuredImageUrl || DEFAULT_OG_IMAGE],
     },
     robots: {
       index: true,
@@ -80,7 +83,7 @@ export async function generateMetadata({
       },
     },
     other: {
-      "geo.region": `IN-${branch.state}`,
+      "geo.region": `IN-${branch.state === "Tamil Nadu" ? "TN" : branch.state}`,
       "geo.placename": `${branch.neighborhood}, ${branch.city}`,
       "geo.position": `${branch.latitude};${branch.longitude}`,
       ICBM: `${branch.latitude}, ${branch.longitude}`,

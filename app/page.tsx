@@ -1,50 +1,35 @@
 import type { Metadata } from "next";
 import LandingPage from "./components/landing/LandingPage";
-import { OrganizationSchema } from "./components/SEO/StructuredData";
-import { SALON_BRANCHES } from "@/lib/branches";
 import OfferPopup from "@/app/components/offers/OfferPopup";
+import JsonLd from "@/app/components/SEO/JsonLd";
+import { buildFAQSchema } from "@/lib/schema-generators";
+import {
+  SITE_URL,
+  SITE_SHORT_NAME,
+  DEFAULT_OG_IMAGE,
+  DEFAULT_KEYWORDS,
+  ORG_AGGREGATE_RATING,
+} from "@/lib/seo-config";
 
 export const metadata: Metadata = {
   title: "Best Premium Unisex Salon in Chennai | Vibe Salon",
   description:
     "Vibe Unisex Salon — Chennai's finest premium salon for hair, beauty & grooming. Expert stylists, luxury products, 5 locations across Chennai. Book your appointment today.",
-  keywords: [
-    "Best Unisex Salon in Chennai",
-    "Premium Salon Chennai",
-    "Luxury Salon Chennai",
-    "Hair Salon Chennai",
-    "Beauty Salon Chennai",
-    "Hair Cut Chennai",
-    "Hair Spa Chennai",
-    "Keratin Treatment Chennai",
-    "Hair Coloring Chennai",
-    "Bridal Makeup Chennai",
-    "Facial Treatment Chennai",
-    "Mens Grooming Chennai",
-    "Professional Hairstylist Chennai",
-    "Hair Smoothening Chennai",
-    "Hair Care Chennai",
-    "Best hair salon near me in Chennai",
-    "Luxury unisex salon in Chennai",
-    "Premium hair styling salon Chennai",
-    "Best bridal makeup artist Chennai",
-    "Best keratin treatment salon Chennai",
-    "Hair spa and facial packages Chennai",
-  ],
+  keywords: DEFAULT_KEYWORDS,
   alternates: {
-    canonical: "https://vibeunisexsalon.in",
+    canonical: SITE_URL,
   },
   openGraph: {
     title: "Best Premium Unisex Salon in Chennai | Vibe Salon",
     description:
       "Experience luxury hair, beauty & grooming at Vibe Unisex Salon — Chennai's most trusted premium salon with 5 locations, 15,000+ happy clients, and a 4.9 rating.",
-    url: "https://vibeunisexsalon.in",
+    url: SITE_URL,
     siteName: "Vibe Unisex Salon",
     locale: "en_IN",
     type: "website",
     images: [
       {
-        url: "https://vibeunisexsalon.in/og-image.jpg",
+        url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
         alt: "Vibe Unisex Salon Chennai — Premium Luxury Salon",
@@ -54,9 +39,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Best Premium Unisex Salon in Chennai | Vibe Salon",
-    description:
-      "Luxury hair, beauty & grooming at Vibe Unisex Salon, Chennai. 5 locations · 15,000+ clients · 4.9 rating.",
-    images: ["https://vibeunisexsalon.in/og-image.jpg"],
+    description: `Luxury hair, beauty & grooming at Vibe Unisex Salon, Chennai. 5 locations · ${ORG_AGGREGATE_RATING.reviewCount}+ clients · ${ORG_AGGREGATE_RATING.ratingValue} rating.`,
+    images: [DEFAULT_OG_IMAGE],
   },
   robots: {
     index: true,
@@ -80,126 +64,34 @@ export const metadata: Metadata = {
   },
 };
 
-// Structured data for FAQ (complements OrganizationSchema)
-const faqStructuredData = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "Which is the best unisex salon in Chennai?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Vibe Unisex Salon is widely regarded as one of the best premium unisex salons in Chennai, with 5 branches, certified stylists, and a 4.9-star rating from over 15,000 happy clients.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Do you provide bridal makeup services in Chennai?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes, Vibe Salon offers comprehensive bridal makeup services in Chennai with certified bridal artists specialising in traditional and contemporary bridal looks.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Do you offer keratin treatment in Chennai?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes, keratin treatment is one of the most popular services at Vibe Salon. We use professional-grade keratin solutions that eliminate frizz and keep hair smooth for months.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Which areas in Chennai do Vibe Salon branches serve?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Vibe Unisex Salon has 5 branches across Chennai. Contact us to find your nearest premium salon location.",
-      },
-    },
-  ],
-};
-
-const localBusinessStructuredData = {
-  "@context": "https://schema.org",
-  "@type": "HairSalon",
-  name: "Vibe Unisex Salon",
-  description:
-    "Premium unisex salon in Chennai offering luxury hair, beauty, and grooming services including hair cut, hair coloring, keratin treatment, bridal makeup, and men's grooming.",
-  url: "https://vibeunisexsalon.in",
-  telephone: "+919876543210",
-  priceRange: "₹₹₹",
-  currenciesAccepted: "INR",
-  paymentAccepted: "Cash, Credit Card, Debit Card, UPI",
-  areaServed: {
-    "@type": "City",
-    name: "Chennai",
-    "@id": "https://www.wikidata.org/wiki/Q1352",
+// Home page FAQ — complements the site-wide Organization schema mounted
+// in the root layout. Kept here because it is page-specific content.
+const homeFAQs = [
+  {
+    question: "Which is the best unisex salon in Chennai?",
+    answer: `${SITE_SHORT_NAME} is widely regarded as one of the best premium unisex salons in Chennai, with 5 branches, certified stylists, and a ${ORG_AGGREGATE_RATING.ratingValue}-star rating from over ${ORG_AGGREGATE_RATING.reviewCount} happy clients.`,
   },
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Chennai",
-    addressRegion: "Tamil Nadu",
-    addressCountry: "IN",
+  {
+    question: "Do you provide bridal makeup services in Chennai?",
+    answer:
+      "Yes, Vibe Salon offers comprehensive bridal makeup services in Chennai with certified bridal artists specialising in traditional and contemporary bridal looks.",
   },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.9",
-    reviewCount: "15000",
-    bestRating: "5",
-    worstRating: "1",
+  {
+    question: "Do you offer keratin treatment in Chennai?",
+    answer:
+      "Yes, keratin treatment is one of the most popular services at Vibe Salon. We use professional-grade keratin solutions that eliminate frizz and keep hair smooth for months.",
   },
-  openingHoursSpecification: {
-    "@type": "OpeningHoursSpecification",
-    dayOfWeek: [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
-    ],
-    opens: "09:00",
-    closes: "20:00",
+  {
+    question: "Which areas in Chennai do Vibe Salon branches serve?",
+    answer:
+      "Vibe Unisex Salon has 5 branches across Chennai — Anna Nagar, T Nagar, Porur, Velachery, and Ekkatuthangal. Visit our Branches page to find your nearest location.",
   },
-  hasOfferCatalog: {
-    "@type": "OfferCatalog",
-    name: "Vibe Salon Services",
-    itemListElement: [
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Hair Cut & Styling" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Hair Coloring" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Keratin Treatment" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Hair Spa" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Bridal Makeup" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Men's Grooming" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Facial Treatments" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Hair Smoothening" } },
-    ],
-  },
-};
+];
 
 export default function HomePage() {
   return (
     <>
-      <OrganizationSchema
-        siteUrl="https://vibeunisexsalon.in"
-        branches={SALON_BRANCHES}
-      />
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(faqStructuredData),
-        }}
-      />
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(localBusinessStructuredData),
-        }}
-      />
+      <JsonLd id="home-faq-schema" data={buildFAQSchema(homeFAQs)} />
 
       <LandingPage />
       <OfferPopup />
