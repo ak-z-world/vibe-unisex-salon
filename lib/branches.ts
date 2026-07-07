@@ -28,7 +28,7 @@ export const SALON_BRANCHES: Branch[] = [
     pincode: "600101",
     phone: "+91 9677377316",
     hours: "Mon–Sun: 9:00 AM – 9:00 PM",
-    mapsLink: "https://maps.app.goo.gl/iozjgAmAGrgFqRJE7",
+    mapsLink: "https://maps.app.goo.gl/JaN2nJgtLVpj6fFC6",
     featuredImageUrl:
       "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80",
     latitude: 13.085,
@@ -45,7 +45,7 @@ export const SALON_BRANCHES: Branch[] = [
     pincode: "600017",
     phone: "+91 98765 43211",
     hours: "Mon–Sun: 9:00 AM – 9:00 PM",
-    mapsLink: "https://maps.app.goo.gl/P1xoVYL11DNRnQ5d8",
+    mapsLink: "https://maps.app.goo.gl/dzdyacoqprkGGRpK8",
     featuredImageUrl:
       "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80",
     latitude: 13.0418,
@@ -63,7 +63,7 @@ export const SALON_BRANCHES: Branch[] = [
     pincode: "600032",
     phone: "+91 98765 43212",
     hours: "Mon–Sun: 9:00 AM – 9:00 PM",
-    mapsLink: "https://maps.app.goo.gl/1wEbD7NpnmoBjbdi6",
+    mapsLink: "https://maps.app.goo.gl/DB4ERZiWVn75YoFo9",
     featuredImageUrl:
       "https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=800&q=80",
     latitude: 13.017,
@@ -81,7 +81,7 @@ export const SALON_BRANCHES: Branch[] = [
     pincode: "600116",
     phone: "+91 98765 43213",
     hours: "Mon–Sun: 9:00 AM – 9:00 PM",
-    mapsLink: "https://maps.app.goo.gl/4J9dy41jjP4uj8xM6",
+    mapsLink: "https://maps.app.goo.gl/nYo2EFmS5esdVw3f7",
     featuredImageUrl:
       "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=800&q=80",
     latitude: 13.035,
@@ -99,7 +99,7 @@ export const SALON_BRANCHES: Branch[] = [
     pincode: "600042",
     phone: "+91 98765 43214",
     hours: "Mon–Sun: 9:00 AM – 9:00 PM",
-    mapsLink: "https://maps.app.goo.gl/yLKqGCVwp8Vg6MJD8",
+    mapsLink: "https://maps.app.goo.gl/X2sfpWcm7jKu9G8g6",
     featuredImageUrl:
       "https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=800&q=80",
     latitude: 12.979,
