@@ -227,7 +227,7 @@ function BranchCard({ branch, index }: { branch: (typeof SALON_BRANCHES)[0]; ind
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to top, rgba(250,248,245,0.85) 0%, rgba(250,248,245,0.15) 60%, transparent 100%)",
+              ", transparent 100%)",
           }}
         />
         <span
@@ -238,14 +238,14 @@ function BranchCard({ branch, index }: { branch: (typeof SALON_BRANCHES)[0]; ind
             boxShadow: "0 2px 10px rgba(201,168,76,0.3)",
           }}
         >
-          Chennai
+          {branch.name}
         </span>
       </div>
 
       {/* content */}
       <div className="p-6 space-y-4">
         <h2 className="text-xl font-bold tracking-wide" style={{ color: charcoal }}>
-          Vibe Salon –{" "}
+          Vibe Unisex Salon {" "}
           <span style={{ color: gold }}>{branch.name}</span>
         </h2>
 
@@ -354,6 +354,68 @@ export default function BranchListingPage() {
     `,
             }}
           />
+          {/* ───────── Luxury Floating Badge ───────── */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.7 }}
+            className="
+    absolute
+    bottom-6
+    right-4
+    sm:bottom-8
+    sm:right-6
+    lg:bottom-10
+    lg:right-10
+    z-20
+"
+          >
+            <motion.div
+              animate={{ y: [0, -4, 0] }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="
+      relative
+      w-[120px]
+      sm:w-[140px]
+      lg:w-[160px]
+      rounded-2xl
+      border border-[#D4AF37]/25
+      bg-black/35
+      backdrop-blur-xl
+      shadow-[0_10px_40px_rgba(0,0,0,0.35)]
+      px-3
+      py-3
+      overflow-hidden
+    "
+            >
+              {/* Soft Gold Glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/10 via-transparent to-transparent" />
+
+              <div className="relative z-10 flex flex-col items-center text-center">
+
+                <span className="text-[9px] sm:text-[10px] tracking-[0.25em] uppercase text-[#D4AF37]">
+                  Premium
+                </span>
+
+                <span className="mt-1 text-base sm:text-lg text-[#D4AF37]">
+                  ★★★★★
+                </span>
+
+                <span className="mt-1 text-[10px] sm:text-xs text-white font-medium">
+                  4.9 Rating
+                </span>
+
+                <span className="text-[9px] sm:text-[10px] text-white/70">
+                  Since 2018
+                </span>
+
+              </div>
+            </motion.div>
+          </motion.div>
         </motion.div>
 
         {/* ambient gold vertical lines */}
