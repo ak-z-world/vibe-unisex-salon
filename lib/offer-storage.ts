@@ -1,93 +1,122 @@
-import { promises as fs } from "fs";
-import path from "path";
-import { Offer, CreateOfferPayload, UpdateOfferPayload } from "@/types/offer";
+import { put, list } from "@vercel/blob";
+import {
+  Offer,
+  CreateOfferPayload,
+  UpdateOfferPayload,
+} from "@/types/offer";
 
-const OFFERS_FILE = path.join(process.cwd(), "data", "offers.json");
-
-// In-memory fallback for serverless (read-only) environments
-let inMemoryOffers: Offer[] | null = null;
+const FILE_NAME = "offers.json";
 
 async function loadOffers(): Promise<Offer[]> {
-  // Return cached memory if available
-  if (inMemoryOffers) return inMemoryOffers;
+  const blobs = await list({
+    prefix: FILE_NAME,
+    token: process.env.BLOB_READ_WRITE_TOKEN,
+  });
 
-  try {
-    const raw = await fs.readFile(OFFERS_FILE, "utf-8");
-    inMemoryOffers = JSON.parse(raw) as Offer[];
-  } catch (error) {
-    // If file doesn't exist, initialize an empty array
-    inMemoryOffers = [];
+  if (blobs.blobs.length === 0) {
+    return [];
   }
-  return inMemoryOffers;
+
+  const url = blobs.blobs[0].url;
+
+  // Pass the token in the headers to authenticate the request
+  const res = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}`,
+    },
+  });
+
+  if (!res.ok) {
+    console.error(`Failed to fetch blob: ${res.status} ${res.statusText}`);
+    return [];
+  }
+
+  return await res.json();
 }
 
-async function saveOffers(offers: Offer[]): Promise<void> {
-  // 1. Always update the in-memory state so the app works instantly
-  inMemoryOffers = offers;
-
-  // 2. Try to save to disk (works locally, fails silently in production)
-  try {
-    await fs.mkdir(path.dirname(OFFERS_FILE), { recursive: true });
-    await fs.writeFile(OFFERS_FILE, JSON.stringify(offers, null, 2), "utf-8");
-  } catch (error) {
-    console.warn("Read-only filesystem detected. Using in-memory storage.");
-  }
+async function saveOffers(offers: Offer[]) {
+  await put(
+    FILE_NAME,
+    JSON.stringify(offers, null, 2),
+    {
+      access: "private",
+      contentType: "application/json",
+      allowOverwrite: true,
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    }
+  );
 }
 
-export async function getOffers(): Promise<Offer[]> {
+export async function getOffers() {
   return await loadOffers();
 }
 
-export async function getOfferById(id: string): Promise<Offer | null> {
+export async function getOfferById(id: string) {
   const offers = await getOffers();
-  return offers.find((o) => o.id === id) ?? null;
+
+  return offers.find(o => o.id === id) ?? null;
 }
 
-export async function createOffer(payload: CreateOfferPayload): Promise<Offer> {
+export async function createOffer(payload: CreateOfferPayload) {
+
   const offers = await getOffers();
-  const newOffer: Offer = {
-    id: `offer-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+
+  const offer: Offer = {
+    id: crypto.randomUUID(),
     createdAt: new Date().toISOString(),
     ...payload,
   };
-  
-  offers.push(newOffer);
+
+  offers.push(offer);
+
   await saveOffers(offers);
-  
-  return newOffer;
+
+  return offer;
 }
 
 export async function updateOffer(
   id: string,
   payload: UpdateOfferPayload
-): Promise<Offer | null> {
+) {
+
   const offers = await getOffers();
-  const index = offers.findIndex((o) => o.id === id);
+
+  const index = offers.findIndex(o => o.id === id);
+
   if (index === -1) return null;
-  
-  offers[index] = { ...offers[index], ...payload };
+
+  offers[index] = {
+    ...offers[index],
+    ...payload,
+  };
+
   await saveOffers(offers);
-  
+
   return offers[index];
 }
 
-export async function deleteOffer(id: string): Promise<boolean> {
+export async function deleteOffer(id: string) {
+
   const offers = await getOffers();
-  const filtered = offers.filter((o) => o.id !== id);
-  
-  if (filtered.length === offers.length) return false;
-  
+
+  const filtered = offers.filter(o => o.id !== id);
+
   await saveOffers(filtered);
+
   return true;
 }
 
-export async function getActiveOffer(): Promise<Offer | null> {
+export async function getActiveOffer() {
+
   const offers = await getOffers();
-  const active = offers
-    .filter((o) => o.active)
-    .sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    );
-  return active[0] ?? null;
+
+  return (
+    offers
+      .filter(o => o.active)
+      .sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() -
+          new Date(a.createdAt).getTime()
+      )[0] ?? null
+  );
 }
