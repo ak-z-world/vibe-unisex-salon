@@ -3,131 +3,152 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
+import { SALON_BRANCHES } from "@/lib/branches";
+
+// Utility to generate dynamic WhatsApp links
+const getWhatsAppLink = (phone: string, branchName: string) => {
+  const cleanPhone = phone.replace(/[^0-9]/g, "");
+  const message = `Hello Vibe Salon, I would like to book an appointment at the ${branchName} branch.`;
+  return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
+};
 
 export default function CTASection() {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <section
       ref={ref}
-      className="relative py-32 overflow-hidden"
+      className="relative py-12 lg:py-18 overflow-hidden flex flex-col items-center justify-center min-h-[80vh]"
       style={{
-        background: "linear-gradient(150deg,#FFFDF8 0%,#FFF8EE 35%,#F5EFE6 70%,#FAF6F0 100%)",
+        background: "linear-gradient(180deg, #FAFAF8 0%, #FDFBF7 40%, #FFF8EE 100%)",
       }}
       aria-labelledby="cta-heading"
     >
-      {/* Top rule */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#C9A84C]/40 to-transparent" />
-      <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#C9A84C]/20 to-transparent" />
+      {/* Subtle corner framing marks for an editorial feel */}
+      <div className="absolute top-12 left-12 w-8 h-8 border-t border-l border-[#C9A84C]/30" aria-hidden="true" />
+      <div className="absolute top-12 right-12 w-8 h-8 border-t border-r border-[#C9A84C]/30" aria-hidden="true" />
+      <div className="absolute bottom-12 left-12 w-8 h-8 border-b border-l border-[#C9A84C]/30" aria-hidden="true" />
+      <div className="absolute bottom-12 right-12 w-8 h-8 border-b border-r border-[#C9A84C]/30" aria-hidden="true" />
 
-      {/* Warm ambient blobs */}
-      <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full bg-[#FFF3DA]/60 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-[#F5EAD4]/40 blur-3xl" />
+      {/* Center ambient glow */}
+      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-[radial-gradient(circle,rgba(201,168,76,0.06)_0%,transparent_70%)] blur-3xl" />
 
-      {/* Ornamental corner brackets */}
-      <div className="absolute top-10 left-10 w-12 h-12 border-t-2 border-l-2 border-[#C9A84C]/25" aria-hidden="true" />
-      <div className="absolute top-10 right-10 w-12 h-12 border-t-2 border-r-2 border-[#C9A84C]/25" aria-hidden="true" />
-      <div className="absolute bottom-10 left-10 w-12 h-12 border-b-2 border-l-2 border-[#C9A84C]/25" aria-hidden="true" />
-      <div className="absolute bottom-10 right-10 w-12 h-12 border-b-2 border-r-2 border-[#C9A84C]/25" aria-hidden="true" />
-
-      <div className="relative z-10 container mx-auto px-6 lg:px-16">
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 lg:px-8 flex flex-col items-center">
+        
+        {/* Typographic Hero */}
         <motion.div
-          initial={{ opacity: 0, y: 44 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center max-w-3xl mx-auto"
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center w-full"
         >
           {/* Eyebrow */}
-          <div className="flex items-center justify-center gap-4 mb-8">
-            <span className="h-px w-10 bg-gradient-to-r from-transparent to-[#C9A84C]" />
-            <span className="text-[10px] tracking-[0.38em] uppercase text-[#9A8060] font-medium">
+          <div className="flex items-center justify-center gap-6 mb-10">
+            <span className="h-[1px] w-12 bg-gradient-to-r from-transparent to-[#C9A84C]/50" />
+            <span className="text-[11px] tracking-[0.4em] uppercase text-[#9A8060] font-medium">
               Book Your Visit
             </span>
-            <span className="h-px w-10 bg-gradient-to-l from-transparent to-[#C9A84C]" />
+            <span className="h-[1px] w-12 bg-gradient-to-l from-transparent to-[#C9A84C]/50" />
           </div>
 
-          {/* Headline — single lines */}
+          {/* Headline */}
           <h2
             id="cta-heading"
-            className="font-display leading-tight text-[#2C2117]"
+            className="font-display text-[#16110E] tracking-tight flex flex-col items-center gap-2"
           >
-            <span className="block text-4xl md:text-5xl lg:text-6xl whitespace-nowrap">
+            <span className="text-4xl md:text-6xl lg:text-7xl font-medium">
               Experience Premium
             </span>
-            <span
-              className="block text-4xl md:text-5xl lg:text-6xl italic mt-1 whitespace-nowrap"
-              style={{
-                background:
-                  "linear-gradient(135deg,#B8922E 0%,#E2C97E 45%,#B8922E 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
+            <span className="text-5xl md:text-6xl lg:text-7xl italic font-light text-[#C9A84C]">
               Beauty Like Never Before
             </span>
           </h2>
 
-          <p className="mt-6 text-[#7A6A58] text-lg font-light leading-relaxed max-w-xl mx-auto">
-            Book your appointment at one of our Chennai locations and discover
-            why over 15,000 clients trust Vibe for their hair, beauty, and
-            grooming needs.
+          <p className="mt-8 text-[#6B5F55] text-base lg:text-lg font-light leading-relaxed max-w-xl mx-auto">
+            Select your preferred location below to instantly reserve your appointment via WhatsApp. Over 15,000 clients trust Vibe for their signature look.
           </p>
+        </motion.div>
 
-          {/* CTA buttons */}
-          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.25 }}
-            >
-              <Link
-                href="tel:+919876543210"
-                className="group relative inline-flex items-center gap-3 overflow-hidden px-12 py-5 text-sm tracking-[0.18em] uppercase font-semibold text-[#2C2117]"
-                style={{
-                  background:
-                    "linear-gradient(135deg,#D4A840 0%,#EDD58A 50%,#C9A030 100%)",
-                  boxShadow: "0 4px 24px rgba(201,168,76,0.25)",
-                }}
-                aria-label="Call to book appointment at Vibe Salon Chennai"
-              >
-                <span className="relative z-10">Book Appointment</span>
-                <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1">
-                  →
-                </span>
-                <span className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" />
-              </Link>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.25 }}
-            >
-              <Link
-                href="#branches"
-                className="group inline-flex items-center gap-3 border border-[#C9A84C]/50 text-[#9A7840] px-12 py-5 text-sm tracking-[0.18em] uppercase font-light hover:bg-[#FFF8EE] hover:border-[#C9A84C] transition-all duration-300"
-                aria-label="View all Vibe Salon Chennai branches"
-              >
-                Find a Branch
-                <span className="transition-transform duration-300 group-hover:translate-x-1">
-                  →
-                </span>
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* Trust line */}
-          <motion.p
+        {/* Branch Selection Grid */}
+        <div className="mt-20 w-full flex flex-col items-center">
+          <motion.p 
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.6, duration: 0.7 }}
-            className="mt-10 text-[#B0A090] text-[10px] tracking-[0.25em] uppercase"
+            transition={{ delay: 0.4, duration: 1 }}
+            className="text-[10px] tracking-[0.25em] uppercase text-[#9A8060] mb-8"
           >
-            5 Locations Across Chennai &nbsp;·&nbsp; Open Daily &nbsp;·&nbsp; Walk-ins Welcome
+            Select a sanctuary to begin
           </motion.p>
+
+          <div className="flex flex-wrap justify-center gap-4 lg:gap-6 w-full max-w-4xl">
+            {SALON_BRANCHES.map((branch, index) => (
+              <motion.div
+                key={branch.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.2 + index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <Link
+                  href={getWhatsAppLink(branch.phone, branch.name)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative flex flex-col justify-center items-center w-[220px] h-[120px] border border-[#E5DFD5] bg-white/60 backdrop-blur-sm transition-all duration-500 hover:border-[#C9A84C] hover:bg-white hover:shadow-[0_10px_40px_-10px_rgba(201,168,76,0.15)] hover:-translate-y-1 overflow-hidden"
+                >
+                  {/* Hover Accent Line */}
+                  <div className="absolute top-0 inset-x-0 h-[2px] bg-[#C9A84C] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+
+                  {/* Default State Content */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-6 transition-all duration-500 translate-y-0 opacity-100 group-hover:-translate-y-8 group-hover:opacity-0">
+                    <span className="text-sm font-semibold tracking-wider text-[#16110E] uppercase mb-1">
+                      {branch.name}
+                    </span>
+                    <span className="text-[10px] tracking-widest text-[#9A8060] uppercase">
+                      {branch.neighborhood}
+                    </span>
+                  </div>
+
+                  {/* Hover State Content (WhatsApp CTA) */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-6 transition-all duration-500 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 bg-[#FAF6F0]">
+                    <div className="flex items-center gap-2 text-[#C9A84C]">
+                      <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        width="18" 
+                        height="18" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                      >
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                      </svg>
+                      <span className="text-[11px] font-semibold tracking-widest uppercase">
+                        Book via WA
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Minimalist Trust Footer */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ delay: 1.2, duration: 1 }}
+          className="mt-20 flex items-center gap-6 text-[#9A8060]"
+        >
+          <span className="text-[10px] tracking-[0.2em] uppercase">5 Locations</span>
+          <span className="w-1 h-1 rounded-full bg-[#D4C3B3]" />
+          <span className="text-[10px] tracking-[0.2em] uppercase">Open Daily</span>
+          <span className="w-1 h-1 rounded-full bg-[#D4C3B3]" />
+          <span className="text-[10px] tracking-[0.2em] uppercase">Walk-ins Welcome</span>
         </motion.div>
+
       </div>
     </section>
   );
