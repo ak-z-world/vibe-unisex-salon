@@ -24,11 +24,6 @@ export const contactFormSchema = z.object({
       "Enter a valid 10-digit Indian mobile number"
     ),
 
-  email: z
-    .string()
-    .email("Enter a valid email address")
-    .max(120, "Email must be under 120 characters"),
-
   service: z.enum(SERVICES, {
     message: "Please select a service",
     }),
