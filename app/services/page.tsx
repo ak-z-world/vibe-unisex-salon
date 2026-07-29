@@ -12,6 +12,15 @@ import {
   type ServiceCategory,
 } from "@/lib/services";
 
+
+const salonBranches = [
+  { name: "Anna Nagar", phone: "+91 8072352853" },
+  { name: "T. Nagar", phone: "+91 9342795928" },
+  { name: "Ekkatuthangal", phone: "+91 6374679577" },
+  { name: "Porur", phone: "+91 7603957055" },
+  { name: "Velachery", phone: "+91 9363702047" },
+];
+
 // ─── SEO Metadata ──────────────────────────────────────────────────────────────
 export const metadata: Metadata = {
   title:
@@ -164,7 +173,7 @@ export default function ServicesPage() {
           </p>
           <h2>Pricing and Quality</h2>
           <p>
-            Prices start from ₹100. Vibe Unisex Salon is rated 4.8 out of 5 by over 200 clients. 
+            Prices start from ₹100. Vibe Unisex Salon is rated 4.8 out of 5 by over 200 clients.
             The salon serves men, women, and kids with a transparent pricing structure.
           </p>
         </article>
@@ -197,7 +206,7 @@ export default function ServicesPage() {
           {/* Content Container */}
           <div className="relative z-10 container mx-auto max-w-screen-2xl px-6 lg:px-12 flex flex-col justify-center h-full">
             <div className="max-w-2xl text-left mt-10 md:mt-0">
-              
+
               {/* Eyebrow */}
               <div className="flex items-center gap-4 mb-6">
                 <span className="w-12 h-[1px] bg-white"></span>
@@ -227,20 +236,30 @@ export default function ServicesPage() {
               </p>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  href="/book"
-                  className="px-8 py-4 text-xs tracking-[0.2em] uppercase font-semibold text-[#1A1A1A] transition-transform hover:scale-105 inline-flex items-center justify-center gap-2"
-                  style={{ backgroundColor: "#D4A840" }}
-                >
-                  Book Appointment <span aria-hidden="true">→</span>
-                </Link>
+              <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center sm:justify-start gap-3 sm:gap-4 mt-8 sm:mt-10 w-full max-w-3xl">
+
+                {/* 5 Branch Booking Buttons */}
+                {salonBranches.map((branch) => (
+                  <a
+                    key={branch.name}
+                    href={`tel:${branch.phone}`}
+                    className="group w-full sm:w-auto px-6 py-4 text-[11px] sm:text-xs tracking-[0.2em] uppercase font-bold text-[#1A1A1A] transition-colors duration-300 hover:bg-[#C29835] inline-flex items-center justify-center gap-2 rounded-none"
+                    style={{ backgroundColor: "#D4A840" }}
+                  >
+                    BOOK {branch.name}
+                    <span aria-hidden="true" className="font-normal transition-transform duration-300 group-hover:translate-x-1">→</span>
+                  </a>
+                ))}
+
+                {/* Explore Services Button */}
                 <Link
                   href="#services"
-                  className="px-8 py-4 text-xs tracking-[0.2em] uppercase font-medium text-white border border-white/50 hover:bg-white/10 transition-colors duration-300 inline-flex items-center justify-center gap-2 backdrop-blur-sm"
+                  className="group w-full sm:w-auto px-6 py-4 text-[11px] sm:text-xs tracking-[0.2em] uppercase font-medium text-white border border-white/50 hover:bg-white/10 transition-colors duration-300 inline-flex items-center justify-center gap-2 backdrop-blur-sm rounded-none"
                 >
-                  Explore Services <span aria-hidden="true">→</span>
+                  EXPLORE SERVICES
+                  <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                 </Link>
+
               </div>
             </div>
           </div>
@@ -250,80 +269,80 @@ export default function ServicesPage() {
             SERVICE LEDGER GRID — BESPOKE MENU
         ════════════════════════════════════════ */}
         <section className="py-32 bg-[#FDFBF7]" aria-labelledby="categories-list-heading">
-  <div className="container mx-auto max-w-6xl px-6">
-    
-    {/* High Contrast Header */}
-    <div className="flex flex-col items-center text-center mb-20">
-      <h2
-        id="categories-list-heading"
-        className="text-[11px] tracking-[0.4em] uppercase font-bold text-[#8B7355] mb-6"
-      >
-        Curated Offerings
-      </h2>
-      <p 
-        className="text-4xl md:text-5xl text-[#1A1A1A] max-w-xl leading-[1.2]"
-        style={{ fontFamily: "'Playfair Display', serif" }}
-      >
-        Where precision meets artistry in every ritual.
-      </p>
-    </div>
+          <div className="container mx-auto max-w-6xl px-6">
 
-    {/* Robust Grid Layout */}
-    <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
-      {SERVICES.map((category, i) => (
-        <ServiceLedgerCard
-          key={category.slug}
-          category={category}
-          index={i}
-          accent={CATEGORY_ACCENTS[category.slug] ?? "#8B7355"}
-          tagline={CATEGORY_TAGLINES[category.slug] ?? ""}
-        />
-      ))}
-    </ul>
-  </div>
-</section>
-{/* ════════════════════════════════════════
+            {/* High Contrast Header */}
+            <div className="flex flex-col items-center text-center mb-20">
+              <h2
+                id="categories-list-heading"
+                className="text-[11px] tracking-[0.4em] uppercase font-bold text-[#8B7355] mb-6"
+              >
+                Curated Offerings
+              </h2>
+              <p
+                className="text-4xl md:text-5xl text-[#1A1A1A] max-w-xl leading-[1.2]"
+                style={{ fontFamily: "'Playfair Display', serif" }}
+              >
+                Where precision meets artistry in every ritual.
+              </p>
+            </div>
+
+            {/* Robust Grid Layout */}
+            <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
+              {SERVICES.map((category, i) => (
+                <ServiceLedgerCard
+                  key={category.slug}
+                  category={category}
+                  index={i}
+                  accent={CATEGORY_ACCENTS[category.slug] ?? "#8B7355"}
+                  tagline={CATEGORY_TAGLINES[category.slug] ?? ""}
+                />
+              ))}
+            </ul>
+          </div>
+        </section>
+        {/* ════════════════════════════════════════
     HIDDEN SEO/AIO SECTION (Bot Readable Only)
 ════════════════════════════════════════ */}
-<section className="sr-only" aria-hidden="true">
-  <div className="container mx-auto max-w-screen-xl px-6 lg:px-12">
-    <h2 id="quick-facts-heading">Salon Intelligence</h2>
-    
-    <dl>
-      {[
-        {
-          q: "Service Portfolio",
-          a: `${SERVICES.length} distinct categories, ranging from precision cuts to elite bridal transformations.`,
-        },
-        {
-          q: "Chennai Locations",
-          a: `Available across five premium studios: ${SALON_LOCATIONS.join(", ")}.`,
-        },
-        {
-          q: "Pricing Architecture",
-          a: "Transparent pricing starting from ₹100, ensuring luxury is accessible.",
-        },
-        {
-          q: "Clientele",
-          a: "A dedicated unisex environment providing bespoke treatments for men, women, and children.",
-        },
-        {
-          q: "Advanced Treatments",
-          a: "Featuring Keratin, Botox, and Nanoplastia—all premium treatments include a complimentary haircut.",
-        },
-        {
-          q: "Bridal Excellence",
-          a: "Exclusive HD and Luxury bridal packages, extending to comprehensive groom and bridesmaid services.",
-        },
-      ].map(({ q, a }) => (
-        <div key={q}>
-          <dt>{q}</dt>
-          <dd>{a}</dd>
-        </div>
-      ))}
-    </dl>
-  </div>
-</section>
+        <section className="sr-only" aria-hidden="true">
+          <div className="container mx-auto max-w-screen-xl px-6 lg:px-12">
+            <h2 id="quick-facts-heading">Salon Intelligence</h2>
+
+            <dl>
+              {[
+                {
+                  q: "Service Portfolio",
+                  a: `${SERVICES.length} distinct categories, ranging from precision cuts to elite bridal transformations.`,
+                },
+                {
+                  q: "Chennai Locations",
+                  a: `Available across five premium studios: ${SALON_LOCATIONS.join(", ")}.`,
+                },
+                {
+                  q: "Pricing Architecture",
+                  a: "Transparent pricing starting from ₹100, ensuring luxury is accessible.",
+                },
+                {
+                  q: "Clientele",
+                  a: "A dedicated unisex environment providing bespoke treatments for men, women, and children.",
+                },
+                {
+                  q: "Advanced Treatments",
+                  a: "Featuring Keratin, Botox, and Nanoplastia—all premium treatments include a complimentary haircut.",
+                },
+                {
+                  q: "Bridal Excellence",
+                  a: "Exclusive HD and Luxury bridal packages, extending to comprehensive groom and bridesmaid services.",
+                },
+              ].map(({ q, a }) => (
+                <div key={q}>
+                  <dt>{q}</dt>
+                  <dd>{a}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </section>
 
         {/* ════════════════════════════════════════
             LOCATIONS GRID

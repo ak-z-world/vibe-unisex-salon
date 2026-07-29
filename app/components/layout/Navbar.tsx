@@ -71,7 +71,7 @@ export default function Navbar() {
 
         {/* CTA Button */}
         <Link
-          href="/branches"
+          href="/contact"
           className={`hidden md:inline-flex items-center justify-center text-xs tracking-[0.15em] uppercase font-semibold py-3 px-7 transition-all duration-300 ${scrolled
             ? "bg-[#C9A84C] text-white hover:bg-[#B5955C] shadow-md hover:shadow-lg"
             : "bg-[#C9A84C]/90 text-white hover:bg-[#C9A84C] backdrop-blur-sm shadow-[0_4px_14px_rgba(0,0,0,0.2)] hover:scale-105"

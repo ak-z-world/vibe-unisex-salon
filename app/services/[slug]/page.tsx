@@ -16,6 +16,14 @@ import {
   type ServiceItem,
 } from "@/lib/services";
 
+const salonBranches = [
+  { name: "Anna Nagar", phone: "+91 8072352853" },
+  { name: "T. Nagar", phone: "+91 9342795928" },
+  { name: "Ekkatuthangal", phone: "+91 6374679577" },
+  { name: "Porur", phone: "+91 7603957055" },
+  { name: "Velachery", phone: "+91 9363702047" },
+];
+
 // ─── Static generation ────────────────────────────────────────────────────────
 export function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
@@ -740,80 +748,87 @@ export default async function ServiceSlugPage({
             BOOKING CTA — LUXURY DARK BLOCK
         ════════════════════════════════════════ */}
         <section
-          className="py-20"
-          aria-labelledby="booking-heading"
+  className="py-20"
+  aria-labelledby="booking-heading"
+>
+  <div className="container mx-auto max-w-screen-xl px-6 lg:px-16">
+    <div className="relative overflow-hidden rounded-[2.5rem] bg-[#2A2421] p-12 md:p-20 shadow-2xl">
+      {/* Gold ambient glow */}
+      <div
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(185,147,90,0.15),_transparent_50%)] pointer-events-none"
+        aria-hidden="true"
+      />
+
+      {/* Decorative watermark numeral */}
+      <span
+        className="absolute -bottom-8 -right-4 leading-none select-none pointer-events-none opacity-[0.03]"
+        style={{
+          ...SERIF,
+          fontSize: "20rem",
+          color: "#FFFFFF",
+          letterSpacing: "-0.04em",
+        }}
+        aria-hidden="true"
+      >
+        {String(categoryIndex + 1).padStart(2, "0")}
+      </span>
+
+      <div className="relative z-10 max-w-4xl">
+        <p
+          className="text-[10px] tracking-[0.4em] uppercase font-semibold mb-6"
+          style={{ color: GOLD_COLOR }}
         >
-          <div className="container mx-auto max-w-screen-xl px-6 lg:px-16">
-            <div className="relative overflow-hidden rounded-[2.5rem] bg-[#2A2421] p-12 md:p-20 shadow-2xl">
-              {/* Gold ambient glow */}
-              <div
-                className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(185,147,90,0.15),_transparent_50%)] pointer-events-none"
-                aria-hidden="true"
-              />
+          Reserve Your Appointment
+        </p>
+        <h2
+          id="booking-heading"
+          className="leading-[1.1] mb-6 text-white"
+          style={{
+            ...SERIF,
+            fontSize: "clamp(2.5rem, 5vw, 4rem)",
+            fontWeight: 400,
+          }}
+        >
+          Indulge in <br /> {category.name}
+        </h2>
+        <p className="text-[1.1rem] font-light mb-10 leading-relaxed text-white/70 max-w-2xl">
+          Connect with our expert stylists today. We invite you to visit
+          or call your nearest Vibe Unisex Salon in Chennai.
+        </p>
 
-              {/* Decorative watermark numeral */}
-              <span
-                className="absolute -bottom-8 -right-4 leading-none select-none pointer-events-none opacity-[0.03]"
-                style={{
-                  ...SERIF,
-                  fontSize: "20rem",
-                  color: "#FFFFFF",
-                  letterSpacing: "-0.04em",
-                }}
-                aria-hidden="true"
-              >
-                {String(categoryIndex + 1).padStart(2, "0")}
+        {/* Responsive CTA Container */}
+        <div className="flex flex-col sm:flex-row sm:flex-wrap items-center sm:items-start gap-4">
+          
+          {/* 5 Branch Booking Buttons */}
+          {salonBranches.map((branch) => (
+            <a
+              key={branch.name}
+              href={`tel:${branch.phone}`}
+              className="group w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-4 sm:py-5 text-[10px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.25em] uppercase font-semibold text-[#2A2421] bg-[#B9935A] rounded-full hover:bg-white transition-all duration-400 shadow-[0_0_15px_rgba(185,147,90,0.3)] hover:shadow-[0_0_25px_rgba(255,255,255,0.5)]"
+            >
+              <span>Book {branch.name}</span>
+              <span className="transition-transform duration-300 group-hover:translate-x-1">
+                →
               </span>
+            </a>
+          ))}
 
-              <div className="relative z-10 max-w-2xl">
-                <p
-                  className="text-[10px] tracking-[0.4em] uppercase font-semibold mb-6"
-                  style={{ color: GOLD_COLOR }}
-                >
-                  Reserve Your Appointment
-                </p>
-                <h2
-                  id="booking-heading"
-                  className="leading-[1.1] mb-6 text-white"
-                  style={{
-                    ...SERIF,
-                    fontSize: "clamp(2.5rem, 5vw, 4rem)",
-                    fontWeight: 400,
-                  }}
-                >
-                  Indulge in <br /> {category.name}
-                </h2>
-                <p className="text-[1.1rem] font-light mb-12 leading-relaxed text-white/70">
-                  Connect with our expert stylists today. We invite you to visit
-                  or call your nearest Vibe Unisex Salon in Chennai.
-                </p>
-
-                <div className="flex flex-col sm:flex-row items-center gap-5">
-                  {/*
-                    Pure CSS hover via Tailwind — no JS event handlers.
-                    hover:bg-white replaces the previous onMouseEnter/onMouseLeave
-                    that caused the RSC "Event handlers cannot be passed" error.
-                  */}
-                  <a
-                    href="tel:+91XXXXXXXXXX"
-                    className="group w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-5 text-[11px] tracking-[0.25em] uppercase font-semibold text-[#2A2421] bg-[#B9935A] rounded-full hover:bg-white transition-all duration-400 shadow-[0_0_20px_rgba(185,147,90,0.4)] hover:shadow-[0_0_25px_rgba(255,255,255,0.5)]"
-                  >
-                    <span>Call to Book</span>
-                    <span className="transition-transform duration-300 group-hover:translate-x-1">
-                      →
-                    </span>
-                  </a>
-                  <Link
-                    href="/services"
-                    className="group w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-5 text-[11px] tracking-[0.25em] uppercase font-medium text-white border border-white/20 rounded-full hover:bg-white/10 transition-all duration-400"
-                  >
-                    Explore Menu
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+          {/* Explore Menu Button */}
+          <Link
+            href="/services"
+            className="group w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-4 sm:py-5 text-[10px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.25em] uppercase font-medium text-white border border-white/20 rounded-full hover:bg-white/10 transition-all duration-400 backdrop-blur-sm"
+          >
+            Explore Menu
+            <span className="transition-transform duration-300 group-hover:translate-x-1">
+              →
+            </span>
+          </Link>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
         {/* ════════════════════════════════════════
             PREV / NEXT NAV

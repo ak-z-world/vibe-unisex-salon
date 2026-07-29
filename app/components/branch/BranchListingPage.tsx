@@ -3,7 +3,16 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
+// Ensure you have this import path correctly resolving in your project
 import { SALON_BRANCHES } from "@/lib/branches";
+
+const salonBranches = [
+  { name: "Anna Nagar", phone: "+91 8072352853" },
+  { name: "T. Nagar", phone: "+91 9342795928" },
+  { name: "Ekkatuthangal", phone: "+91 6374679577" },
+  { name: "Porur", phone: "+91 7603957055" },
+  { name: "Velachery", phone: "+91 9363702047" },
+];
 
 /* ─── design tokens ─── */
 const gold = "#C9A84C";
@@ -171,7 +180,7 @@ function FAQItem({ faq, index }: { faq: { q: string; a: string }; index: number 
         className="flex items-start justify-between cursor-pointer py-5 gap-4 list-none"
       >
         <span
-          className="font-semibold text-base leading-snug transition-colors duration-200"
+          className="font-semibold text-sm sm:text-base leading-snug transition-colors duration-200"
           style={{ color: charcoal }}
         >
           {faq.q}
@@ -183,7 +192,7 @@ function FAQItem({ faq, index }: { faq: { q: string; a: string }; index: number 
           +
         </span>
       </summary>
-      <p className="pb-5 text-sm leading-relaxed" style={{ color: taupe }}>
+      <p className="pb-5 text-xs sm:text-sm leading-relaxed" style={{ color: taupe }}>
         {faq.a}
       </p>
     </motion.details>
@@ -201,7 +210,7 @@ function BranchCard({ branch, index }: { branch: (typeof SALON_BRANCHES)[0]; ind
       initial={{ opacity: 0, y: 50 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] as const }}
-      className="group relative overflow-hidden rounded-2xl border transition-all duration-500"
+      className="group relative overflow-hidden rounded-2xl border transition-all duration-500 w-full"
       style={{
         background: pearl,
         borderColor: "rgba(201,168,76,0.2)",
@@ -217,7 +226,7 @@ function BranchCard({ branch, index }: { branch: (typeof SALON_BRANCHES)[0]; ind
       }}
     >
       {/* image */}
-      <div className="relative overflow-hidden h-56">
+      <div className="relative overflow-hidden h-48 sm:h-56">
         <img
           src={branch.featuredImageUrl}
           alt={`Vibe Unisex Salon ${branch.name} Chennai`}
@@ -226,12 +235,11 @@ function BranchCard({ branch, index }: { branch: (typeof SALON_BRANCHES)[0]; ind
         <div
           className="absolute inset-0"
           style={{
-            background:
-              ", transparent 100%)",
+            background: "linear-gradient(to top, rgba(26,20,16,0.8) 0%, transparent 100%)",
           }}
         />
         <span
-          className="absolute top-4 left-4 text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full"
+          className="absolute top-4 left-4 text-[10px] sm:text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full"
           style={{
             background: "linear-gradient(135deg, #C9A84C 0%, #B8942E 100%)",
             color: pearl,
@@ -243,13 +251,13 @@ function BranchCard({ branch, index }: { branch: (typeof SALON_BRANCHES)[0]; ind
       </div>
 
       {/* content */}
-      <div className="p-6 space-y-4">
-        <h2 className="text-xl font-bold tracking-wide" style={{ color: charcoal }}>
+      <div className="p-5 sm:p-6 space-y-4">
+        <h2 className="text-lg sm:text-xl font-bold tracking-wide" style={{ color: charcoal }}>
           Vibe Unisex Salon {" "}
           <span style={{ color: gold }}>{branch.name}</span>
         </h2>
 
-        <div className="space-y-2 text-sm" style={{ color: taupe }}>
+        <div className="space-y-2 text-xs sm:text-sm" style={{ color: taupe }}>
           <div className="flex gap-3 items-start">
             <span style={{ color: gold }}>📍</span>
             <span>{branch.address}</span>
@@ -274,7 +282,7 @@ function BranchCard({ branch, index }: { branch: (typeof SALON_BRANCHES)[0]; ind
 
         <Link
           href={`/branches/${branch.slug}`}
-          className="inline-flex items-center gap-2 mt-2 text-xs font-bold tracking-widest uppercase px-5 py-3 rounded-full w-full justify-center border transition-all duration-300"
+          className="inline-flex items-center gap-2 mt-2 text-[11px] sm:text-xs font-bold tracking-widest uppercase px-5 py-3 rounded-full w-full justify-center border transition-all duration-300"
           style={{
             borderColor: "rgba(201,168,76,0.4)",
             color: gold,
@@ -325,7 +333,9 @@ export default function BranchListingPage() {
       {/* ──────────── HERO ──────────── */}
       <header
         ref={heroRef}
-        className="relative h-[92vh] min-h-[700px] flex items-center justify-center overflow-hidden pt-20 md:pt-24"
+        // Swapped h-screen for h-auto min-h-[100dvh] so short screens can scroll gracefully
+        // Added ample py to clear fixed navigation menus at the top and bottom
+        className="relative h-auto min-h-[100dvh] md:min-h-[700px] flex items-center justify-center overflow-hidden py-24 sm:py-32"
       >
         {/* parallax bg */}
         <motion.div style={{ y: heroY }} className="absolute inset-0">
@@ -345,31 +355,30 @@ export default function BranchListingPage() {
             className="absolute inset-0"
             style={{
               background: `
-      linear-gradient(
-        to bottom,
-        rgba(0,0,0,0.35) 0%,
-        rgba(0,0,0,0.25) 85%,
-        rgba(250,248,245,0.75) 100%
-      )
-    `,
+                linear-gradient(
+                  to bottom,
+                  rgba(0,0,0,0.50) 0%,
+                  rgba(0,0,0,0.30) 70%,
+                  rgba(250,248,245,0.95) 100%
+                )
+              `,
             }}
           />
-          {/* ───────── Luxury Floating Badge ───────── */}
+          
+          {/* ───────── Luxury Floating Badge (Hidden on Mobile) ───────── */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.7 }}
             className="
-    absolute
-    bottom-6
-    right-4
-    sm:bottom-8
-    sm:right-6
-    lg:bottom-10
-    lg:right-10
-    z-20
-"
-          >
+              hidden
+              lg:block
+              absolute
+              lg:bottom-10
+              lg:right-10
+              z-20
+              "
+            >
             <motion.div
               animate={{ y: [0, -4, 0] }}
               transition={{
@@ -378,41 +387,34 @@ export default function BranchListingPage() {
                 ease: "easeInOut",
               }}
               className="
-      relative
-      w-[120px]
-      sm:w-[140px]
-      lg:w-[160px]
-      rounded-2xl
-      border border-[#D4AF37]/25
-      bg-black/35
-      backdrop-blur-xl
-      shadow-[0_10px_40px_rgba(0,0,0,0.35)]
-      px-3
-      py-3
-      overflow-hidden
-    "
-            >
+                relative
+                w-[160px]
+                rounded-2xl
+                border border-[#D4AF37]/25
+                bg-black/35
+                backdrop-blur-xl
+                shadow-[0_10px_40px_rgba(0,0,0,0.35)]
+                px-3
+                py-3
+                overflow-hidden
+              "
+              >
               {/* Soft Gold Glow */}
               <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/10 via-transparent to-transparent" />
 
               <div className="relative z-10 flex flex-col items-center text-center">
-
-                <span className="text-[9px] sm:text-[10px] tracking-[0.25em] uppercase text-[#D4AF37]">
+                <span className="text-[10px] tracking-[0.25em] uppercase text-[#D4AF37]">
                   Premium
                 </span>
-
-                <span className="mt-1 text-base sm:text-lg text-[#D4AF37]">
+                <span className="mt-1 text-lg text-[#D4AF37]">
                   ★★★★★
                 </span>
-
-                <span className="mt-1 text-[10px] sm:text-xs text-white font-medium">
+                <span className="mt-1 text-xs text-white font-medium">
                   4.9 Rating
                 </span>
-
-                <span className="text-[9px] sm:text-[10px] text-white/70">
+                <span className="text-[10px] text-white/70">
                   Since 2018
                 </span>
-
               </div>
             </motion.div>
           </motion.div>
@@ -420,24 +422,25 @@ export default function BranchListingPage() {
 
         {/* ambient gold vertical lines */}
         <div
-          className="absolute left-0 top-0 h-full w-px opacity-30"
+          className="hidden sm:block absolute left-0 top-0 h-full w-px opacity-30"
           style={{ background: `linear-gradient(to bottom, transparent, ${gold}, transparent)` }}
         />
         <div
-          className="absolute right-0 top-0 h-full w-px opacity-30"
+          className="hidden sm:block absolute right-0 top-0 h-full w-px opacity-30"
           style={{ background: `linear-gradient(to bottom, transparent, ${gold}, transparent)` }}
         />
 
         {/* hero content */}
         <motion.div
           style={{ opacity: heroOpacity }}
-          className="relative z-10 text-center px-6 max-w-4xl mx-auto pt-15 md:pt-15"
+          // Added mt-8 specifically on mobile to ensure content isn't buried under your absolute logo/nav
+          className="relative z-10 text-center px-4 sm:px-6 w-full max-w-5xl mx-auto mt-8 sm:mt-0"
         >
           <motion.p
-            initial={{ opacity: 0, letterSpacing: "0.5em" }}
-            animate={{ opacity: 1, letterSpacing: "0.3em" }}
+            initial={{ opacity: 0, letterSpacing: "0.1em" }}
+            animate={{ opacity: 1, letterSpacing: "0.15em" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
-            className="text-xs font-sans tracking-[0.3em] uppercase mb-6"
+            className="text-[9px] sm:text-xs font-sans uppercase mb-3 sm:mb-6 sm:tracking-[0.3em]"
             style={{ color: gold }}
           >
             Chennai's Premier Luxury Salon Group
@@ -447,15 +450,17 @@ export default function BranchListingPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] as const }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight mb-6"
+            // Scaled text all the way down to text-[26px] for absolute smallest 320px screens
+            className="text-[26px] xs:text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold leading-tight sm:leading-tight tracking-tight mb-4 sm:mb-6"
             style={{
               color: "#FAF8F5",
-              textShadow: "0 4px 30px rgba(0,0,0,0.45)",
+              textShadow: "0 4px 30px rgba(0,0,0,0.55)",
             }}
           >
             Best Premium Unisex
-            <br />
+            <br className="hidden sm:block" />{" "}
             <span
+              className="block sm:inline"
               style={{
                 background: "linear-gradient(135deg, #F4D06F 0%, #FFE7A3 50%, #D4AF37 100%)",
                 WebkitBackgroundClip: "text",
@@ -463,8 +468,8 @@ export default function BranchListingPage() {
               }}
             >
               Salon Branches
-            </span>
-            <br />
+            </span>{" "}
+            <br className="hidden sm:block" />
             in Chennai
           </motion.h1>
 
@@ -472,10 +477,10 @@ export default function BranchListingPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
-            className="text-lg md:text-xl max-w-2xl mx-auto mb-10 font-sans leading-relaxed"
+            className="text-[13px] xs:text-sm sm:text-base md:text-xl max-w-2xl mx-auto mb-6 sm:mb-10 font-sans leading-relaxed px-2"
             style={{
-              color: "rgba(255,255,255,0.88)",
-              textShadow: "0 2px 15px rgba(0,0,0,0.55)",
+              color: "rgba(255,255,255,0.92)",
+              textShadow: "0 2px 15px rgba(0,0,0,0.65)",
             }}
           >
             Five luxury locations across Chennai. One uncompromising standard of beauty.
@@ -485,11 +490,12 @@ export default function BranchListingPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.9, ease: [0.22, 1, 0.36, 1] as const }}
-            className="flex flex-wrap gap-4 justify-center"
+            className="flex flex-col items-center gap-3 sm:gap-6 w-full max-w-3xl mx-auto"
           >
+            {/* Find a Branch Button */}
             <a
               href="#branches"
-              className="px-8 py-4 text-xs font-bold tracking-widest uppercase font-sans rounded-full transition-all duration-300"
+              className="w-full sm:w-auto px-8 py-3.5 sm:py-4 text-[11px] sm:text-xs font-bold tracking-widest uppercase font-sans rounded-full transition-all duration-300 flex justify-center items-center"
               style={{
                 background: "linear-gradient(135deg, #C9A84C 0%, #B8942E 100%)",
                 color: pearl,
@@ -498,17 +504,26 @@ export default function BranchListingPage() {
             >
               Find a Branch
             </a>
-            <a
-              href="tel:+919876543210"
-              className="px-8 py-4 text-xs font-bold tracking-widest uppercase font-sans rounded-full border transition-all duration-300"
-              style={{
-                borderColor: "rgba(201,168,76,0.5)",
-                color: "#8A6E35",
-                background: "rgba(201,168,76,0.08)",
-              }}
-            >
-              Book Now
-            </a>
+
+            {/* Branch Booking Pills Container */}
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2.5 sm:gap-3 justify-center items-center w-full sm:w-auto">
+              {salonBranches.map((branch) => (
+                <a
+                  key={branch.name}
+                  href={`tel:${branch.phone}`}
+                  // Tighter padding on ultra-mobile to save height space
+                  className="group w-full sm:w-auto px-5 py-2.5 sm:py-3 text-[10px] xs:text-[11px] md:text-xs font-bold tracking-widest uppercase font-sans rounded-full border transition-all duration-300 hover:bg-[#C9A84C] hover:text-[#120E0C] hover:border-[#C9A84C] hover:shadow-[0_4px_20px_rgba(201,168,76,0.35)] flex justify-center items-center"
+                  style={{
+                    borderColor: "rgba(201,168,76,0.5)",
+                    color: "#F3EFEA",
+                    background: "rgba(201,168,76,0.12)",
+                    backdropFilter: "blur(4px)",
+                  }}
+                >
+                  Book <span className="text-[#C9A84C] group-hover:text-[#120E0C] transition-colors duration-300 ml-1">{branch.name}</span>
+                </a>
+              ))}
+            </div>
           </motion.div>
 
           {/* branch count strip */}
@@ -516,56 +531,33 @@ export default function BranchListingPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.2 }}
-            className="mt-16 flex items-center justify-center gap-8 flex-wrap"
+            className="mt-10 sm:mt-16 flex items-center justify-center gap-4 sm:gap-8 flex-wrap px-2"
           >
             {["5 Branches", "10+ Years", "500+ Bridal", "4.9★ Rated"].map((s) => (
-              <div key={s} className="text-center">
-                <span className="font-bold text-lg" style={{ color: gold }}>
+              <div key={s} className="text-center w-[40%] sm:w-auto">
+                <span className="block sm:inline font-bold text-[15px] xs:text-base sm:text-lg" style={{ color: gold }}>
                   {s.split(" ")[0]}
                 </span>
-                <span className="text-xs font-sans ml-1" style={{ color: taupe }}>
+                <span className="block sm:inline text-[9px] xs:text-[10px] sm:text-xs font-sans sm:ml-1 mt-1 sm:mt-0" style={{ color: taupe }}>
                   {s.split(" ").slice(1).join(" ")}
                 </span>
               </div>
             ))}
           </motion.div>
         </motion.div>
-
-        {/* scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        >
-          <span
-            className="text-xs tracking-widest font-sans uppercase"
-            style={{ color: "rgba(201,168,76,0.6)" }}
-          >
-            Scroll
-          </span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 1.4 }}
-            className="w-px h-10"
-            style={{
-              background: `linear-gradient(to bottom, ${gold}, transparent)`,
-            }}
-          />
-        </motion.div>
       </header>
 
       {/* ──────────── BRANCH GRID ──────────── */}
-      <section id="branches" className="py-24 px-6 max-w-7xl mx-auto">
-        <FadeUp className="text-center mb-16">
+      <section id="branches" className="py-16 md:py-24 px-4 sm:px-6 max-w-7xl mx-auto">
+        <FadeUp className="text-center mb-12 sm:mb-16">
           <p
-            className="text-xs tracking-[0.3em] uppercase font-sans mb-4"
+            className="text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.3em] uppercase font-sans mb-3 sm:mb-4"
             style={{ color: gold }}
           >
             Our Locations
           </p>
           <h2
-            className="text-3xl md:text-5xl font-bold"
+            className="text-2xl sm:text-3xl md:text-5xl font-bold leading-tight"
             style={{ color: charcoal }}
           >
             5 Premium Branches{" "}
@@ -575,7 +567,7 @@ export default function BranchListingPage() {
           <GoldRule />
         </FadeUp>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {SALON_BRANCHES.map((branch, i) => (
             <BranchCard key={branch.slug} branch={branch} index={i} />
           ))}
@@ -584,21 +576,21 @@ export default function BranchListingPage() {
 
       {/* ──────────── WHY VIBE ──────────── */}
       <section
-        className="py-24 px-6"
+        className="py-16 md:py-24 px-4 sm:px-6"
         style={{
           background: `linear-gradient(180deg, ${champagne} 0%, #F5EDD8 100%)`,
         }}
       >
         <div className="max-w-6xl mx-auto">
-          <FadeUp className="text-center mb-16">
+          <FadeUp className="text-center mb-12 sm:mb-16">
             <p
-              className="text-xs tracking-[0.3em] uppercase font-sans mb-4"
+              className="text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.3em] uppercase font-sans mb-3 sm:mb-4"
               style={{ color: gold }}
             >
               Our Promise
             </p>
             <h2
-              className="text-3xl md:text-5xl font-bold"
+              className="text-2xl sm:text-3xl md:text-5xl font-bold leading-tight"
               style={{ color: charcoal }}
             >
               Why Chennai Chooses{" "}
@@ -607,11 +599,11 @@ export default function BranchListingPage() {
             <GoldRule />
           </FadeUp>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
             {WHYS.map((item, i) => (
               <FadeUp key={item.title} delay={i * 0.08}>
                 <div
-                  className="group p-8 rounded-2xl border transition-all duration-500 relative overflow-hidden h-full"
+                  className="group p-6 sm:p-8 rounded-2xl border transition-all duration-500 relative overflow-hidden h-full flex flex-col"
                   style={{
                     background: pearl,
                     borderColor: "rgba(201,168,76,0.18)",
@@ -628,18 +620,17 @@ export default function BranchListingPage() {
                     el.style.boxShadow = "0 2px 12px rgba(201,168,76,0.06)";
                   }}
                 >
-                  <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center justify-between mb-5 sm:mb-6">
                     <span
-                      className="text-4xl font-light tracking-tight"
+                      className="text-3xl sm:text-4xl font-light tracking-tight"
                       style={{
                         color: "rgba(180,168,76,1)",
                       }}
                     >
                       {item.number}
                     </span>
-
                     <div
-                      className="h-px w-16"
+                      className="h-px w-12 sm:w-16"
                       style={{
                         background:
                           "linear-gradient(90deg, rgba(201,168,76,0.8), transparent)",
@@ -647,12 +638,12 @@ export default function BranchListingPage() {
                     />
                   </div>
                   <h3
-                    className="font-bold text-lg mb-3 font-sans"
+                    className="font-bold text-base sm:text-lg mb-2 sm:mb-3 font-sans"
                     style={{ color: gold }}
                   >
                     {item.title}
                   </h3>
-                  <p className="text-sm leading-relaxed font-sans" style={{ color: taupe }}>
+                  <p className="text-xs sm:text-sm leading-relaxed font-sans flex-grow" style={{ color: taupe }}>
                     {item.desc}
                   </p>
                   {/* subtle hover sheen */}
@@ -668,16 +659,16 @@ export default function BranchListingPage() {
       </section>
 
       {/* ──────────── SERVICES ──────────── */}
-      <section className="py-24 px-6 max-w-7xl mx-auto">
-        <FadeUp className="text-center mb-16">
+      <section className="py-16 md:py-24 px-4 sm:px-6 max-w-7xl mx-auto">
+        <FadeUp className="text-center mb-12 sm:mb-16">
           <p
-            className="text-xs tracking-[0.3em] uppercase font-sans mb-4"
+            className="text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.3em] uppercase font-sans mb-3 sm:mb-4"
             style={{ color: gold }}
           >
             What We Offer
           </p>
           <h2
-            className="text-3xl md:text-5xl font-bold"
+            className="text-2xl sm:text-3xl md:text-5xl font-bold leading-tight"
             style={{ color: charcoal }}
           >
             Luxury Services at{" "}
@@ -687,7 +678,7 @@ export default function BranchListingPage() {
           <GoldRule />
         </FadeUp>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {SERVICES.map((svc, i) => (
             <FadeUp key={svc.label} delay={i * 0.07}>
               <motion.div
@@ -698,7 +689,7 @@ export default function BranchListingPage() {
                 transition={{
                   duration: 0.3,
                 }}
-                className="group relative overflow-hidden rounded-3xl h-full p-8 border"
+                className="group relative overflow-hidden rounded-3xl h-full p-6 sm:p-8 border flex flex-col"
                 style={{
                   background:
                     "linear-gradient(180deg,#FFFFFF 0%,#FCF8F1 100%)",
@@ -708,12 +699,11 @@ export default function BranchListingPage() {
               >
                 {/* Glow Background */}
                 <div
-                  className="absolute -top-12 -right-12 h-32 w-32 rounded-full opacity-0 group-hover:opacity-100 blur-3xl transition-all duration-700"
+                  className="absolute -top-12 -right-12 h-32 w-32 rounded-full opacity-0 group-hover:opacity-100 blur-3xl transition-all duration-700 pointer-events-none"
                   style={{
                     background: "rgba(201,168,76,0.18)",
                   }}
                 />
-
                 {/* Top Gold Line */}
                 <div
                   className="absolute top-0 left-0 h-1 w-0 group-hover:w-full transition-all duration-700"
@@ -722,11 +712,10 @@ export default function BranchListingPage() {
                       "linear-gradient(90deg,#C9A84C,#F4D06F,#C9A84C)",
                   }}
                 />
-
                 {/* Number */}
-                <div className="mb-8 flex items-center justify-between">
+                <div className="mb-6 sm:mb-8 flex items-center justify-between">
                   <span
-                    className="text-6xl font-bold leading-none"
+                    className="text-4xl sm:text-6xl font-bold leading-none"
                     style={{
                       color: "#C9A84C",
                       opacity: 0.80,
@@ -734,29 +723,25 @@ export default function BranchListingPage() {
                   >
                     {svc.number}
                   </span>
-
                 </div>
-
                 {/* Title */}
                 <h3
-                  className="mb-3 text-xl font-semibold tracking-tight"
+                  className="mb-2 sm:mb-3 text-lg sm:text-xl font-semibold tracking-tight"
                   style={{
                     color: charcoal,
                   }}
                 >
                   {svc.label}
                 </h3>
-
                 {/* Description */}
                 <p
-                  className="text-[15px] leading-7"
+                  className="text-xs sm:text-[15px] leading-relaxed sm:leading-7 flex-grow"
                   style={{
                     color: taupe,
                   }}
                 >
                   {svc.desc}
                 </p>
-
                 {/* Bottom Accent */}
                 <div
                   className="absolute bottom-0 left-0 h-[3px] w-full scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"
@@ -773,21 +758,21 @@ export default function BranchListingPage() {
 
       {/* ──────────── FAQ ──────────── */}
       <section
-        className="py-24 px-6"
+        className="py-16 md:py-24 px-4 sm:px-6"
         style={{ background: champagne }}
         itemScope
         itemType="https://schema.org/FAQPage"
       >
         <div className="max-w-3xl mx-auto">
-          <FadeUp className="text-center mb-14">
+          <FadeUp className="text-center mb-10 sm:mb-14">
             <p
-              className="text-xs tracking-[0.3em] uppercase font-sans mb-4"
+              className="text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.3em] uppercase font-sans mb-3 sm:mb-4"
               style={{ color: gold }}
             >
               FAQ
             </p>
             <h2
-              className="text-3xl md:text-4xl font-bold"
+              className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight"
               style={{ color: charcoal }}
             >
               Frequently Asked{" "}
@@ -807,7 +792,7 @@ export default function BranchListingPage() {
             itemScope
             itemType="https://schema.org/FAQPage"
           >
-            <div className="px-8 py-2">
+            <div className="px-4 sm:px-8 py-2">
               {FAQS.map((faq, i) => (
                 <div
                   key={i}
@@ -834,7 +819,7 @@ export default function BranchListingPage() {
       {/* ──────────── SEO CONTENT ──────────── */}
       <section
         aria-hidden="true"
-        className="max-w-4xl mx-auto overflow-hidden"
+        className="max-w-4xl mx-auto overflow-hidden px-4"
         style={{
           maxHeight: "1px",
           opacity: 0.01,
@@ -978,7 +963,7 @@ export default function BranchListingPage() {
 
       {/* ──────────── CTA ──────────── */}
       <section
-        className="relative py-28 px-6 overflow-hidden"
+        className="relative py-16 md:py-28 px-4 sm:px-6 overflow-hidden"
         style={{
           background: `linear-gradient(135deg, ${champagne} 0%, #F5EDD8 50%, ${champagne} 100%)`,
         }}
@@ -989,11 +974,11 @@ export default function BranchListingPage() {
           className="pointer-events-none absolute inset-0 overflow-hidden"
         >
           <div
-            className="absolute -top-32 -left-32 h-96 w-96 rounded-full opacity-20 blur-3xl"
+            className="absolute -top-32 -left-32 h-64 w-64 md:h-96 md:w-96 rounded-full opacity-20 blur-3xl"
             style={{ background: `radial-gradient(circle, ${gold} 0%, transparent 70%)` }}
           />
           <div
-            className="absolute -bottom-32 -right-32 h-80 w-80 rounded-full opacity-15 blur-3xl"
+            className="absolute -bottom-32 -right-32 h-64 w-64 md:h-80 md:w-80 rounded-full opacity-15 blur-3xl"
             style={{ background: `radial-gradient(circle, #D4B896 0%, transparent 70%)` }}
           />
         </div>
@@ -1001,7 +986,7 @@ export default function BranchListingPage() {
         {/* top gold rule */}
         <div
           aria-hidden="true"
-          className="absolute top-0 left-1/2 -translate-x-1/2 h-px w-2/3 max-w-lg"
+          className="absolute top-0 left-1/2 -translate-x-1/2 h-px w-3/4 md:w-2/3 max-w-lg"
           style={{
             background:
               "linear-gradient(90deg, transparent 0%, #C9A84C 30%, #E8C97A 50%, #C9A84C 70%, transparent 100%)",
@@ -1010,29 +995,30 @@ export default function BranchListingPage() {
 
         <FadeUp className="relative z-10 text-center max-w-3xl mx-auto">
           <p
-            className="text-xs tracking-[0.3em] uppercase font-sans mb-4"
+            className="text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.3em] uppercase font-sans mb-3 sm:mb-4"
             style={{ color: gold }}
           >
             Book Your Experience
           </p>
           <h2
-            className="text-3xl md:text-5xl font-bold mb-6"
+            className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 sm:mb-6 leading-tight"
             style={{ color: charcoal }}
           >
             Ready for a Luxury{" "}
+            <br className="block sm:hidden" />
             <span style={{ color: gold }}>Transformation?</span>
           </h2>
           <p
-            className="font-sans text-lg mb-10 leading-relaxed"
+            className="font-sans text-sm sm:text-lg mb-8 sm:mb-10 leading-relaxed max-w-xl mx-auto"
             style={{ color: taupe }}
           >
             Walk in to any of our five Chennai branches or book an appointment to secure your preferred time slot.
           </p>
 
-          <div className="flex flex-wrap gap-5 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center">
             <a
               href="tel:+919876543210"
-              className="px-10 py-4 text-xs font-bold tracking-widest uppercase font-sans rounded-full transition-all duration-300"
+              className="w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 text-[11px] sm:text-xs font-bold tracking-widest uppercase font-sans rounded-full transition-all duration-300 flex justify-center items-center"
               style={{
                 background: "linear-gradient(135deg, #C9A84C 0%, #B8942E 100%)",
                 color: pearl,
@@ -1043,7 +1029,7 @@ export default function BranchListingPage() {
             </a>
             <a
               href="#branches"
-              className="px-10 py-4 text-xs font-bold tracking-widest uppercase font-sans rounded-full border transition-all duration-300"
+              className="w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 text-[11px] sm:text-xs font-bold tracking-widest uppercase font-sans rounded-full border transition-all duration-300 flex justify-center items-center"
               style={{
                 borderColor: "rgba(201,168,76,0.45)",
                 color: "#8A6E35",
@@ -1058,7 +1044,7 @@ export default function BranchListingPage() {
         {/* bottom gold rule */}
         <div
           aria-hidden="true"
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 h-px w-2/3 max-w-lg"
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 h-px w-3/4 md:w-2/3 max-w-lg"
           style={{
             background:
               "linear-gradient(90deg, transparent 0%, #C9A84C 30%, #E8C97A 50%, #C9A84C 70%, transparent 100%)",

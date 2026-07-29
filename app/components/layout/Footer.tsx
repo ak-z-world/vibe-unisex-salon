@@ -13,7 +13,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-10 pb-12">
         {/* Main Content Layout Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-y-16 gap-x-12 lg:gap-x-8 items-start">
-          
+
           {/* 1. Brand Column (Spans 3/12 on Large) */}
           <div className="lg:col-span-3 flex flex-col justify-between h-full space-y-6">
             <div>
@@ -27,7 +27,7 @@ export default function Footer() {
                 Premium hair, beauty &amp; grooming for every identity — curated across India&apos;s finest luxury spaces.
               </p>
             </div>
-            
+
             {/* Socials with minimalist circular frames */}
             <div className="flex gap-3 pt-2">
               <a
@@ -83,8 +83,8 @@ export default function Footer() {
             {/* Expansive layout: 1 col on mobile, 2 cols on tablets, 3 cols on large displays */}
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
               {SALON_BRANCHES.map((branch) => (
-                <div 
-                  key={branch.id} 
+                <div
+                  key={branch.id}
                   className="group relative border-b border-[#2D231C] pb-4 flex flex-col justify-between hover:border-[#C9A84C]/50 transition-colors duration-300"
                 >
                   <div className="space-y-1">
@@ -117,9 +117,9 @@ export default function Footer() {
         </div>
 
         {/* Giant luxury typography backdrop for 2026 branding */}
-        <div className="select-none pointer-events-none mt-6 md:mt-2 mb-4 text-center overflow-hidden w-full hidden sm:block">
-          <h2 className="text-[12vw] font-bold tracking-[0.25em] text-[#16110E] leading-none select-none uppercase font-display translate-y-4">
-            VIBE
+        <div className="select-none pointer-events-none mt-6 md:mt-2 mb-7 flex justify-center overflow-hidden w-full hidden sm:block">
+          <h2 className="whitespace-nowrap text-[5.5vw] font-bold tracking-[0.25em] text-[#16110E] leading-none select-none uppercase font-display translate-y-3">
+            VIBE UNISEX SALON
           </h2>
         </div>
 
