@@ -14,7 +14,7 @@ import Image from "next/image";
 const metrics = [
   { value: 15000, suffix: "+", label: "Satisfied Clients" },
   { value: 6, suffix: "+", label: "Years in Chennai" },
-  { value: 5, suffix: "", label: "Salon Branches" },
+  { value: 6, suffix: "", label: "Salon Locations" },
   { value: 98, suffix: "%", label: "Client Satisfaction" },
 ];
 
@@ -190,7 +190,7 @@ export default function AboutSection() {
                 don&apos;t just follow trends; we help our clients set them.
               </p>
               <p>
-                With five thoughtfully designed branches across Chennai, Vibe is
+                With 5 active locations across Chennai and our 6th branch opening in Virugambakkam on September 1, 2026, Vibe is
                 built for discerning clients who believe beauty is an experience
                 — not just a service.
               </p>

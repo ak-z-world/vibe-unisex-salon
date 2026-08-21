@@ -162,7 +162,7 @@ export default function CitySEOContent() {
             <p className="mb-4">
               Consistency is the hallmark of a truly premium salon brand. At Vibe, we have built
               systems and training standards that ensure you receive the same elevated experience
-              across all five of our Chennai branches. The products, protocols, hygiene standards,
+              across our active Chennai locations and upcoming Virugambakkam destination. The products, protocols, hygiene standards,
               and service philosophy are uniform — so you are never disappointed, regardless of
               which location you visit.
             </p>

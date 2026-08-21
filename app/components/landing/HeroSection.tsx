@@ -5,19 +5,12 @@ import { useRef } from "react";
 import Link from "next/link";
 import { MapPin } from "lucide-react";
 
-// Local branch data (update phone numbers with actual salon numbers)
-const salonBranches = [
-  { name: "Anna Nagar", phone: "+91 8072352853" },
-  { name: "T. Nagar", phone: "+91 9342795928" },
-  { name: "Ekkatuthangal", phone: "+91 6374679577" },
-  { name: "Porur", phone: "+91 7603957055" },
-  { name: "Velachery", phone: "+91 9363702047" },
-];
+import { SALON_BRANCHES } from "@/lib/branches";
 
 const stats = [
   { value: "15,000+", label: "Happy Clients" },
   { value: "4.9★", label: "Average Rating" },
-  { value: "5", label: "Chennai Locations" },
+  { value: "6", label: "Chennai Locations" },
   { value: "6+", label: "Years of Excellence" },
 ];
 
@@ -181,17 +174,17 @@ export default function HeroSection() {
             
             {/* High-Intent Luxury Action Pills */}
             <div className="flex flex-wrap gap-3 sm:gap-4 max-w-3xl">
-              {salonBranches.map((branch) => (
+              {SALON_BRANCHES.map((branch) => (
                 <Link
                   key={branch.name}
-                  href={getWhatsAppLink(branch.phone, branch.name)}
-                  target="_blank"
+                  href={branch.status === "coming_soon" ? `/branches/${branch.slug}` : getWhatsAppLink(branch.phone, branch.name)}
+                  target={branch.status === "coming_soon" ? "_self" : "_blank"}
                   rel="noopener noreferrer"
                   className="group relative flex items-center gap-3 px-5 sm:px-6 py-3 sm:py-3.5 rounded-full border border-white/15 bg-black/40 backdrop-blur-md transition-all duration-400 ease-out hover:border-[#C9A84C] hover:bg-[#C9A84C] hover:shadow-[0_8px_30px_rgba(201,168,76,0.25)] overflow-hidden"
-                  aria-label={`Book appointment at ${branch.name} via WhatsApp`}
+                  aria-label={branch.status === "coming_soon" ? `View upcoming ${branch.name} branch` : `Book appointment at ${branch.name} via WhatsApp`}
                 >
                   <span className="relative z-10 text-[10px] sm:text-xs tracking-[0.15em] uppercase font-bold text-white group-hover:text-[#120E0C] transition-colors duration-300">
-                    {branch.name}
+                    {branch.status === "coming_soon" ? `${branch.name} (Opening Soon)` : branch.name}
                   </span>
                   
                   {/* Right Arrow Icon */}

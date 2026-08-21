@@ -68,6 +68,18 @@ function fieldRow(label: string, value: string): string {
   `;
 }
 
+function formatDateString(dateStr?: string): string {
+  if (!dateStr) return "Not specified";
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr;
+  return d.toLocaleDateString("en-IN", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
 export function buildBranchEmail(data: ContactFormData): {
   subject: string;
   html: string;
@@ -84,9 +96,9 @@ export function buildBranchEmail(data: ContactFormData): {
     <table width="100%" cellpadding="0" cellspacing="0">
       ${fieldRow("Customer Name", data.fullName)}
       ${fieldRow("Mobile Number", data.mobile)}
-      ${fieldRow("Email Address", data.email)}
+      ${data.email ? fieldRow("Email Address", data.email) : ""}
       ${fieldRow("Service Interested In", data.service)}
-      ${fieldRow("Preferred Visit Date", new Date(data.preferredDate).toLocaleDateString("en-IN", { weekday: "long", year: "numeric", month: "long", day: "numeric" }))}
+      ${fieldRow("Preferred Visit Date", formatDateString(data.preferredDate))}
       ${fieldRow("Preferred Time", data.preferredTime)}
       ${fieldRow("Selected Branch", data.branchName)}
       ${data.message ? fieldRow("Additional Message", data.message) : ""}
@@ -106,7 +118,7 @@ ${"=".repeat(50)}
 
 Customer Name   : ${data.fullName}
 Mobile          : ${data.mobile}
-Email           : ${data.email}
+Email           : ${data.email ?? "Not provided"}
 Service         : ${data.service}
 Preferred Date  : ${data.preferredDate}
 Preferred Time  : ${data.preferredTime}
@@ -136,9 +148,9 @@ export function buildAdminEmail(data: ContactFormData, branchEmail: string): {
     <table width="100%" cellpadding="0" cellspacing="0">
       ${fieldRow("Customer Name", data.fullName)}
       ${fieldRow("Mobile Number", data.mobile)}
-      ${fieldRow("Email Address", data.email)}
+      ${data.email ? fieldRow("Email Address", data.email) : ""}
       ${fieldRow("Service Interested In", data.service)}
-      ${fieldRow("Preferred Visit Date", new Date(data.preferredDate).toLocaleDateString("en-IN", { weekday: "long", year: "numeric", month: "long", day: "numeric" }))}
+      ${fieldRow("Preferred Visit Date", formatDateString(data.preferredDate))}
       ${fieldRow("Preferred Time", data.preferredTime)}
       ${fieldRow("Routed To Branch", `${data.branchName} (${branchEmail})`)}
       ${fieldRow("Branch ID", data.branchId)}
@@ -153,7 +165,7 @@ ${"=".repeat(50)}
 
 Customer Name   : ${data.fullName}
 Mobile          : ${data.mobile}
-Email           : ${data.email}
+Email           : ${data.email ?? "Not provided"}
 Service         : ${data.service}
 Preferred Date  : ${data.preferredDate}
 Preferred Time  : ${data.preferredTime}
@@ -183,7 +195,7 @@ export function buildCustomerConfirmationEmail(data: ContactFormData): {
       <p style="margin:0 0 16px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#8a7d6b;font-family:Arial,sans-serif;">Your Enquiry Summary</p>
       <table width="100%" cellpadding="0" cellspacing="0">
         ${fieldRow("Service", data.service)}
-        ${fieldRow("Preferred Date", new Date(data.preferredDate).toLocaleDateString("en-IN", { weekday: "long", year: "numeric", month: "long", day: "numeric" }))}
+        ${fieldRow("Preferred Date", formatDateString(data.preferredDate))}
         ${fieldRow("Preferred Time", data.preferredTime)}
         ${fieldRow("Branch", data.branchName)}
       </table>

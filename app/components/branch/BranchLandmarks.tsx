@@ -22,74 +22,59 @@ export default function BranchLandmarks({ branch }: { branch: Branch }) {
     items.length > 0 ? items.join(", ") : undefined;
 
   return (
-    <section className="sr-only" aria-hidden="false" role="complementary">
-      <h2>
-        Vibe Unisex Salon {branch.name} — Neighbourhood &amp; Connectivity
-        Guide
+    <section className="mt-16 border-t border-[#EDE5D8] pt-12 text-left">
+      <div className="flex items-center gap-3 mb-6">
+        <span className="h-px w-8 bg-gradient-to-r from-[#C9A84C] to-[#E7D8B1]" />
+        <span className="text-[10px] tracking-[0.32em] uppercase text-[#9A8060] font-medium">
+          Neighbourhood &amp; Location Guide
+        </span>
+      </div>
+      <h2 className="font-display text-2xl md:text-3xl text-[#2C2117] font-semibold mb-6">
+        Vibe Unisex Salon {branch.name} — Area &amp; Landmark Guide
       </h2>
-      <p>
-        Vibe Unisex Salon {branch.name} serves clients throughout{" "}
-        {branch.neighborhood} and the surrounding {branch.city} localities,
-        including {list(extendedAreas)}. The branch is easily reachable for
-        residents and working professionals across this part of{" "}
-        {branch.city}, {branch.state}.
-      </p>
-
-      {cluster.transit.length > 0 && (
+      <div className="space-y-4 text-[#7A6A58] text-sm leading-relaxed font-light">
         <p>
-          Commuters travelling by public transport can reach this branch via{" "}
-          {list(cluster.transit)}, making it a convenient stop for a haircut,
-          hair spa, or grooming appointment before or after work.
+          Vibe Unisex Salon {branch.name} serves clients throughout{" "}
+          {branch.neighborhood} and the surrounding {branch.city} localities,
+          including {list(extendedAreas)}. The branch is easily reachable for
+          residents and working professionals across {branch.city}, {branch.state}.
         </p>
-      )}
 
-      {cluster.landmarks.length > 0 && (
-        <p>
-          Well-known landmarks close to this location include{" "}
-          {list(cluster.landmarks)}, which residents and visitors commonly
-          use as reference points when navigating to{" "}
-          {branch.neighborhood}.
-        </p>
-      )}
+        {cluster.transit.length > 0 && (
+          <p>
+            <strong className="text-[#2C2117] font-medium">Transit &amp; Commute:</strong> Commuters travelling by public transport can reach this branch via{" "}
+            {list(cluster.transit)}, making it a convenient stop for a haircut,
+            hair spa, or grooming appointment.
+          </p>
+        )}
 
-      {cluster.residentialAreas.length > 0 && (
-        <p>
-          Popular residential neighbourhoods near this branch include{" "}
-          {list(cluster.residentialAreas)}. Clients from these areas
-          frequently visit Vibe Unisex Salon {branch.name} for haircuts, hair
-          colour, keratin treatments, hair spa, and bridal makeup.
-        </p>
-      )}
+        {cluster.landmarks.length > 0 && (
+          <p>
+            <strong className="text-[#2C2117] font-medium">Key Landmarks:</strong> Well-known landmarks close to this location include{" "}
+            {list(cluster.landmarks)}, which clients commonly use as reference points.
+          </p>
+        )}
 
-      {cluster.colleges.length > 0 && (
-        <p>
-          Students and staff from nearby educational institutions such as{" "}
-          {list(cluster.colleges)} regularly visit this branch for
-          affordable grooming and styling services.
-        </p>
-      )}
+        {cluster.residentialAreas.length > 0 && (
+          <p>
+            <strong className="text-[#2C2117] font-medium">Nearby Neighbourhoods:</strong> Clients from{" "}
+            {list(cluster.residentialAreas)} regularly visit Vibe Unisex Salon {branch.name} for haircuts, hair colour, keratin treatments, hair spa, and bridal makeup.
+          </p>
+        )}
 
-      {cluster.itHubs.length > 0 && (
-        <p>
-          Working professionals from {list(cluster.itHubs)} choose this
-          branch for quick, high-quality salon services close to their
-          workplace.
-        </p>
-      )}
+        {cluster.colleges.length > 0 && (
+          <p>
+            <strong className="text-[#2C2117] font-medium">Nearby Campus &amp; Colleges:</strong> Students and staff from nearby educational institutions such as{" "}
+            {list(cluster.colleges)} regularly visit this branch for styling and grooming.
+          </p>
+        )}
 
-      {cluster.hospitals.length > 0 && (
-        <p>
-          The branch is also located within convenient reach of{" "}
-          {list(cluster.hospitals)}.
-        </p>
-      )}
-
-      {cluster.malls.length > 0 && (
-        <p>
-          Clients often combine their salon visit with shopping trips to{" "}
-          {list(cluster.malls)}, both located near {branch.neighborhood}.
-        </p>
-      )}
+        {cluster.itHubs.length > 0 && (
+          <p>
+            <strong className="text-[#2C2117] font-medium">IT &amp; Business Hubs:</strong> Working professionals from {list(cluster.itHubs)} choose this branch for quick, high-quality salon services near their workplace.
+          </p>
+        )}
+      </div>
     </section>
   );
 }

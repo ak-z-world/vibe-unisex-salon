@@ -78,7 +78,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `Best Premium Unisex Salon in Chennai | ${SITE_SHORT_NAME}`,
     description:
-      "Experience luxury hair, beauty & grooming at Vibe Unisex Salon — 5 branches across Chennai.",
+      "Experience luxury hair, beauty & grooming at Vibe Unisex Salon — premium locations across Anna Nagar, T. Nagar, Ekkatuthangal, Porur, Velachery & Virugambakkam.",
     url: SITE_URL,
     siteName: SITE_NAME,
     locale: SITE_LOCALE,

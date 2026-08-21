@@ -6,14 +6,6 @@ import { motion, useScroll, useTransform, useInView } from "framer-motion";
 // Ensure you have this import path correctly resolving in your project
 import { SALON_BRANCHES } from "@/lib/branches";
 
-const salonBranches = [
-  { name: "Anna Nagar", phone: "+91 8072352853" },
-  { name: "T. Nagar", phone: "+91 9342795928" },
-  { name: "Ekkatuthangal", phone: "+91 6374679577" },
-  { name: "Porur", phone: "+91 7603957055" },
-  { name: "Velachery", phone: "+91 9363702047" },
-];
-
 /* ─── design tokens ─── */
 const gold = "#C9A84C";
 const charcoal = "#1A1410";
@@ -241,12 +233,14 @@ function BranchCard({ branch, index }: { branch: (typeof SALON_BRANCHES)[0]; ind
         <span
           className="absolute top-4 left-4 text-[10px] sm:text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full"
           style={{
-            background: "linear-gradient(135deg, #C9A84C 0%, #B8942E 100%)",
+            background: branch.status === "coming_soon"
+              ? "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)"
+              : "linear-gradient(135deg, #C9A84C 0%, #B8942E 100%)",
             color: pearl,
-            boxShadow: "0 2px 10px rgba(201,168,76,0.3)",
+            boxShadow: "0 2px 10px rgba(0,0,0,0.3)",
           }}
         >
-          {branch.name}
+          {branch.status === "coming_soon" ? "Opening Sept 1, 2026" : branch.name}
         </span>
       </div>
 
@@ -276,7 +270,7 @@ function BranchCard({ branch, index }: { branch: (typeof SALON_BRANCHES)[0]; ind
           </div>
           <div className="flex gap-3 items-start">
             <span style={{ color: gold }}>🕐</span>
-            <span>{branch.hours}</span>
+            <span>{branch.status === "coming_soon" ? "Opening September 1, 2026" : branch.hours}</span>
           </div>
         </div>
 
@@ -303,7 +297,7 @@ function BranchCard({ branch, index }: { branch: (typeof SALON_BRANCHES)[0]; ind
             el.style.boxShadow = "none";
           }}
         >
-          View Branch →
+          {branch.status === "coming_soon" ? "Pre-Book Virugambakkam →" : "View Branch →"}
         </Link>
       </div>
 
@@ -483,7 +477,7 @@ export default function BranchListingPage() {
               textShadow: "0 2px 15px rgba(0,0,0,0.65)",
             }}
           >
-            Five luxury locations across Chennai. One uncompromising standard of beauty.
+            Six luxury locations across Chennai. One uncompromising standard of beauty.
           </motion.p>
 
           <motion.div
@@ -507,10 +501,10 @@ export default function BranchListingPage() {
 
             {/* Branch Booking Pills Container */}
             <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2.5 sm:gap-3 justify-center items-center w-full sm:w-auto">
-              {salonBranches.map((branch) => (
+              {SALON_BRANCHES.map((branch) => (
                 <a
                   key={branch.name}
-                  href={`tel:${branch.phone}`}
+                  href={branch.status === "coming_soon" ? `/branches/${branch.slug}` : `tel:${branch.phone}`}
                   // Tighter padding on ultra-mobile to save height space
                   className="group w-full sm:w-auto px-5 py-2.5 sm:py-3 text-[10px] xs:text-[11px] md:text-xs font-bold tracking-widest uppercase font-sans rounded-full border transition-all duration-300 hover:bg-[#C9A84C] hover:text-[#120E0C] hover:border-[#C9A84C] hover:shadow-[0_4px_20px_rgba(201,168,76,0.35)] flex justify-center items-center"
                   style={{
@@ -520,7 +514,8 @@ export default function BranchListingPage() {
                     backdropFilter: "blur(4px)",
                   }}
                 >
-                  Book <span className="text-[#C9A84C] group-hover:text-[#120E0C] transition-colors duration-300 ml-1">{branch.name}</span>
+                  {branch.status === "coming_soon" ? "Opening Soon: " : "Book "}
+                  <span className="text-[#C9A84C] group-hover:text-[#120E0C] transition-colors duration-300 ml-1">{branch.name}</span>
                 </a>
               ))}
             </div>
@@ -533,7 +528,7 @@ export default function BranchListingPage() {
             transition={{ duration: 1, delay: 1.2 }}
             className="mt-10 sm:mt-16 flex items-center justify-center gap-4 sm:gap-8 flex-wrap px-2"
           >
-            {["5 Branches", "10+ Years", "500+ Bridal", "4.9★ Rated"].map((s) => (
+            {["6 Locations", "10+ Years", "500+ Bridal", "4.9★ Rated"].map((s) => (
               <div key={s} className="text-center w-[40%] sm:w-auto">
                 <span className="block sm:inline font-bold text-[15px] xs:text-base sm:text-lg" style={{ color: gold }}>
                   {s.split(" ")[0]}
@@ -560,7 +555,7 @@ export default function BranchListingPage() {
             className="text-2xl sm:text-3xl md:text-5xl font-bold leading-tight"
             style={{ color: charcoal }}
           >
-            5 Premium Branches{" "}
+            Luxury Branches{" "}
             <br className="hidden md:block" />
             <span style={{ color: gold }}>Across Chennai</span>
           </h2>
@@ -835,20 +830,20 @@ export default function BranchListingPage() {
               className="text-2xl md:text-3xl font-bold not-prose"
               style={{ color: charcoal }}
             >
-              Best Unisex Salon in Chennai — Vibe Salon Across 5 Locations
+              Best Unisex Salon in Chennai — Vibe Salon Across Chennai Locations
             </h2>
             <p style={{ color: taupe }}>
               When it comes to finding a{" "}
               <strong style={{ color: gold }}>premium salon in Chennai</strong> that consistently delivers
-              internationally inspired results, Vibe Unisex Salon stands in a class of its own. With five
-              strategically located branches — Anna Nagar, T Nagar, Ekkatuthangal, Porur, and Velachery —
+              internationally inspired results, Vibe Unisex Salon stands in a class of its own. With 5 active
+              branches — Anna Nagar, T. Nagar, Ekkatuthangal, Porur, and Velachery — and our upcoming 6th location in Virugambakkam,
               Vibe brings luxury hair and beauty experiences to every major neighbourhood in the city.
             </p>
             <p style={{ color: taupe }}>
               Chennai's beauty landscape has evolved dramatically over the last decade. Today's discerning clients
               expect more than a routine haircut; they seek a holistic grooming experience that combines skilled
               artistry, premium products, and an ambiance that transports them far from the everyday. Vibe Unisex
-              Salon was founded on this very philosophy, and our five Chennai branches are a testament to our
+              Salon was founded on this very philosophy, and our Chennai branches are a testament to our
               unwavering commitment to that standard.
             </p>
 
@@ -941,8 +936,8 @@ export default function BranchListingPage() {
               Vibe Unisex Salon — Chennai's Most Trusted Premium Salon Group
             </h3>
             <p style={{ color: taupe }}>
-              Across all five branches, Vibe Unisex Salon maintains a 4.9-star average rating on Google, drawn
-              from more than 3,000 verified reviews from satisfied clients across Chennai. Our hygiene protocols
+              Across our Chennai locations, Vibe Unisex Salon maintains top client satisfaction ratings, drawn
+              from thousands of verified reviews across the city. Our hygiene protocols
               follow NABH-aligned standards — tools are sterilised before every client, stations are sanitised
               between appointments, and all products are stored in controlled conditions. This meticulous
               attention to detail is what distinguishes Vibe as the{" "}
@@ -1012,7 +1007,7 @@ export default function BranchListingPage() {
             className="font-sans text-sm sm:text-lg mb-8 sm:mb-10 leading-relaxed max-w-xl mx-auto"
             style={{ color: taupe }}
           >
-            Walk in to any of our five Chennai branches or book an appointment to secure your preferred time slot.
+            Walk in to any of our active Chennai branches or pre-book your slot for our new Virugambakkam location.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center">

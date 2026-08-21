@@ -18,6 +18,8 @@ type Branch = {
   longitude: number;
   mapsLink: string;
   featuredImageUrl: string;
+  status?: "open" | "coming_soon";
+  openingDate?: string;
 };
 
 interface BranchCTAProps {
@@ -36,6 +38,8 @@ const services = [
 ];
 
 export default function BranchCTA({ branch }: BranchCTAProps) {
+  const isComingSoon = branch.status === "coming_soon";
+
   return (
     <section
       aria-labelledby="cta-heading"
@@ -112,8 +116,11 @@ export default function BranchCTA({ branch }: BranchCTAProps) {
             className="mb-3 text-3xl font-semibold tracking-tight md:text-4xl"
             style={{ color: "#1A1410" }}
           >
-            Book Your Visit at{" "}
-            <span style={{ color: "#C9A84C" }}>{branch.name}</span>
+            {isComingSoon ? (
+              <>Opening September 1, 2026 at <span style={{ color: "#C9A84C" }}>{branch.name}</span></>
+            ) : (
+              <>Book Your Visit at <span style={{ color: "#C9A84C" }}>{branch.name}</span></>
+            )}
           </motion.h2>
 
           {/* Subtext */}
@@ -125,8 +132,9 @@ export default function BranchCTA({ branch }: BranchCTAProps) {
             className="mx-auto mb-2 max-w-xl text-base leading-relaxed"
             style={{ color: "#6B5F55" }}
           >
-            Experience premium salon services tailored for you — from everyday
-            elegance to special occasions.
+            {isComingSoon
+              ? "Pre-book your opening week appointment now for exclusive launch offers."
+              : "Experience premium salon services tailored for you — from everyday elegance to special occasions."}
           </motion.p>
 
           {/* Service pills */}
@@ -170,7 +178,7 @@ export default function BranchCTA({ branch }: BranchCTAProps) {
               }}
             >
               <Phone size={16} className="transition-transform duration-300 group-hover:rotate-12" />
-              Call Now
+              {isComingSoon ? "Pre-Book via Phone" : "Call Now"}
             </a>
 
             <a
@@ -198,7 +206,7 @@ export default function BranchCTA({ branch }: BranchCTAProps) {
             className="mt-7 text-xs tracking-wide"
             style={{ color: "#9E9189" }}
           >
-            {branch.address}, {branch.neighborhood}, {branch.city} — {branch.hours}
+            {branch.address}, {branch.neighborhood}, {branch.city} — {isComingSoon ? "Opening September 1, 2026" : branch.hours}
           </motion.p>
         </motion.div>
       </div>

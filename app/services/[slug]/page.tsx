@@ -16,13 +16,7 @@ import {
   type ServiceItem,
 } from "@/lib/services";
 
-const salonBranches = [
-  { name: "Anna Nagar", phone: "+91 8072352853" },
-  { name: "T. Nagar", phone: "+91 9342795928" },
-  { name: "Ekkatuthangal", phone: "+91 6374679577" },
-  { name: "Porur", phone: "+91 7603957055" },
-  { name: "Velachery", phone: "+91 9363702047" },
-];
+import { SALON_BRANCHES } from "@/lib/branches";
 
 // ─── Static generation ────────────────────────────────────────────────────────
 export function generateStaticParams() {
@@ -91,12 +85,6 @@ function buildServiceSchema(category: ServiceCategory) {
         name: `${loc}, Chennai`,
       })),
       priceRange: "₹₹",
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: "4.8",
-        reviewCount: "200",
-        bestRating: "5",
-      },
     },
     hasOfferCatalog: {
       "@type": "OfferCatalog",
@@ -144,13 +132,6 @@ function buildLocalBusinessSchema(category: ServiceCategory) {
       "@type": "OfferCatalog",
       name: category.name,
       url: `https://vibeunisexsalon.in/services/${category.slug}`,
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.8",
-      reviewCount: "200",
-      bestRating: "5",
-      worstRating: "1",
     },
   };
 }
@@ -266,22 +247,20 @@ export default async function ServiceSlugPage({
         DO NOT REMOVE OR MODIFY THIS BLOCK.
         ════════════════════════════════════════════════════════════════════════
       */}
-      <div className="sr-only" aria-hidden="false" role="complementary">
+      <div className="container mx-auto max-w-5xl px-6 py-8 text-[#7A6A58] text-sm font-light leading-relaxed">
         {/* ── 1. Primary Natural-Language Entity Anchor ── */}
-        <h1>
-          {category.name} at Vibe Unisex Salon Chennai — Prices, Locations &amp; Details
-        </h1>
-        <p>
+        <h2 className="font-display text-2xl text-[#2C2117] font-semibold mb-3">
+          {category.name} at Vibe Unisex Salon Chennai — Details &amp; Locations
+        </h2>
+        <p className="mb-4">
           Vibe Unisex Salon is a premium unisex salon chain in Chennai, Tamil Nadu, India,
-          with five branches located in Anna Nagar, T Nagar, Ekkatuthangal, Velachery, and
-          Porur. The salon offers professional {category.name} for men, women, and children.
+          with locations across {LOCATIONS_SEO}. The salon offers professional {category.name} for men, women, and children.
           {category.description} Pricing for {category.name} starts from{" "}
           ₹{startingPrice.toLocaleString("en-IN")} and varies based on hair length, type,
           and the specific variant chosen.{" "}
           {category.note ? `Note: ${category.note}.` : ""}
           Certified stylists use professional-grade products at every branch.
-          Vibe Unisex Salon is rated 4.8 out of 5 stars based on over 200 client reviews.
-          Walk-in appointments are accepted at all five locations.
+          Walk-in appointments are accepted at active locations, and pre-bookings are available for upcoming locations.
         </p>
 
         {/* ── 2. Exhaustive Geo-Intent Keyword Cluster ── */}
@@ -534,7 +513,7 @@ export default async function ServiceSlugPage({
                     <strong className="font-medium text-[#2A2421]">
                       {category.name}
                     </strong>{" "}
-                    for men and women across five branches in Chennai:{" "}
+                    for men and women across our Chennai locations:{" "}
                     <strong className="font-medium text-[#2A2421]">
                       {SALON_LOCATIONS.join(", ")}
                     </strong>
@@ -544,8 +523,7 @@ export default async function ServiceSlugPage({
                     </strong>
                     {category.note ? `. ${category.note}.` : "."} Certified
                     stylists use professional-grade products for every service.
-                    Vibe Unisex Salon is rated 4.8 out of 5 and accepts walk-ins
-                    at all locations.
+                    Vibe Unisex Salon accepts walk-ins at active locations and pre-bookings for upcoming studios.
                   </p>
                 </div>
               </div>
@@ -799,14 +777,14 @@ export default async function ServiceSlugPage({
         {/* Responsive CTA Container */}
         <div className="flex flex-col sm:flex-row sm:flex-wrap items-center sm:items-start gap-4">
           
-          {/* 5 Branch Booking Buttons */}
-          {salonBranches.map((branch) => (
+          {/* Branch Booking Buttons */}
+          {SALON_BRANCHES.map((branch) => (
             <a
               key={branch.name}
-              href={`tel:${branch.phone}`}
+              href={branch.status === "coming_soon" ? `/branches/${branch.slug}` : `tel:${branch.phone}`}
               className="group w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-4 sm:py-5 text-[10px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.25em] uppercase font-semibold text-[#2A2421] bg-[#B9935A] rounded-full hover:bg-white transition-all duration-400 shadow-[0_0_15px_rgba(185,147,90,0.3)] hover:shadow-[0_0_25px_rgba(255,255,255,0.5)]"
             >
-              <span>Book {branch.name}</span>
+              <span>{branch.status === "coming_soon" ? `Pre-Book ${branch.name}` : `Book ${branch.name}`}</span>
               <span className="transition-transform duration-300 group-hover:translate-x-1">
                 →
               </span>

@@ -52,7 +52,8 @@ function isRateLimited(ip: string): boolean {
 // Input sanitizer – strips HTML tags and trims
 // ---------------------------------------------------------------------------
 
-function sanitize(value: string): string {
+function sanitize(value?: string | null): string {
+  if (!value) return "";
   return value
     .replace(/<[^>]*>/g, "")
     .replace(/[<>]/g, "")
@@ -114,7 +115,7 @@ export async function POST(req: NextRequest) {
     ...raw,
     fullName: sanitize(raw.fullName),
     mobile: sanitize(raw.mobile),
-    email: sanitize(raw.email),
+    email: raw.email ? sanitize(raw.email) : "",
     message: raw.message ? sanitize(raw.message) : undefined,
     branchName: sanitize(raw.branchName),
   };
@@ -147,34 +148,40 @@ export async function POST(req: NextRequest) {
   const customerEmail_ = buildCustomerConfirmationEmail(data);
 
   try {
-    const [branchResult, adminResult, customerResult] =
-      await Promise.allSettled([
-        resend.emails.send({
-          from: `${BRAND_NAME} <${FROM_EMAIL}>`,
-          to: [branchEmail],
-          subject: branchEmail_.subject,
-          html: branchEmail_.html,
-          text: branchEmail_.text,
-          replyTo: data.email,
-        }),
+    const promises: Promise<unknown>[] = [
+      resend.emails.send({
+        from: `${BRAND_NAME} <${FROM_EMAIL}>`,
+        to: [branchEmail],
+        subject: branchEmail_.subject,
+        html: branchEmail_.html,
+        text: branchEmail_.text,
+        replyTo: data.email || undefined,
+      }),
 
-        resend.emails.send({
-          from: `${BRAND_NAME} <${FROM_EMAIL}>`,
-          to: [ADMIN_EMAIL],
-          subject: adminEmail_.subject,
-          html: adminEmail_.html,
-          text: adminEmail_.text,
-          replyTo: data.email,
-        }),
+      resend.emails.send({
+        from: `${BRAND_NAME} <${FROM_EMAIL}>`,
+        to: [ADMIN_EMAIL],
+        subject: adminEmail_.subject,
+        html: adminEmail_.html,
+        text: adminEmail_.text,
+        replyTo: data.email || undefined,
+      }),
+    ];
 
+    if (data.email) {
+      promises.push(
         resend.emails.send({
           from: `${BRAND_NAME} <${FROM_EMAIL}>`,
           to: [data.email],
           subject: customerEmail_.subject,
           html: customerEmail_.html,
           text: customerEmail_.text,
-        }),
-      ]);
+        })
+      );
+    }
+
+    const [branchResult, adminResult, customerResult] =
+      await Promise.allSettled(promises);
 
     if (branchResult.status === "rejected") {
       console.error(branchResult.reason);
@@ -185,11 +192,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (adminResult.status === "rejected") {
+    if (adminResult && adminResult.status === "rejected") {
       console.error(adminResult.reason);
     }
 
-    if (customerResult.status === "rejected") {
+    if (customerResult && customerResult.status === "rejected") {
       console.error(customerResult.reason);
     }
 

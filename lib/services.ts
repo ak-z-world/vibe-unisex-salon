@@ -49,12 +49,14 @@ export const SALON_LOCATIONS = [
   "Ekkatuthangal",
   "Velachery",
   "Porur",
+  "Virugambakkam",
 ] as const;
 
 export type SalonLocation = (typeof SALON_LOCATIONS)[number];
 
 export const LOCATIONS_STRING = SALON_LOCATIONS.join(" | ");
-export const LOCATIONS_SEO = SALON_LOCATIONS.slice(0, 4).join(", ") + " & " + SALON_LOCATIONS[4];
+export const LOCATIONS_SEO =
+  SALON_LOCATIONS.slice(0, -1).join(", ") + " & " + SALON_LOCATIONS[SALON_LOCATIONS.length - 1];
 
 // ─── Master Services Array ────────────────────────────────────────────────────
 export const SERVICES: ServiceCategory[] = [

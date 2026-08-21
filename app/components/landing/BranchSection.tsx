@@ -61,8 +61,7 @@ export default function BranchSection() {
             </span>
           </h2>
           <p className="text-[#7A6A58] text-lg max-w-xl mx-auto font-light leading-relaxed">
-            Five premium Vibe Salon branches across Chennai — each designed to
-            deliver the same world-class experience, close to where you are.
+            Luxury Vibe Salon locations across Chennai — 5 active branches and our upcoming Virugambakkam destination, each crafted to deliver a world-class experience.
           </p>
         </motion.div>
 
@@ -94,7 +93,7 @@ export default function BranchSection() {
                 <div className="flex items-start justify-between mb-5">
                   <div>
                     <span className="text-[9px] tracking-[0.32em] uppercase text-[#9A8060] font-medium block mb-1">
-                      Vibe Salon
+                      {branch.status === "coming_soon" ? "Opening Sept 2026" : "Vibe Salon"}
                     </span>
                     <h3 className="text-[#2C2117] text-xl font-semibold tracking-tight">
                       {branch.name}
@@ -143,7 +142,7 @@ export default function BranchSection() {
                     </div>
                   </div>
 
-                  {branch.phone && (
+                  {branch.phone ? (
                     <div className="flex gap-3">
                       <span
                         className="text-xs mt-0.5 shrink-0"
@@ -170,58 +169,67 @@ export default function BranchSection() {
                         </a>
                       </div>
                     </div>
-                  )}
+                  ) : null}
 
-                  {branch.hours && (
-                    <div className="flex gap-3">
-                      <span
-                        className="text-xs mt-0.5 shrink-0"
-                        style={{
-                          background:
-                            "linear-gradient(135deg,#B8922E 0%,#E2C97E 60%,#B8922E 100%)",
-                          WebkitBackgroundClip: "text",
-                          WebkitTextFillColor: "transparent",
-                          backgroundClip: "text",
-                        }}
-                      >
-                        ◈
-                      </span>
-                      <div>
-                        <div className="text-[9px] tracking-[0.25em] uppercase text-[#9A8878] mb-1">
-                          Hours
-                        </div>
-                        <div className="text-[#4A3D33] text-sm font-light">
-                          {branch.hours}
-                        </div>
+                  <div className="flex gap-3">
+                    <span
+                      className="text-xs mt-0.5 shrink-0"
+                      style={{
+                        background:
+                          "linear-gradient(135deg,#B8922E 0%,#E2C97E 60%,#B8922E 100%)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
+                      }}
+                    >
+                      ◈
+                    </span>
+                    <div>
+                      <div className="text-[9px] tracking-[0.25em] uppercase text-[#9A8878] mb-1">
+                        Status / Hours
+                      </div>
+                      <div className="text-[#4A3D33] text-sm font-light">
+                        {branch.status === "coming_soon" ? "Opening Sept 1, 2026 (Pre-Booking Open)" : (branch.hours ?? "Open Daily 9:00 AM – 9:00 PM")}
                       </div>
                     </div>
-                  )}
+                  </div>
                 </div>
 
                 {/* CTAs */}
                 <div className="mt-7 flex items-center gap-4">
-                  {branch.mapsLink && (
+                  {branch.status === "coming_soon" ? (
                     <Link
-                      href={branch.mapsLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      href={`/branches/${branch.slug}`}
                       className="inline-flex items-center gap-2 text-[9px] tracking-[0.22em] uppercase text-[#9A7840] border border-[#C9A84C]/40 px-4 py-2 hover:bg-[#FFF8EE] hover:border-[#C9A84C] transition-all duration-300"
-                      aria-label={`Get directions to Vibe Salon ${branch.name}`}
                     >
-                      Get Directions →
+                      Pre-Book Slot →
                     </Link>
+                  ) : (
+                    <>
+                      {branch.mapsLink && (
+                        <Link
+                          href={branch.mapsLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-[9px] tracking-[0.22em] uppercase text-[#9A7840] border border-[#C9A84C]/40 px-4 py-2 hover:bg-[#FFF8EE] hover:border-[#C9A84C] transition-all duration-300"
+                          aria-label={`Get directions to Vibe Salon ${branch.name}`}
+                        >
+                          Get Directions →
+                        </Link>
+                      )}
+                      <Link
+                        href={
+                          branch.phone
+                            ? `tel:${branch.phone.replace(/\s/g, "")}`
+                            : `/branches/${branch.slug}`
+                        }
+                        className="inline-flex items-center gap-1.5 text-[9px] tracking-[0.22em] uppercase text-[#9A8878] hover:text-[#9A7840] transition-colors duration-300"
+                        aria-label={`Call Vibe Salon ${branch.name}`}
+                      >
+                        Call Now →
+                      </Link>
+                    </>
                   )}
-                  <Link
-                    href={
-                      branch.phone
-                        ? `tel:${branch.phone.replace(/\s/g, "")}`
-                        : "tel:+919876543210"
-                    }
-                    className="inline-flex items-center gap-1.5 text-[9px] tracking-[0.22em] uppercase text-[#9A8878] hover:text-[#9A7840] transition-colors duration-300"
-                    aria-label={`Call Vibe Salon ${branch.name}`}
-                  >
-                    Call Now →
-                  </Link>
                 </div>
               </div>
             </motion.article>

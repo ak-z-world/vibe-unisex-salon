@@ -13,6 +13,8 @@ export interface Branch {
   neighborhood: string;
   state: string;
   pincode: string;
+  status: "open" | "coming_soon";
+  openingDate?: string;
 }
 
 export const SALON_BRANCHES: Branch[] = [
@@ -29,9 +31,10 @@ export const SALON_BRANCHES: Branch[] = [
     phone: "+918072352853",
     hours: "Mon–Sun:  10:00 AM – 9:00 PM",
     mapsLink: "https://maps.app.goo.gl/JaN2nJgtLVpj6fFC6",
-    featuredImageUrl:"/images/annanagar.svg",
-    latitude: 13.085,
-    longitude: 80.2101,
+    featuredImageUrl: "/images/annanagar.svg",
+    latitude: 13.08763848847409,
+    longitude: 80.19406765338717,
+    status: "open",
   },
   {
     id: "b2",
@@ -45,9 +48,10 @@ export const SALON_BRANCHES: Branch[] = [
     phone: "+919342795928",
     hours: "Mon–Sun:  10:00 AM – 9:00 PM",
     mapsLink: "https://maps.app.goo.gl/dzdyacoqprkGGRpK8",
-    featuredImageUrl:"/images/tnagar.svg",
-    latitude: 13.0418,
-    longitude: 80.2341,
+    featuredImageUrl: "/images/tnagar.svg",
+    latitude: 13.0398618823334,
+    longitude: 80.23385217404764,
+    status: "open",
   },
   {
     id: "b3",
@@ -62,14 +66,14 @@ export const SALON_BRANCHES: Branch[] = [
     phone: "+916374679577",
     hours: "Mon–Sun:  10:00 AM – 9:00 PM",
     mapsLink: "https://maps.app.goo.gl/DB4ERZiWVn75YoFo9",
-    featuredImageUrl:
-      "/images/ekkatuthangal.svg",
-    latitude: 13.017,
-    longitude: 80.205,
+    featuredImageUrl: "/images/ekkatuthangal.svg",
+    latitude: 13.02183340538191,
+    longitude: 80.20609466942182,
+    status: "open",
   },
   {
     id: "b4",
-    name: " Porur",
+    name: "Porur",
     slug: "porur-chennai",
     city: "Chennai",
     neighborhood: "Porur",
@@ -80,14 +84,14 @@ export const SALON_BRANCHES: Branch[] = [
     phone: "+917603957055",
     hours: "Mon–Sun:  10:00 AM – 9:00 PM",
     mapsLink: "https://maps.app.goo.gl/nYo2EFmS5esdVw3f7",
-    featuredImageUrl:
-      "/images/porur.svg",
-    latitude: 13.035,
-    longitude: 80.158,
+    featuredImageUrl: "/images/porur.svg",
+    latitude: 13.038676158385805,
+    longitude: 80.16181014174965,
+    status: "open",
   },
   {
     id: "b5",
-    name: " Velachery",
+    name: "Velachery",
     slug: "velachery-chennai",
     city: "Chennai",
     neighborhood: "Velachery",
@@ -98,10 +102,28 @@ export const SALON_BRANCHES: Branch[] = [
     phone: "+919363702047",
     hours: "Mon–Sun:  10:00 AM – 9:00 PM",
     mapsLink: "https://maps.app.goo.gl/X2sfpWcm7jKu9G8g6",
-    featuredImageUrl:
-      "/images/velachery.svg",
-    latitude: 12.979,
-    longitude: 80.221,
+    featuredImageUrl: "/images/velachery.svg",
+    latitude: 12.994558372044812,
+    longitude: 80.21778719645563,
+    status: "open",
+  },
+  {
+    id: "b6",
+    name: "Virugambakkam",
+    slug: "virugambakkam-chennai",
+    city: "Chennai",
+    neighborhood: "Virugambakkam",
+    address: "121/60, Kaliamman Koil St, L & T Colony Phase II,",
+    state: "Tamil Nadu",
+    pincode: "600092",
+    phone: "+918122380250",
+    hours: "Mon–Sun:  10:00 AM – 9:00 PM",
+    mapsLink: "https://maps.app.goo.gl/ZBbW6FaP72FihMde8",
+    featuredImageUrl: "/images/velachery.svg",
+    latitude: 13.054138728355701,
+    longitude: 80.19261367486781,
+    status: "coming_soon",
+    openingDate: "2026-09-01",
   },
 ];
 
@@ -145,6 +167,14 @@ export const nearbyAreas: Record<string, string[]> = {
     "Thoraipakkam",
     "Taramani",
   ],
+
+  "virugambakkam-chennai": [
+    "Vadapalani",
+    "Saligramam",
+    "Chinmaya Nagar",
+    "Koyambedu",
+    "Alwarthirunagar",
+  ],
 };
 
 export const BRAND_NAME = "Vibe Unisex Salon";
@@ -159,8 +189,19 @@ export const branchEmailMap: Record<string, string> = {
   "ekkatuthangal-chennai": "admin@vibeunisexsalon.in",
   "porur-chennai": "admin@vibeunisexsalon.in",
   "velachery-chennai": "admin@vibeunisexsalon.in",
+  "virugambakkam-chennai": "admin@vibeunisexsalon.in",
 };
 
 export function getBranchBySlug(slug: string): Branch | undefined {
   return SALON_BRANCHES.find((b) => b.slug === slug);
 }
+
+export function isBranchOpen(branch: Branch): boolean {
+  if (branch.status === "open") return true;
+  if (branch.openingDate) {
+    const today = new Date().toISOString().split("T")[0];
+    return today >= branch.openingDate;
+  }
+  return false;
+}
+

@@ -7,7 +7,7 @@ const faqs = [
   {
     question: "Which is the best unisex salon in Chennai?",
     answer:
-      "Vibe Unisex Salon is widely regarded as one of the best premium unisex salons in Chennai. With 5 branches across the city, certified stylists, and internationally acclaimed products from brands like L'Oréal and Wella, Vibe delivers a luxury salon experience for men, women, and all genders — consistently rated 4.9 stars by over 15,000 happy clients.",
+      "Vibe Unisex Salon is widely regarded as one of the best premium unisex salons in Chennai. With 5 active branches across Anna Nagar, T. Nagar, Ekkatuthangal, Porur, and Velachery — plus our upcoming 6th location in Virugambakkam (opening September 2026) — Vibe delivers a luxury salon experience with certified stylists and premium hair & beauty products.",
   },
   {
     question: "What are your hair spa charges?",
@@ -37,12 +37,12 @@ const faqs = [
   {
     question: "Do I need an appointment to visit Vibe Salon?",
     answer:
-      "Walk-ins are welcome at all Vibe Salon branches across Chennai, though we strongly recommend booking an appointment — especially for bridal makeup, keratin treatments, and hair coloring — to ensure a dedicated stylist and minimal wait time. You can call your nearest branch or reach out via our contact details to schedule a visit.",
+      "Walk-ins are welcome at all Vibe Salon active branches across Chennai, though we strongly recommend booking an appointment — especially for bridal makeup, keratin treatments, and hair coloring — to ensure a dedicated stylist and minimal wait time. You can call your nearest branch or pre-book slots for our upcoming Virugambakkam branch.",
   },
   {
     question: "Which areas in Chennai do Vibe Salon branches serve?",
     answer:
-      "Vibe Unisex Salon has 5 branches across Chennai, making premium salon services accessible throughout the city. All our Chennai locations offer the complete range of hair, beauty, and grooming services. Contact us to find your nearest branch.",
+      "Vibe Unisex Salon operates 5 active branches across Chennai — Anna Nagar, T. Nagar, Porur, Velachery, and Ekkatuthangal — and is opening its 6th location in Virugambakkam on September 1, 2026.",
   },
 ];
 

@@ -11,7 +11,7 @@ export const SITE_SHORT_NAME = "Vibe Salon";
 export const SITE_LOCALE = "en_IN";
 export const SITE_LANGUAGE = "en-IN";
 export const SITE_DESCRIPTION =
-  "Vibe Unisex Salon — Chennai's premium unisex salon chain for hair, beauty, and grooming across 5 branches: Anna Nagar, T Nagar, Porur, Velachery, and Ekkatuthangal.";
+  "Vibe Unisex Salon — Chennai's luxury unisex salon chain for hair, beauty, and grooming across branches in Anna Nagar, T. Nagar, Porur, Velachery, Ekkatuthangal, and Virugambakkam.";
 
 export const DEFAULT_PHONE = "+91 96773 77316";
 export const SUPPORT_EMAIL = "admin@vibeunisexsalon.in";
@@ -19,20 +19,6 @@ export const ADMIN_EMAIL = "admin@vibeunisexsalon.in";
 
 export const SOCIAL_LINKS = {
   instagram: "https://www.instagram.com/vibe_unisex_salon4",
-} as const;
-
-export const ORG_AGGREGATE_RATING = {
-  ratingValue: "4.9",
-  reviewCount: "15000",
-  bestRating: "5",
-  worstRating: "1",
-} as const;
-
-export const BRANCH_AGGREGATE_RATING = {
-  ratingValue: "4.9",
-  reviewCount: "500",
-  bestRating: "5",
-  worstRating: "1",
 } as const;
 
 export const PRIMARY_CITY = "Chennai";
@@ -63,6 +49,10 @@ export const DEFAULT_KEYWORDS = [
   "Hair Smoothening Chennai",
   "Salon near me Chennai",
   "Best hair salon near me in Chennai",
+  "Unisex Salon Virugambakkam",
+  "Hair Salon Virugambakkam",
+  "Keratin Treatment Virugambakkam",
+  "Bridal Makeup Virugambakkam",
 ];
 
 /**

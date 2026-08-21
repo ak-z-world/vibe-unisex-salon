@@ -15,8 +15,6 @@ import {
   DEFAULT_PHONE,
   LOGO_URL,
   DEFAULT_OG_IMAGE,
-  ORG_AGGREGATE_RATING,
-  BRANCH_AGGREGATE_RATING,
   SOCIAL_LINKS,
   PRIMARY_CITY,
   PRIMARY_STATE,
@@ -66,10 +64,6 @@ export function buildOrganizationSchema(branches: Branch[]) {
       "@type": "Place",
       name: `${PRIMARY_CITY}, ${PRIMARY_STATE}, India`,
     },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ...ORG_AGGREGATE_RATING,
-    },
     contactPoint: branches.map((b) => ({
       "@type": "ContactPoint",
       telephone: b.phone,
@@ -80,7 +74,7 @@ export function buildOrganizationSchema(branches: Branch[]) {
     department: branches.map((b) => ({
       "@type": "BeautySalon",
       "@id": `${SITE_URL}/branches/${b.slug}#localbusiness`,
-      name: b.name,
+      name: `${SITE_NAME} — ${b.name}`,
       url: `${SITE_URL}/branches/${b.slug}`,
       address: {
         "@type": "PostalAddress",
@@ -118,12 +112,17 @@ export function buildWebSiteSchema() {
 
 // ─── Per-branch LocalBusiness ───────────────────────────────────────────────
 export function buildBranchLocalBusinessSchema(branch: Branch) {
+  const isComingSoon = branch.status === "coming_soon";
+  const desc = isComingSoon
+    ? `Vibe Unisex Salon is opening a new branch in ${branch.neighborhood}, ${branch.city} on September 1, 2026. Offering luxury hair, beauty, and grooming services.`
+    : `Premium unisex salon in ${branch.neighborhood}, ${branch.city} offering luxury hair, beauty, and grooming services including hair cut, hair coloring, keratin treatment, bridal makeup, and men's grooming.`;
+
   return {
     "@context": "https://schema.org",
     "@type": ["HairSalon", "BeautySalon"],
     "@id": `${SITE_URL}/branches/${branch.slug}#localbusiness`,
     name: `${SITE_NAME} — ${branch.name}`,
-    description: `Premium unisex salon in ${branch.neighborhood}, ${branch.city} offering luxury hair, beauty, and grooming services including hair cut, hair coloring, keratin treatment, bridal makeup, and men's grooming.`,
+    description: desc,
     url: `${SITE_URL}/branches/${branch.slug}`,
     telephone: branch.phone,
     image: branch.featuredImageUrl,
@@ -155,25 +154,23 @@ export function buildBranchLocalBusinessSchema(branch: Branch) {
     },
     hasMap: branch.mapsLink,
     sameAs: [branch.mapsLink],
-    openingHoursSpecification: {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
-      ],
-      opens: "09:00",
-      closes: "21:00",
-      description: branch.hours,
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ...BRANCH_AGGREGATE_RATING,
-    },
+    openingHoursSpecification: isComingSoon
+      ? undefined
+      : {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+          ],
+          opens: "09:00",
+          closes: "21:00",
+          description: branch.hours,
+        },
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: `${branch.name} Services`,
@@ -214,6 +211,31 @@ export function buildFAQSchema(faqs: FAQPair[]) {
 
 // ─── Standard FAQ content generator for a branch (AEO) ─────────────────────
 export function buildBranchFAQs(branch: Branch): FAQPair[] {
+  if (branch.status === "coming_soon") {
+    return [
+      {
+        question: `When is Vibe Unisex Salon ${branch.name} opening?`,
+        answer: `Vibe Unisex Salon ${branch.name} is scheduled to officially open on September 1, 2026. Pre-booking for opening week appointments is available now via WhatsApp.`,
+      },
+      {
+        question: `Where is the new Vibe Salon ${branch.name} located?`,
+        answer: `The new branch is located at ${branch.address}, ${branch.neighborhood}, ${branch.city}, ${branch.state} ${branch.pincode}.`,
+      },
+      {
+        question: `How can I pre-book an appointment for Vibe Salon ${branch.name}?`,
+        answer: `You can pre-book appointments via WhatsApp or phone at ${branch.phone} to secure your opening week slot.`,
+      },
+      {
+        question: `What services will be offered at Vibe Salon ${branch.name}?`,
+        answer: `Vibe Salon ${branch.name} will offer full hair care (cuts, coloring, keratin treatments, hair spa), skin care (facials, treatments), bridal makeup, and men's grooming.`,
+      },
+      {
+        question: `What will be the working hours for Vibe Salon ${branch.name}?`,
+        answer: `Starting September 1, 2026, the Virugambakkam branch will operate Monday through Sunday from 10:00 AM to 9:00 PM.`,
+      },
+    ];
+  }
+
   return [
     {
       question: `Where is Vibe Unisex Salon ${branch.name} located?`,

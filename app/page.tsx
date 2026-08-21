@@ -8,13 +8,12 @@ import {
   SITE_SHORT_NAME,
   DEFAULT_OG_IMAGE,
   DEFAULT_KEYWORDS,
-  ORG_AGGREGATE_RATING,
 } from "@/lib/seo-config";
 
 export const metadata: Metadata = {
   title: "Best Premium Unisex Salon in Chennai | Vibe Salon",
   description:
-    "Vibe Unisex Salon — Chennai's finest premium salon for hair, beauty & grooming. Expert stylists, luxury products, 5 locations across Chennai. Book your appointment today.",
+    "Vibe Unisex Salon — Chennai's finest luxury salon for hair, beauty & grooming. Expert stylists, luxury products, branches across Anna Nagar, T. Nagar, Porur, Velachery, Ekkatuthangal & Virugambakkam.",
   keywords: DEFAULT_KEYWORDS,
   alternates: {
     canonical: SITE_URL,
@@ -22,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Best Premium Unisex Salon in Chennai | Vibe Salon",
     description:
-      "Experience luxury hair, beauty & grooming at Vibe Unisex Salon — Chennai's most trusted premium salon with 5 locations, 15,000+ happy clients, and a 4.9 rating.",
+      "Experience luxury hair, beauty & grooming at Vibe Unisex Salon — Chennai's most trusted premium salon chain across 6 locations.",
     url: SITE_URL,
     siteName: "Vibe Unisex Salon",
     locale: "en_IN",
@@ -39,7 +38,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Best Premium Unisex Salon in Chennai | Vibe Salon",
-    description: `Luxury hair, beauty & grooming at Vibe Unisex Salon, Chennai. 5 locations · ${ORG_AGGREGATE_RATING.reviewCount}+ clients · ${ORG_AGGREGATE_RATING.ratingValue} rating.`,
+    description: "Luxury hair, beauty & grooming at Vibe Unisex Salon, Chennai. Premium hair styling, keratin treatments, hair spa & bridal makeup.",
     images: [DEFAULT_OG_IMAGE],
   },
   robots: {
@@ -52,9 +51,6 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-video-preview": -1,
     },
-  },
-  verification: {
-    google: "YOUR_GOOGLE_SEARCH_CONSOLE_VERIFICATION_TOKEN",
   },
   other: {
     "geo.region": "IN-TN",
@@ -69,7 +65,7 @@ export const metadata: Metadata = {
 const homeFAQs = [
   {
     question: "Which is the best unisex salon in Chennai?",
-    answer: `${SITE_SHORT_NAME} is widely regarded as one of the best premium unisex salons in Chennai, with 5 branches, certified stylists, and a ${ORG_AGGREGATE_RATING.ratingValue}-star rating from over ${ORG_AGGREGATE_RATING.reviewCount} happy clients.`,
+    answer: `${SITE_SHORT_NAME} is widely regarded as one of the best premium unisex salons in Chennai, with certified stylists, luxury ambiance, and top-rated client reviews.`,
   },
   {
     question: "Do you provide bridal makeup services in Chennai?",
@@ -84,7 +80,7 @@ const homeFAQs = [
   {
     question: "Which areas in Chennai do Vibe Salon branches serve?",
     answer:
-      "Vibe Unisex Salon has 5 branches across Chennai — Anna Nagar, T Nagar, Porur, Velachery, and Ekkatuthangal. Visit our Branches page to find your nearest location.",
+      "Vibe Unisex Salon has 5 active branches across Chennai — Anna Nagar, T. Nagar, Porur, Velachery, and Ekkatuthangal — with a new 6th branch opening in Virugambakkam on September 1, 2026.",
   },
 ];
 

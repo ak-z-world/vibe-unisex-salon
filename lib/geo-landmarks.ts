@@ -123,8 +123,26 @@ export const GEO_CLUSTERS: Record<string, GeoCluster> = {
       "Taramani",
     ],
   },
+
+  "virugambakkam-chennai": {
+    slug: "virugambakkam-chennai",
+    transit: ["Vadapalani Metro Station (nearby)", "Arcot Road bus corridor"],
+    landmarks: ["Virugambakkam Market", "Kaliamman Koil Street", "Avichi School junction"],
+    colleges: ["Meenakshi Ammal Dental College (nearby)"],
+    itHubs: ["Vadapalani–Arcot Road commercial hub"],
+    hospitals: ["Vijaya Hospital Vadapalani (nearby)", "SIMS Hospital Vadapalani"],
+    malls: ["Nexus Vijaya Mall Vadapalani (nearby)"],
+    residentialAreas: [
+      "Saligramam",
+      "Vadapalani",
+      "Chinmaya Nagar",
+      "Koyambedu",
+      "Alwarthirunagar",
+    ],
+  },
 };
 
 export function getGeoCluster(slug: string): GeoCluster | undefined {
   return GEO_CLUSTERS[slug];
 }
+

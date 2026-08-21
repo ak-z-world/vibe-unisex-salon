@@ -4,9 +4,9 @@ import { SALON_BRANCHES } from "@/lib/branches";
 
 /* ─── SEO Metadata ─── */
 export const metadata: Metadata = {
-  title: "Best Premium Unisex Salon Branches in Chennai | Vibe Unisex Salon",
+  title: "Premium Unisex Salon Branches in Chennai | Vibe Unisex Salon",
   description:
-    "Vibe Unisex Salon has 5 premium branches across Chennai — Anna Nagar, T Nagar, Ekkatuthangal, Porur & Velachery. Luxury hair salon, bridal makeup, hair spa, keratin & more. Book today!",
+    "Explore Vibe Unisex Salon branches across Chennai — Anna Nagar, T. Nagar, Ekkatuthangal, Porur, Velachery, and Virugambakkam (opening Sept 1, 2026). Luxury haircuts, hair spa, keratin treatments, and bridal makeup.",
   keywords: [
     "Best Unisex Salon Chennai",
     "Premium Salon Chennai",
@@ -20,14 +20,15 @@ export const metadata: Metadata = {
     "Vibe Unisex Salon Chennai",
     "Unisex Salon Branches Chennai",
     "Best Hair Salon Chennai",
+    "Unisex Salon Virugambakkam",
   ],
   alternates: {
     canonical: "https://vibeunisexsalon.in/branches",
   },
   openGraph: {
-    title: "Best Premium Unisex Salon Branches in Chennai | Vibe Unisex Salon",
+    title: "Premium Unisex Salon Branches in Chennai | Vibe Unisex Salon",
     description:
-      "5 luxury salon branches across Chennai — expert stylists, premium products, bridal specialists. Visit Vibe Unisex Salon at Anna Nagar, T Nagar, Ekkatuthangal, Porur or Velachery.",
+      "Luxury salon branches across Chennai — expert stylists, premium products, bridal specialists. Visit Vibe Unisex Salon at Anna Nagar, T. Nagar, Ekkatuthangal, Porur, Velachery, or Virugambakkam.",
     url: "https://vibeunisexsalon.in/branches",
     siteName: "Vibe Unisex Salon Chennai",
     locale: "en_IN",
@@ -35,9 +36,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Best Premium Unisex Salon Branches in Chennai | Vibe Unisex Salon",
+    title: "Premium Unisex Salon Branches in Chennai | Vibe Unisex Salon",
     description:
-      "5 luxury salon branches across Chennai. Hair cuts, colour, keratin, bridal makeup, hair spa & more. Book at Vibe Unisex Salon today.",
+      "Luxury salon branches across Chennai. Hair cuts, colour, keratin, bridal makeup, hair spa & more. Book at Vibe Unisex Salon today.",
   },
   robots: {
     index: true,
@@ -59,19 +60,18 @@ function generateStructuredData() {
       streetAddress: branch.address,
       addressLocality: "Chennai",
       addressRegion: "Tamil Nadu",
-      postalCode: branch.address.match(/\d{6}/)?.[0] || "600001",
+      postalCode: branch.pincode,
       addressCountry: "IN",
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: 13.0827,
-      longitude: 80.2707,
+      latitude: branch.latitude,
+      longitude: branch.longitude,
     },
-    openingHours: ["Mo-Sa 10:00-21:00", "Su 10:00-21:00"],
+    openingHours: branch.status === "coming_soon" ? undefined : ["Mo-Sa 10:00-21:00", "Su 10:00-21:00"],
     priceRange: "₹₹",
     image: branch.featuredImageUrl,
     hasMap: branch.mapsLink,
-    servesCuisine: [],
     amenityFeature: [
       { "@type": "LocationFeatureSpecification", name: "Hair Cutting", value: true },
       { "@type": "LocationFeatureSpecification", name: "Hair Colouring", value: true },
@@ -98,7 +98,7 @@ function generateStructuredData() {
         name: "How many Vibe Unisex Salon branches are there in Chennai?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Vibe Unisex Salon has 5 premium branches in Chennai — Anna Nagar, T Nagar, Ekkatuthangal, Porur, and Velachery.",
+          text: "Vibe Unisex Salon operates 5 active branches in Chennai (Anna Nagar, T. Nagar, Ekkatuthangal, Porur, and Velachery) and is opening its 6th branch in Virugambakkam on September 1, 2026.",
         },
       },
       {

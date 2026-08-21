@@ -11,15 +11,7 @@ import {
   getStartingPrice,
   type ServiceCategory,
 } from "@/lib/services";
-
-
-const salonBranches = [
-  { name: "Anna Nagar", phone: "+91 8072352853" },
-  { name: "T. Nagar", phone: "+91 9342795928" },
-  { name: "Ekkatuthangal", phone: "+91 6374679577" },
-  { name: "Porur", phone: "+91 7603957055" },
-  { name: "Velachery", phone: "+91 9363702047" },
-];
+import { SALON_BRANCHES } from "@/lib/branches";
 
 // ─── SEO Metadata ──────────────────────────────────────────────────────────────
 export const metadata: Metadata = {
@@ -99,12 +91,6 @@ const localBusinessSchema = {
       priceCurrency: "INR",
     })),
   },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.8",
-    reviewCount: "200",
-    bestRating: "5",
-  },
 };
 
 // ─── Category Settings ────────────────────────────────────────────────────────
@@ -154,27 +140,25 @@ export default function ServicesPage() {
         style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
       >
         {/* ════════════════════════════════════════
-            INVISIBLE AEO/GEO/LLMO DATA LAYER
-            This semantic article is fully crawled by
-            AI but invisible to human users.
+            SERVICE OVERVIEW & INTEL SECTION
+            Visible, structured content for clients & search engines.
         ════════════════════════════════════════ */}
-        <article className="sr-only">
-          <h1>Vibe Unisex Salon - Complete Service Menu and Pricing</h1>
-          <p>
+        <article className="container mx-auto max-w-5xl px-6 py-12 border-t border-[#EDE5D8] text-[#7A6A58] text-sm leading-relaxed font-light">
+          <h2 className="font-display text-2xl text-[#2C2117] font-semibold mb-4">Vibe Unisex Salon — Complete Service &amp; Location Guide</h2>
+          <p className="mb-4">
             Vibe Unisex Salon offers {SERVICES.length} premium service categories including
             haircuts, hair colour, hair spa, keratin treatments, skin care facials,
             detan and bleach, massage, hands and foot spa, hair styling, and bridal
             makeup with saree draping.
           </p>
-          <h2>Locations</h2>
-          <p>
-            Services are available at five branches across Chennai:{" "}
-            {SALON_LOCATIONS.join(", ")}. All services are available at every branch.
+          <h3 className="text-lg text-[#2C2117] font-medium mb-2">Salon Locations</h3>
+          <p className="mb-4">
+            Services are available across all Vibe Unisex Salon locations in Chennai:{" "}
+            {SALON_LOCATIONS.join(", ")}.
           </p>
-          <h2>Pricing and Quality</h2>
+          <h3 className="text-lg text-[#2C2117] font-medium mb-2">Pricing and Quality Standards</h3>
           <p>
-            Prices start from ₹100. Vibe Unisex Salon is rated 4.8 out of 5 by over 200 clients.
-            The salon serves men, women, and kids with a transparent pricing structure.
+            Prices start from ₹100. Vibe Unisex Salon delivers luxury styling for men, women, and kids with transparent pricing across all services.
           </p>
         </article>
 
@@ -238,15 +222,15 @@ export default function ServicesPage() {
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center sm:justify-start gap-3 sm:gap-4 mt-8 sm:mt-10 w-full max-w-3xl">
 
-                {/* 5 Branch Booking Buttons */}
-                {salonBranches.map((branch) => (
+                {/* Branch Booking Buttons */}
+                {SALON_BRANCHES.map((branch) => (
                   <a
                     key={branch.name}
-                    href={`tel:${branch.phone}`}
+                    href={branch.status === "coming_soon" ? `/branches/${branch.slug}` : `tel:${branch.phone}`}
                     className="group w-full sm:w-auto px-6 py-4 text-[11px] sm:text-xs tracking-[0.2em] uppercase font-bold text-[#1A1A1A] transition-colors duration-300 hover:bg-[#C29835] inline-flex items-center justify-center gap-2 rounded-none"
                     style={{ backgroundColor: "#D4A840" }}
                   >
-                    BOOK {branch.name}
+                    {branch.status === "coming_soon" ? `PRE-BOOK ${branch.name.toUpperCase()}` : `BOOK ${branch.name.toUpperCase()}`}
                     <span aria-hidden="true" className="font-normal transition-transform duration-300 group-hover:translate-x-1">→</span>
                   </a>
                 ))}
@@ -304,9 +288,9 @@ export default function ServicesPage() {
         {/* ════════════════════════════════════════
     HIDDEN SEO/AIO SECTION (Bot Readable Only)
 ════════════════════════════════════════ */}
-        <section className="sr-only" aria-hidden="true">
+        <section className="bg-[#FDFAF6] py-16 border-t border-[#EDE5D8]">
           <div className="container mx-auto max-w-screen-xl px-6 lg:px-12">
-            <h2 id="quick-facts-heading">Salon Intelligence</h2>
+            <h2 id="quick-facts-heading" className="font-display text-2xl md:text-3xl text-[#2C2117] font-semibold mb-8">Salon Intelligence &amp; Quick Facts</h2>
 
             <dl>
               {[
@@ -316,7 +300,7 @@ export default function ServicesPage() {
                 },
                 {
                   q: "Chennai Locations",
-                  a: `Available across five premium studios: ${SALON_LOCATIONS.join(", ")}.`,
+                  a: `Available across premium studios in ${SALON_LOCATIONS.join(", ")}.`,
                 },
                 {
                   q: "Pricing Architecture",

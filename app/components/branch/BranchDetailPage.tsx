@@ -223,25 +223,38 @@ export default function BranchDetailPage({ branch }: { branch: Branch }) {
 
               {/* Description */}
               <p className="mt-6 md:mt-5 text-base md:text-lg lg:text-xl leading-relaxed text-[#ffffff] max-w-[540px]">
-                Premium hair, beauty & grooming in{" "}
-                <strong className="text-[#f8e0ab] font-medium">
-                  {branch.neighborhood}
-                </strong>
-                , {branch.city}. Expert stylists, international-grade products
-                and luxury experiences crafted for modern lifestyles.
+                {branch.status === "coming_soon" ? (
+                  <>
+                    Vibe Unisex Salon is launching a brand-new luxury destination in{" "}
+                    <strong className="text-[#f8e0ab] font-medium">
+                      {branch.neighborhood}
+                    </strong>
+                    , {branch.city} on September 1, 2026. Pre-book your slot now for opening week offers.
+                  </>
+                ) : (
+                  <>
+                    Premium hair, beauty & grooming in{" "}
+                    <strong className="text-[#f8e0ab] font-medium">
+                      {branch.neighborhood}
+                    </strong>
+                    , {branch.city}. Expert stylists, international-grade products
+                    and luxury experiences crafted for modern lifestyles.
+                  </>
+                )}
               </p>
 
               {/* Stats */}
               <div className="flex flex-wrap gap-3 mt-8 md:mt-10">
-                {[branch.hours, branch.city, "4.9 ★ Luxury Rated"].map(
-                  (item) => (
-                    <div
-                      key={item}
-                      className="bg-white/80 backdrop-blur-md border border-[#E7D8B1]/50 px-4 py-2 md:px-5 md:py-3 rounded-none text-xs md:text-sm text-[#1A1410] font-medium shadow-sm">
-                      {item}
-                    </div>
-                  ),
-                )}
+                {(branch.status === "coming_soon"
+                  ? ["Opening Sept 1, 2026", `${branch.neighborhood}, ${branch.city}`, "Pre-Booking Open"]
+                  : [branch.hours, branch.city, "4.9 ★ Luxury Rated"]
+                ).map((item) => (
+                  <div
+                    key={item}
+                    className="bg-white/80 backdrop-blur-md border border-[#E7D8B1]/50 px-4 py-2 md:px-5 md:py-3 rounded-none text-xs md:text-sm text-[#1A1410] font-medium shadow-sm">
+                    {item}
+                  </div>
+                ))}
               </div>
 
               {/* Buttons */}
@@ -255,7 +268,7 @@ export default function BranchDetailPage({ branch }: { branch: Branch }) {
                     color: "#1A1410",
                     boxShadow: "0 10px 30px rgba(201,168,76,0.25)",
                   }}>
-                  Book Appointment
+                  {branch.status === "coming_soon" ? "Pre-Book Slot" : "Book Appointment"}
                 </a>
 
                 <a
