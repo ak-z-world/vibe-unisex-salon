@@ -189,7 +189,7 @@ export default function BranchSection() {
                         Status / Hours
                       </div>
                       <div className="text-[#4A3D33] text-sm font-light">
-                        {branch.status === "coming_soon" ? "Opening Sept 1, 2026 (Pre-Booking Open)" : (branch.hours ?? "Open Daily 9:00 AM – 9:00 PM")}
+                        {branch.status === "coming_soon" ? "Opening Sept 10, 2026 (Pre-Booking Open)" : (branch.hours ?? "Open Daily 9:00 AM – 9:00 PM")}
                       </div>
                     </div>
                   </div>

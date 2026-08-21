@@ -6,7 +6,7 @@ import { SALON_BRANCHES } from "@/lib/branches";
 export const metadata: Metadata = {
   title: "Premium Unisex Salon Branches in Chennai | Vibe Unisex Salon",
   description:
-    "Explore Vibe Unisex Salon branches across Chennai — Anna Nagar, T. Nagar, Ekkatuthangal, Porur, Velachery, and Virugambakkam (opening Sept 1, 2026). Luxury haircuts, hair spa, keratin treatments, and bridal makeup.",
+    "Explore Vibe Unisex Salon branches across Chennai — Anna Nagar, T. Nagar, Ekkatuthangal, Porur, Velachery, and Virugambakkam (opening Sept 10, 2026). Luxury haircuts, hair spa, keratin treatments, and bridal makeup.",
   keywords: [
     "Best Unisex Salon Chennai",
     "Premium Salon Chennai",

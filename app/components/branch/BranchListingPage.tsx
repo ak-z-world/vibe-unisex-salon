@@ -240,7 +240,7 @@ function BranchCard({ branch, index }: { branch: (typeof SALON_BRANCHES)[0]; ind
             boxShadow: "0 2px 10px rgba(0,0,0,0.3)",
           }}
         >
-          {branch.status === "coming_soon" ? "Opening Sept 1, 2026" : branch.name}
+          {branch.status === "coming_soon" ? "Opening Sept 10, 2026" : branch.name}
         </span>
       </div>
 

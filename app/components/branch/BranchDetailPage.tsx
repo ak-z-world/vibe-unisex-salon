@@ -246,7 +246,7 @@ export default function BranchDetailPage({ branch }: { branch: Branch }) {
               {/* Stats */}
               <div className="flex flex-wrap gap-3 mt-8 md:mt-10">
                 {(branch.status === "coming_soon"
-                  ? ["Opening Sept 1, 2026", `${branch.neighborhood}, ${branch.city}`, "Pre-Booking Open"]
+                  ? ["Opening Sept 10, 2026", `${branch.neighborhood}, ${branch.city}`, "Pre-Booking Open"]
                   : [branch.hours, branch.city, "4.9 ★ Luxury Rated"]
                 ).map((item) => (
                   <div
